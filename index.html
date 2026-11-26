@@ -10,85 +10,104 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
-/* MIPintegra 0.5. Branco, verde-mata do logo para texto e estrutura, verde-folha para gráficos, ouro só para o limite e o foco.
-   Alegreya nos títulos, Source Sans 3 no texto e nas tabelas. O destaque é a linha do tempo da pulverização com as cartelas de ovos. */
+/* MIPintegra 0.6. Faixas verde-mata no topo de cada página, conteúdo em painéis brancos sobre faixas alternadas,
+   verde-folha para gráficos e ouro só para o limite e o foco. Alegreya nos títulos, Source Sans 3 no texto e nas tabelas.
+   O destaque é a linha do tempo da pulverização com as cartelas de ovos. */
 :root{
   color-scheme:light;
-  --paper:#ffffff; --band:#f2f4ee; --ink:#18211a; --muted:#545e52; --line:#d6dbcf; --line-strong:#a3ab99;
-  --mata:#032f0d; --mata-2:#0f4a1d; --folha:#538318; --folha-ink:#3f6b12;
+  --paper:#ffffff; --band:#f1f4ec; --band-2:#e7ecdf; --ink:#18211a; --muted:#4f594d; --line:#d3d9cb; --line-strong:#9da694;
+  --mata:#032f0d; --mata-2:#0f4a1d; --mata-3:#174f24; --folha:#538318; --folha-ink:#3a6410; --folha-bg:#e6efd8;
   --ouro:#c4911e; --ouro-soft:#faf1da; --ouro-line:#ead6a0; --ouro-ink:#5c4306;
-  --ok:#1e7a45; --ok-bg:#d7f0df; --inc:#7c5e00; --inc-bg:#f6eab0; --ruim:#b42318; --ruim-bg:#f8d3ce; --nd:#45576a; --nd-bg:#e4e9ee; --ress:#8a4b0f; --ress-bg:#fbe0c4;
+  --on-dark:#ffffff; --on-dark-2:#cfdcc4;
+  --ok:#17663a; --ok-bg:#d7f0df; --inc:#6f5300; --inc-bg:#f6eab0; --ruim:#a61f15; --ruim-bg:#f8d3ce; --nd:#3f5164; --nd-bg:#e4e9ee; --ress:#7f450e; --ress-bg:#fbe0c4;
   --cartela:#dbe7f2; --ovo:#efe3c6; --ovo-p:#2b2420;
+  --shadow:0 1px 2px rgba(3,47,13,.06),0 10px 28px rgba(3,47,13,.07);
   --f-head:'Alegreya',Georgia,'Times New Roman',serif;
   --f-body:'Source Sans 3','Segoe UI',Arial,sans-serif;
-  --wrap:1160px;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-padding-top:96px}
+html{scroll-padding-top:100px;-webkit-tap-highlight-color:rgba(196,145,30,.25)}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--f-body);-webkit-text-size-adjust:100%}
-.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--f-head);color:var(--mata);margin:0;text-wrap:balance}
-h1{font-size:clamp(38px,6vw,68px);font-weight:700;line-height:1.02;letter-spacing:-.01em;max-width:21ch}
-h2{font-size:clamp(25px,3vw,34px);font-weight:700;line-height:1.12}
-h3{font-size:21px;font-weight:700;line-height:1.2}
+h1{font-size:clamp(34px,4.6vw,52px);font-weight:700;line-height:1.06}
+h2{font-size:clamp(25px,2.8vw,32px);font-weight:700;line-height:1.15}
+h3{font-size:20px;font-weight:700;line-height:1.25}
 p{margin:0;text-wrap:pretty}
 a{color:var(--folha-ink);text-underline-offset:3px}
 a:hover{color:var(--mata)}
 small{font-size:14px;color:var(--muted)}
-i,em{font-style:italic}
 :focus-visible{outline:3px solid var(--ouro);outline-offset:2px}
+:focus{scroll-margin-top:100px}
 button,select,input,textarea{font:inherit;color:inherit}
-button,a{touch-action:manipulation}
+button,a,summary{touch-action:manipulation}
 .muted{color:var(--muted)}
 .num{font-variant-numeric:tabular-nums}
 .stack{display:flex;flex-direction:column;gap:16px}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.skip{position:absolute;left:12px;top:-60px;background:var(--mata);color:#fff;padding:8px 14px;z-index:30;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;background:var(--mata);color:#fff;padding:8px 14px;z-index:40;border-radius:6px}
 .skip:focus{top:12px}
 
-/* aviso e cabeçalho */
-.aviso{background:var(--ouro-soft);color:var(--ouro-ink);font-size:15px;border-bottom:1px solid var(--ouro-line)}
-.aviso .wrap{padding-block:7px}
-header.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.4) blur(6px);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:24px;min-height:68px}
+/* ===== cabeçalho ===== */
+header.top{position:sticky;top:0;z-index:20;background:var(--paper);box-shadow:0 1px 0 var(--line)}
+.aviso{background:var(--ouro-soft);color:var(--ouro-ink);font-size:14px;border-bottom:1px solid var(--ouro-line)}
+.aviso .wrap{padding-block:6px}
+.topbar{display:flex;align-items:center;gap:24px;min-height:66px}
 .brand{flex:none;display:block}
-.brand img{display:block;height:44px;width:auto}
+.brand img{display:block;height:42px;width:auto}
 nav.main{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
-nav.main a{flex:none;padding:22px 12px 19px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;border-bottom:3px solid transparent}
-nav.main a:hover{color:var(--mata);border-bottom-color:var(--line-strong)}
-nav.main a[aria-current="page"]{color:var(--mata);border-bottom-color:var(--ouro)}
+nav.main a{flex:none;padding:8px 13px;margin-block:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;border-radius:999px}
+nav.main a:hover{background:var(--band);color:var(--mata)}
+nav.main a[aria-current="page"]{background:var(--mata);color:var(--on-dark)}
 
-main{padding-bottom:72px}
-section.view{display:flex;flex-direction:column;gap:56px;padding-top:40px}
-.block{display:flex;flex-direction:column;gap:20px}
-.intro{display:flex;flex-direction:column;gap:10px;max-width:72ch}
-.intro p{font-size:19px;color:var(--muted)}
+/* ===== faixas e painéis ===== */
+.page-head{background:var(--mata);color:var(--on-dark);position:relative;overflow:hidden}
+.page-head::after{content:"";position:absolute;right:-40px;top:-30px;width:min(46vw,520px);height:calc(100% + 60px);background-image:radial-gradient(ellipse 5px 6px at center,rgba(239,227,198,.16) 98%,transparent 100%);background-size:20px 22px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 45%);mask-image:linear-gradient(90deg,transparent,#000 45%);pointer-events:none}
+.page-head .wrap{position:relative;z-index:1;padding-block:52px 112px;display:flex;flex-direction:column;gap:12px}
+.page-head h1{color:var(--on-dark);max-width:24ch}
+.page-head p{color:var(--on-dark-2);font-size:19px;max-width:66ch}
+.page-head i{color:inherit}
+.hero-head .wrap{padding-block:64px 120px}
+.hero-head h1{font-size:clamp(40px,6.2vw,72px);line-height:1.02;max-width:18ch}
+.band{padding-block:48px}
+.band.alt{background:var(--band)}
+.band.lift{padding-top:0}
+.band.lift > .wrap{margin-top:-72px;position:relative;z-index:2}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:28px;box-shadow:var(--shadow);min-width:0}
+.panel.flat{box-shadow:none}
+.block{display:flex;flex-direction:column;gap:22px}
+.block-head{display:flex;flex-direction:column;gap:6px;max-width:74ch}
+.block-head p{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 
-/* controles */
-.btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--mata);background:var(--paper);color:var(--mata);border-radius:4px;padding:9px 18px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none;transition:background-color .15s,color .15s}
+/* ===== controles ===== */
+.btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--mata);background:var(--paper);color:var(--mata);border-radius:999px;padding:9px 20px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none;transition:background-color .15s,color .15s}
 .btn:hover{background:var(--band);color:var(--mata)}
 .btn.primary{background:var(--mata);color:#fff}
 .btn.primary:hover{background:var(--mata-2);color:#fff}
 .field{display:flex;flex-direction:column;gap:4px;min-width:0}
 .field label{font-size:15px;font-weight:600}
-.field select,.field input,.field textarea{border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:4px;padding:8px 10px;width:100%;min-width:0}
-.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px 16px;align-items:end;background:var(--band);padding:16px;border-radius:6px}
-.lim{display:inline-flex;border:1.5px solid var(--mata);border-radius:999px;overflow:hidden;flex:none}
-.lim button{border:0;background:var(--paper);color:var(--mata);padding:6px 16px;font-weight:700;font-size:15px;cursor:pointer;font-variant-numeric:tabular-nums;min-height:34px}
+.field select,.field input,.field textarea{border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:8px;padding:9px 11px;width:100%;min-width:0}
+.field select:hover,.field input:hover,.field textarea:hover{border-color:var(--mata)}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px 18px;align-items:end}
+.lim{display:inline-flex;border:1.5px solid var(--mata);border-radius:999px;overflow:hidden;flex:none;background:var(--paper)}
+.lim button{border:0;background:transparent;color:var(--mata);padding:6px 16px;font-weight:700;font-size:15px;cursor:pointer;font-variant-numeric:tabular-nums;min-height:36px;transition:background-color .15s,color .15s}
+.lim button:hover{background:var(--band)}
 .lim button + button{border-left:1.5px solid var(--mata)}
 .lim button[aria-pressed="true"]{background:var(--mata);color:#fff}
 .lim-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.lim-wrap span{font-weight:600;font-size:15px}
-.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line-strong)}
-.tabs button{border:0;background:none;padding:10px 14px 8px;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer;font-weight:600;font-size:16px;color:var(--muted)}
-.tabs button:hover{color:var(--mata)}
-.tabs button[aria-pressed="true"]{color:var(--mata);border-bottom-color:var(--ouro)}
+.lim-wrap > span{font-weight:600;font-size:15px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:6px;background:var(--band);border-radius:999px;width:max-content;max-width:100%}
+.tabs button{border:0;background:none;padding:8px 16px;border-radius:999px;cursor:pointer;font-weight:600;font-size:15px;color:var(--muted)}
+.tabs button:hover{color:var(--mata);background:var(--paper)}
+.tabs button[aria-pressed="true"]{color:#fff;background:var(--mata)}
 .linkbtn{background:none;border:0;padding:0;color:var(--folha-ink);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
-.linkbtn:hover{color:var(--mata)}
 
-/* rótulos de classe */
-.chip{display:inline-flex;align-items:center;gap:6px;font:600 14px/1.3 var(--f-body);padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* ===== rótulos de classe ===== */
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 14px/1.3 var(--f-body);padding:3px 10px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-variant-numeric:tabular-nums}
 .chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 button.chip{cursor:pointer}
 button.chip:hover{border-color:currentColor}
@@ -99,108 +118,118 @@ button.chip:hover{border-color:currentColor}
 .s-ress,.s-3{background:var(--ress-bg);color:var(--ress)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:15px;color:var(--muted);align-items:center}
 .legend > span{display:inline-flex;gap:6px;align-items:center}
+.tag{display:inline-flex;align-items:center;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;color:var(--folha-ink);background:var(--folha-bg)}
+.tag.eco{color:var(--ouro-ink);background:var(--ouro-soft)}
 
-/* ===== hero: linha do tempo e cartelas ===== */
-.hero{display:flex;flex-direction:column;gap:36px;padding-top:12px}
-.demo{display:flex;flex-direction:column;gap:22px;border-top:2px solid var(--mata);padding-top:22px}
-.demo-head{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:flex-end}
-.demo-head h2{font-size:clamp(22px,2.6vw,28px);max-width:30ch}
+/* ===== herói: linha do tempo e cartelas ===== */
+.demo{display:flex;flex-direction:column;gap:24px;padding:32px}
+.demo-head{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:flex-end;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.demo-head h2{font-size:clamp(22px,2.4vw,28px);max-width:32ch}
+.tl-box{background:var(--band);border-radius:10px;padding:20px 8px 12px}
 .tl{position:relative;height:118px;margin:0 46px}
 .tl-axis{position:absolute;left:0;right:0;top:54px;height:2px;background:var(--line-strong)}
 .tl-tick{position:absolute;top:49px;width:1px;height:12px;background:var(--line-strong)}
 .tl-rel{position:absolute;top:6px;height:26px;width:0;border-left:2px dashed var(--ouro)}
-.tl-rel span{position:absolute;top:-4px;left:8px;font-size:14px;font-weight:600;color:var(--ouro-ink);white-space:nowrap}
+.tl-rel span{position:absolute;top:-4px;left:8px;font-size:14px;font-weight:700;color:var(--ouro-ink);white-space:nowrap}
 .tl-node{position:absolute;top:34px;width:42px;height:42px;margin-left:-21px;border-radius:50%;border:2px solid currentColor;cursor:pointer;display:flex;align-items:center;justify-content:center;font:700 15px var(--f-body);font-variant-numeric:tabular-nums;padding:0;transition:transform .2s,box-shadow .2s}
 .tl-node:hover{transform:scale(1.08)}
-.tl-node[aria-pressed="true"]{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ouro);transform:scale(1.12)}
+.tl-node[aria-pressed="true"]{box-shadow:0 0 0 4px var(--band),0 0 0 7px var(--ouro);transform:scale(1.12)}
 .tl-lab{position:absolute;top:84px;transform:translateX(-50%);font-size:13px;line-height:1.25;color:var(--muted);text-align:center;width:84px}
-.tl-cap{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin:0 4px}
-.detalhe{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:24px 28px;align-items:start}
+.tl-foot{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:center;margin:4px 14px 0;font-size:14px;color:var(--muted)}
+.detalhe{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:24px 32px;align-items:start}
 .cartela-box{display:flex;flex-direction:column;gap:8px}
-.cartela-box h3{font:600 16px var(--f-body);color:var(--ink)}
-.cartela{display:grid;grid-template-columns:repeat(15,10px);gap:3px 4px;background:var(--cartela);padding:12px;border-radius:3px;width:max-content}
+.cartela-box h3{font:700 16px var(--f-body);color:var(--ink)}
+.cartela{display:grid;grid-template-columns:repeat(15,10px);gap:3px 4px;background:var(--cartela);padding:12px;border-radius:4px;width:max-content;box-shadow:inset 0 0 0 1px rgba(3,47,13,.08)}
 .cartela i{display:block;width:10px;height:12px;border-radius:50%;background:var(--ovo);transition:background-color .35s}
 .cartela i.p{background:var(--ovo-p)}
 .cartela-box small{font-variant-numeric:tabular-nums}
-.leitura{display:flex;flex-direction:column;gap:10px;min-width:0}
-.leitura .valor{font:700 clamp(30px,3.6vw,42px)/1 var(--f-head);color:var(--mata);font-variant-numeric:tabular-nums}
-.leitura .valor small{font:400 16px var(--f-body);color:var(--muted)}
-.veredito{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;background:var(--band);padding:14px 18px;border-radius:6px;font-size:17px}
-.veredito b{font-family:var(--f-head);font-size:21px}
+.leitura{display:flex;flex-direction:column;gap:10px;min-width:0;padding-left:28px;border-left:1px solid var(--line)}
+.leitura .valor{font:700 clamp(34px,4vw,48px)/1 var(--f-head);color:var(--mata);font-variant-numeric:tabular-nums}
+.leitura .valor small{display:block;font:400 16px/1.4 var(--f-body);color:var(--muted);margin-top:6px}
+.veredito{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;background:var(--mata);color:var(--on-dark);padding:16px 22px;border-radius:10px;font-size:17px}
+.veredito b{font-family:var(--f-head);font-size:23px}
+.veredito a{color:#fff;margin-left:auto;font-weight:600}
+.veredito a:hover{color:var(--ouro-line)}
 .nota-demo{font-size:14px;color:var(--muted)}
 
-/* início: etapas, experimentos, atalhos */
-ol.etapas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;counter-reset:e}
-ol.etapas li{counter-increment:e;display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:2px solid var(--mata)}
-ol.etapas li::before{content:counter(e);font:700 30px/1 var(--f-head);color:var(--folha)}
-ol.etapas h3{font-size:19px}
+/* ===== início: etapas, experimentos, atalhos ===== */
+ol.etapas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;counter-reset:e;position:relative}
+ol.etapas::before{content:"";position:absolute;left:28px;right:28px;top:27px;height:2px;background:var(--line-strong)}
+ol.etapas li{counter-increment:e;display:flex;flex-direction:column;gap:8px;position:relative}
+ol.etapas li::before{content:counter(e);width:56px;height:56px;border-radius:50%;background:var(--mata);color:#fff;display:flex;align-items:center;justify-content:center;font:700 26px/1 var(--f-head);box-shadow:0 0 0 6px var(--band)}
+ol.etapas h3{font-size:19px;margin-top:6px}
 ol.etapas p{font-size:16px;color:var(--muted)}
-.exps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.exp{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:2px solid var(--mata)}
+.exp{display:flex;flex-direction:column;gap:12px}
 .exp .q{font-size:17px}
-.exp dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px}
-.exp dt{font-weight:600;color:var(--muted)}
+.exp dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px;padding-top:12px;border-top:1px solid var(--line)}
+.exp dt{font-weight:700;color:var(--muted)}
 .exp dd{margin:0}
-.exp .foot{margin-top:auto}
-.atalhos{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.atalhos li{border-bottom:1px solid var(--line)}
-.atalhos a{display:grid;grid-template-columns:minmax(160px,220px) 1fr auto;gap:6px 24px;align-items:baseline;padding:16px 4px;text-decoration:none;color:var(--ink)}
-.atalhos a:hover{background:var(--band)}
-.atalhos b{font:700 21px var(--f-head);color:var(--mata)}
-.atalhos span{color:var(--muted)}
-.atalhos em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--muted);font-size:15px}
+.minis{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.minis span.d{width:16px;height:16px;border-radius:50%;border:2px solid currentColor}
+.exp .foot{margin-top:auto;padding-top:4px}
+.atalhos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.atalhos a{display:flex;flex-direction:column;gap:8px;height:100%;padding:22px 24px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px;transition:border-color .15s,box-shadow .15s}
+.atalhos a:hover{border-color:var(--mata);box-shadow:var(--shadow)}
+.atalhos b{font:700 23px var(--f-head);color:var(--mata)}
+.atalhos span{color:var(--muted);font-size:16px}
+.atalhos em{font-style:normal;font-variant-numeric:tabular-nums;font-weight:700;color:var(--folha-ink);font-size:15px;margin-top:auto}
 
-/* compatibilidade */
-.barra{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--band);border-radius:6px}
-.verdict{border-left:6px solid var(--nd);padding:6px 0 6px 20px;display:flex;flex-direction:column;gap:8px}
+/* ===== compatibilidade ===== */
+.controles{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between;padding:18px 24px}
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:center;border-left:8px solid var(--nd);padding:24px 28px}
 .verdict.v1{border-left-color:var(--ok)} .verdict.v2{border-left-color:var(--ouro)} .verdict.v4{border-left-color:var(--ruim)} .verdict.v0{border-left-color:var(--nd)}
-.verdict .big{font:700 clamp(26px,3vw,34px)/1.15 var(--f-head)}
-.verdict.v1 .big{color:var(--ok)} .verdict.v2 .big{color:#6e5000} .verdict.v4 .big{color:var(--ruim)} .verdict.v0 .big{color:var(--nd)}
-.verdict p{max-width:78ch}
+.verdict .ic{grid-row:span 4;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 30px var(--f-head)}
+.verdict.v1 .ic{background:var(--ok-bg);color:var(--ok)} .verdict.v2 .ic{background:var(--ouro-soft);color:var(--ouro-ink)} .verdict.v4 .ic{background:var(--ruim-bg);color:var(--ruim)} .verdict.v0 .ic{background:var(--nd-bg);color:var(--nd)}
+.verdict .big{font:700 clamp(26px,3vw,36px)/1.1 var(--f-head);color:var(--mata)}
+.verdict p{max-width:80ch}
+.tabpanel{display:flex;flex-direction:column;gap:24px}
 ul.conds{list-style:none;margin:0;padding:0}
-ul.conds li{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:6px 24px;padding:16px 0;border-top:1px solid var(--line)}
-ul.conds li:last-child{border-bottom:1px solid var(--line)}
-ul.conds b{font:700 19px var(--f-head);color:var(--mata)}
+ul.conds li{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:6px 24px;padding:18px 0;border-top:1px solid var(--line)}
+ul.conds li:first-child{border-top:0;padding-top:0}
+ul.conds b{font:700 20px var(--f-head);color:var(--mata)}
 ul.conds small{display:block}
 ul.conds .why{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 ul.conds .ctx{font-size:15px;color:var(--muted)}
-.exp-head{display:flex;flex-direction:column;gap:4px;max-width:78ch}
-.exp-head small{font-size:15px}
+.exp-head{display:flex;flex-direction:column;gap:6px;max-width:80ch}
+.exp-head .row{gap:8px}
 
-/* tabelas */
-.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+/* ===== tabelas ===== */
+.scroll{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
 table{border-collapse:collapse;width:100%;font-size:16px}
-th,td{padding:10px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
-thead th{border-top:0;font:600 14px/1.3 var(--f-body);color:var(--ink);background:var(--band);vertical-align:bottom;border-bottom:2px solid var(--mata)}
-thead th small{font-weight:400}
-thead tr.grp th{background:var(--paper);border-bottom:1px solid var(--line);text-align:center;font-size:13px;color:var(--muted);padding-block:6px}
+th,td{padding:11px 14px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+thead th{border-top:0;font:700 14px/1.3 var(--f-body);color:var(--on-dark);background:var(--mata);vertical-align:bottom}
+thead th small{font-weight:400;color:var(--on-dark-2)}
+thead tr.grp th{background:var(--mata-3);text-align:center;font-size:13px;padding-block:7px;border-left:1px solid var(--mata)}
 th small,td small{display:block;font-weight:400}
-tbody tr:nth-child(even){background:#fafbf8}
-tbody tr.sub th{background:var(--band);font:700 16px var(--f-head);color:var(--mata)}
-table.matrix tbody th{font-weight:600;min-width:150px;position:sticky;left:0;background:var(--paper);z-index:1}
-table.matrix tbody tr:nth-child(even) th{background:#fafbf8}
+tbody tr:nth-child(even){background:#f8faf5}
+tbody tr.sub th{background:var(--band-2);font:700 17px var(--f-head);color:var(--mata)}
+tbody th{font-weight:700}
+table.matrix tbody th{min-width:150px;position:sticky;left:0;background:var(--paper);z-index:1;font-weight:600}
+table.matrix tbody tr:nth-child(even) th{background:#f8faf5}
 table.matrix thead th:first-child{position:sticky;left:0;z-index:2}
 table.matrix td{min-width:108px;padding:6px}
-.cel{display:flex;flex-direction:column;align-items:flex-start;width:100%;border:1px solid transparent;border-radius:4px;padding:6px 9px;cursor:pointer;text-align:left}
+.cel{display:flex;flex-direction:column;align-items:flex-start;width:100%;border:1px solid transparent;border-radius:6px;padding:6px 10px;cursor:pointer;text-align:left}
 .cel:hover{border-color:currentColor}
 .cel b{font:700 17px var(--f-body);font-variant-numeric:tabular-nums}
 .cel small{font-size:13px;color:inherit;font-variant-numeric:tabular-nums;white-space:nowrap}
 .cel.s-nd{border:1px dashed var(--nd)}
-.na{color:var(--line-strong);padding:6px 9px;display:inline-block}
+.na{color:var(--line-strong);padding:6px 10px;display:inline-block}
 table.list tbody tr{cursor:pointer}
-table.list tbody tr:hover{background:var(--ouro-soft)}
+table.list tbody tr:hover,table.list tbody tr:focus-visible{background:var(--ouro-soft)}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .empty{padding:28px;text-align:center;color:var(--muted)}
-td.mark{text-align:center}
-.dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--folha)}
+.gantt td.g{padding:8px 6px}
+.gantt td.g span{display:block;height:20px;border-radius:4px}
+.gantt td.g.on span{background:var(--folha)}
+.gantt td.g.off span{background:var(--band)}
 
-/* estimativas com intervalo */
-.fp{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:6px;padding:14px 18px}
+/* ===== estimativas com intervalo ===== */
+.fp{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:10px;padding:16px 20px;background:var(--paper)}
 .fp-row{display:grid;grid-template-columns:minmax(140px,220px) minmax(0,1fr) 150px;gap:14px;align-items:center;min-height:34px}
 .fp-l{font-size:15px;line-height:1.3}
 .fp-l small{display:block;font-size:13px}
 .fp-t{position:relative;height:24px}
-.fp-zone{position:absolute;top:0;bottom:0;background:var(--ok-bg);border-radius:2px}
+.fp-zone{position:absolute;top:0;bottom:0;background:var(--ok-bg);border-radius:3px}
 .fp-zero{position:absolute;top:0;bottom:0;width:1px;background:var(--line-strong)}
 .fp-lim{position:absolute;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--ouro)}
 .fp-m{position:absolute;inset:0}
@@ -212,95 +241,130 @@ td.mark{text-align:center}
 .fp-axis{position:relative;height:18px;border-top:1px solid var(--line-strong)}
 .fp-axis span{position:absolute;top:2px;transform:translateX(-50%);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 
-/* métodos */
-.metodos{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-details.met{border-bottom:1px solid var(--line)}
-details.met > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:86px 1fr auto;gap:4px 20px;align-items:baseline;padding:18px 4px}
+/* ===== métodos ===== */
+.metodos{display:flex;flex-direction:column;gap:14px}
+details.met{background:var(--paper);border:1px solid var(--line);border-radius:12px;transition:box-shadow .15s,border-color .15s}
+details.met[open]{box-shadow:var(--shadow);border-color:var(--line-strong)}
+details.met > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:6px 20px;align-items:center;padding:20px 24px;border-radius:12px}
 details.met > summary::-webkit-details-marker{display:none}
 details.met > summary:hover{background:var(--band)}
-details.met .cod{font:700 16px var(--f-body);color:var(--folha-ink);font-variant-numeric:tabular-nums}
+details.met .cod{font:700 14px var(--f-body);color:#fff;background:var(--mata);padding:4px 10px;border-radius:999px;font-variant-numeric:tabular-nums;white-space:nowrap}
 details.met .tit{font:700 21px/1.25 var(--f-head);color:var(--mata)}
 details.met .tit small{display:block;font:400 15px var(--f-body);color:var(--muted);margin-top:3px}
-details.met .seta{font-size:15px;color:var(--muted);white-space:nowrap}
-details.met[open] .seta .abrir{display:none}
-details.met:not([open]) .seta .fechar{display:none}
-.met-body{display:grid;grid-template-columns:86px minmax(0,1fr);gap:0 20px;padding:0 4px 24px}
-.met-body > div{grid-column:2;display:flex;flex-direction:column;gap:14px;max-width:80ch}
-.met-body ol,.met-body ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
-dl.kv{margin:0;display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:8px 18px}
-dl.kv dt{font-weight:600}
+details.met .seta{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--mata);display:flex;align-items:center;justify-content:center;color:var(--mata);font-size:20px;line-height:1;transition:transform .2s}
+details.met[open] .seta{transform:rotate(45deg)}
+.met-body{padding:4px 24px 26px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px 36px;border-top:1px solid var(--line);margin-top:0}
+.met-body .col{display:flex;flex-direction:column;gap:12px;padding-top:20px;min-width:0}
+.met-body ol,.met-body ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+p.sub-h{font:700 19px var(--f-head);color:var(--mata)}
+dl.kv{margin:0;display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:10px 18px}
+dl.kv dt{font-weight:700}
 dl.kv dd{margin:0}
-.note{border-left:3px solid var(--ouro);padding:2px 0 2px 14px;font-size:16px}
+.note{border-left:4px solid var(--ouro);background:var(--ouro-soft);padding:12px 16px;border-radius:0 8px 8px 0;font-size:16px}
 
-/* literatura */
-.bars{display:flex;flex-direction:column;gap:8px;max-width:760px}
-.bar-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:14px;align-items:center}
+/* ===== literatura ===== */
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:grid;grid-template-columns:210px minmax(0,1fr);gap:14px;align-items:center}
 .bar-row span{font-size:15px}
 .bar-t{display:flex;align-items:center;gap:10px}
-.bar-f{height:18px;background:var(--folha);border-radius:0 4px 4px 0;min-width:3px}
-.bar-t b{font-variant-numeric:tabular-nums;font-size:15px}
+.bar-f{height:22px;background:var(--folha);border-radius:0 4px 4px 0;min-width:4px}
+.bar-t b{font-variant-numeric:tabular-nums;font-size:16px}
+.destaque{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.destaque b{font:700 44px/1 var(--f-head);color:var(--mata);font-variant-numeric:tabular-nums}
+.destaque span{color:var(--muted)}
 ul.bib{list-style:none;margin:0;padding:0}
-ul.bib li{padding:14px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
-ul.bib .cit{max-width:86ch}
-.tag{display:inline-block;font-size:13px;font-weight:600;padding:1px 8px;border-radius:999px;color:var(--muted);background:var(--band)}
+ul.bib li{padding:16px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;content-visibility:auto;contain-intrinsic-size:auto 110px}
+ul.bib li:first-child{border-top:0;padding-top:0}
+ul.bib .cit{max-width:88ch}
 
-/* ferramentas */
-.calcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:36px 32px}
-.calc{display:flex;flex-direction:column;gap:12px;padding-top:14px;border-top:2px solid var(--mata);min-width:0}
-.calc .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
-.calc output{display:block;background:var(--band);padding:12px 14px;font-size:16px;border-radius:6px}
-.calc output b{font:700 22px var(--f-head);font-variant-numeric:tabular-nums}
-.calc textarea{min-height:130px;font:14px/1.5 Consolas,'Courier New',monospace}
-.formula{font-size:16px;font-style:italic;color:var(--mata)}
-pre.code{margin:0;font:13px/1.5 Consolas,'Courier New',monospace;background:var(--band);padding:14px 16px;overflow-x:auto;border-radius:6px}
+/* ===== ferramentas ===== */
+.calcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+.calc{display:flex;flex-direction:column;gap:14px}
+.calc .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.calc output{display:block;background:var(--band);padding:14px 16px;font-size:16px;border-radius:8px;margin-top:auto}
+.calc output b{font:700 24px var(--f-head);font-variant-numeric:tabular-nums}
+.calc textarea{min-height:140px;font:14px/1.5 Consolas,'Courier New',monospace}
+.formula{font-size:17px;font-style:italic;color:var(--mata);background:var(--folha-bg);padding:8px 14px;border-radius:8px}
+pre.code{margin:0;font:13px/1.5 Consolas,'Courier New',monospace;background:var(--mata);color:#e6efd8;padding:18px 20px;overflow-x:auto;border-radius:10px}
 
-/* projeto */
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px 48px}
-.prose{display:flex;flex-direction:column;gap:12px;max-width:74ch}
-.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
-.resumo{font-size:18px;line-height:1.65;max-width:76ch}
+/* ===== projeto ===== */
+.resumo{font-size:18px;line-height:1.7;border-left:4px solid var(--ouro);padding-left:22px}
+.hip{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.hip li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.hip b{font:700 15px var(--f-body);color:#fff;background:var(--folha-ink);border-radius:999px;padding:3px 11px}
+ol.obj{margin:0;padding:0;list-style:none;counter-reset:o;display:flex;flex-direction:column;gap:12px}
+ol.obj li{counter-increment:o;display:grid;grid-template-columns:32px 1fr;gap:12px}
+ol.obj li::before{content:counter(o);width:32px;height:32px;border-radius:50%;background:var(--folha-bg);color:var(--folha-ink);display:flex;align-items:center;justify-content:center;font-weight:700}
+.sistema{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.sistema div{display:flex;flex-direction:column;gap:6px}
+.sistema dt{font-size:14px;font-weight:700;color:var(--folha-ink)}
+.sistema dd{margin:0;font:700 22px/1.2 var(--f-head);color:var(--mata)}
+.sistema dd.desc{font:400 15px/1.5 var(--f-body);color:var(--muted)}
+.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.cite{font-size:17px}
+h2.h-s{font-size:20px}
 
-/* diálogo */
-dialog{border:0;border-top:5px solid var(--mata);border-radius:6px;background:var(--paper);color:var(--ink);padding:0;width:min(780px,calc(100vw - 32px));max-height:min(88vh,920px);overscroll-behavior:contain;box-shadow:0 20px 60px rgba(3,47,13,.25)}
-dialog::backdrop{background:rgba(3,22,8,.55)}
-.dlg-in{padding:24px 26px;display:flex;flex-direction:column;gap:14px}
+/* ===== diálogo ===== */
+dialog{border:0;border-top:6px solid var(--mata);border-radius:12px;background:var(--paper);color:var(--ink);padding:0;width:min(800px,calc(100vw - 32px));max-height:min(88vh,920px);overscroll-behavior:contain;box-shadow:0 24px 64px rgba(3,47,13,.3)}
+dialog::backdrop{background:rgba(3,22,8,.6)}
+.dlg-in{padding:26px 28px;display:flex;flex-direction:column;gap:16px}
 .dlg-in ol,.dlg-in ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
-.dlg-in textarea{width:100%;min-height:180px;font:13px Consolas,'Courier New',monospace;border:1px solid var(--line-strong);background:var(--band);padding:10px}
+.dlg-in textarea{width:100%;min-height:180px;font:13px Consolas,'Courier New',monospace;border:1px solid var(--line-strong);background:var(--band);padding:10px;border-radius:8px}
 .dlg-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
-.tag-h{font-size:13px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--ouro-soft);color:var(--ouro-ink);white-space:nowrap}
+.tag-h{font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--ouro-soft);color:var(--ouro-ink);white-space:nowrap}
 
-footer{border-top:2px solid var(--mata);font-size:15px;color:var(--muted)}
-footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify-content:space-between}
+/* ===== rodapé ===== */
+footer{background:var(--mata);color:var(--on-dark-2);font-size:15px}
+footer .cols{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px 40px;padding-block:44px 32px}
+footer h2{font-size:19px;color:#fff}
+footer p{margin-top:8px}
+footer a{color:#fff}
+footer a:hover{color:var(--ouro-line)}
+footer .base{border-top:1px solid rgba(255,255,255,.15);padding-block:16px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
 
-@media (max-width:980px){
-  ol.etapas{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .exps{grid-template-columns:1fr}
+@media (max-width:1000px){
+  ol.etapas{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}
+  ol.etapas::before{display:none}
+  .grid3,.atalhos{grid-template-columns:repeat(2,minmax(0,1fr))}
   .detalhe{grid-template-columns:auto auto}
-  .leitura{grid-column:1 / -1}
+  .leitura{grid-column:1 / -1;padding-left:0;border-left:0;padding-top:20px;border-top:1px solid var(--line)}
+  .sistema{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .met-body{grid-template-columns:1fr;gap:0}
+  footer .cols{grid-template-columns:1fr 1fr}
 }
 @media (max-width:760px){
   body{font-size:16px}
-  header.top .wrap{flex-direction:column;align-items:stretch;gap:0;min-height:0;padding-top:8px}
-  .brand img{height:36px}
-  nav.main{margin-left:-8px}
-  nav.main a{padding:12px 10px 9px;font-size:15px}
-  ol.etapas{grid-template-columns:1fr}
+  header.top{position:static}
+  html{scroll-padding-top:16px}
+  .topbar{flex-direction:column;align-items:stretch;gap:0;min-height:0;padding-top:8px}
+  .brand img{height:34px}
+  nav.main{margin-left:-6px}
+  nav.main a{padding:6px 11px;margin-block:8px;font-size:15px}
+  .page-head .wrap{padding-block:36px 96px}
+  .hero-head .wrap{padding-block:40px 96px}
+  .band{padding-block:36px}
+  .panel{padding:20px;border-radius:10px}
+  .demo{padding:20px}
+  .grid2,.grid3,.atalhos,ol.etapas,.sistema,footer .cols{grid-template-columns:1fr}
   .tl{height:96px;margin:0 18px}
   .tl-node{width:30px;height:30px;margin-left:-15px;font-size:13px;top:40px}
   .tl-lab{display:none}
-  .tl-cap{margin:0}
   .detalhe{grid-template-columns:1fr 1fr;gap:18px 14px}
   .cartela{grid-template-columns:repeat(15,6px);gap:2px 3px;padding:8px}
   .cartela i{width:6px;height:8px}
+  .veredito a{margin-left:0}
   ul.conds li{grid-template-columns:1fr}
   .fp-row{grid-template-columns:1fr;gap:2px;padding-block:4px}
   .fp-row.fp-axisrow > span:first-child{display:none}
-  .atalhos a{grid-template-columns:1fr}
   .bar-row{grid-template-columns:1fr;gap:2px}
-  details.met > summary{grid-template-columns:1fr;gap:2px}
-  details.met .seta{display:none}
-  .met-body{grid-template-columns:1fr}
-  .met-body > div{grid-column:1}
+  details.met > summary{grid-template-columns:1fr auto;padding:16px 18px}
+  details.met .cod{grid-column:1;justify-self:start}
+  details.met .tit{grid-column:1}
+  details.met .seta{grid-row:1 / span 2;grid-column:2}
+  .met-body{padding:0 18px 20px}
+  .verdict{grid-template-columns:1fr}
+  .verdict .ic{grid-row:auto;width:48px;height:48px;font-size:24px}
+  .tabs{border-radius:14px;width:100%}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
@@ -310,39 +374,42 @@ footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify
 <body>
 <a class="skip" href="#conteudo">Ir para o conteúdo</a>
 
-<div class="aviso"><div class="wrap"><b>Protótipo 0.5.</b> Os resultados são hipotéticos e mostram como o modelo funciona; os experimentos ainda serão conduzidos. Métodos, estudos e referências seguem o projeto de pesquisa.</div></div>
+<header class="top">
+  <div class="aviso" role="note"><div class="wrap"><b>Protótipo 0.6.</b> Os resultados são hipotéticos e mostram como o modelo funciona; os experimentos ainda serão conduzidos. Métodos, estudos e referências seguem o projeto de pesquisa.</div></div>
+  <div class="wrap topbar">
+    <a class="brand" href="#inicio"><img src="logo.png" alt="MIPintegra, página inicial" width="900" height="296" fetchpriority="high"></a>
+    <nav class="main" aria-label="Seções">
+      <a href="#inicio">Início</a><a href="#compatibilidade">Compatibilidade</a><a href="#dados">Dados</a><a href="#metodos">Métodos</a><a href="#literatura">Literatura</a><a href="#ferramentas">Ferramentas</a><a href="#projeto">Projeto</a>
+    </nav>
+  </div>
+</header>
 
-<header class="top"><div class="wrap">
-  <a class="brand" href="#inicio"><img src="logo.png" alt="MIPintegra, página inicial" width="900" height="296"></a>
-  <nav class="main" aria-label="Seções">
-    <a href="#inicio">Início</a><a href="#compatibilidade">Compatibilidade</a><a href="#dados">Dados</a><a href="#metodos">Métodos</a><a href="#literatura">Literatura</a><a href="#ferramentas">Ferramentas</a><a href="#projeto">Projeto</a>
-  </nav>
-</div></header>
-
-<main class="wrap" id="conteudo">
+<main id="conteudo" tabindex="-1">
 
 <!-- ============ INÍCIO ============ -->
 <section class="view" data-view="inicio">
-  <div class="hero">
+  <div class="page-head hero-head"><div class="wrap">
     <h1>Modelo de compatibilidade entre controle químico e biológico</h1>
+  </div></div>
 
-    <div class="demo" aria-label="Demonstração do modelo">
+  <div class="band lift"><div class="wrap">
+    <div class="panel demo" aria-label="Demonstração do modelo">
       <div class="demo-head">
         <h2>Quando pulverizar clorantraniliprole em relação à liberação de <i>Trichogramma pretiosum</i>?</h2>
         <div class="lim-wrap"><span id="lim-h">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-h"></div></div>
       </div>
-      <div>
+      <div class="tl-box">
         <div class="tl" id="tl"></div>
-        <div class="tl-cap"><span>antes da liberação</span><span>dias em relação à liberação</span><span>depois</span></div>
+        <div class="tl-foot"><span>Dias em relação à liberação; escolha um momento</span><span class="legend"><span><span class="chip s-pres">Preservado</span></span><span><span class="chip s-insuf">Evidência insuficiente</span></span><span><span class="chip s-prej">Efeito prejudicial</span></span></span></div>
       </div>
       <div class="detalhe" id="detalhe"></div>
       <div class="veredito" id="veredito" aria-live="polite"></div>
       <p class="nota-demo">Dados hipotéticos de semicampo (milho em casa de vegetação, 10 plantas por momento). A cartela ilustra 150 ovos de <i>Ephestia kuehniella</i>: os escuros estão parasitados.</p>
     </div>
-  </div>
+  </div></div>
 
-  <div class="block">
-    <h2>Como o modelo chega à classificação</h2>
+  <div class="band alt"><div class="wrap block">
+    <div class="block-head"><h2>Como o modelo chega à classificação</h2><p>Cinco etapas, da evidência experimental à categoria de compatibilidade.</p></div>
     <ol class="etapas">
       <li><h3>Evidências</h3><p>Seletividade fisiológica, com efeitos letais, subletais, transgeracionais e persistência, e ecológica, com a sequência e os intervalos entre pulverização e liberação.</p></li>
       <li><h3>Padronização</h3><p>Cada indicador vira redução em relação à testemunha, com intervalo de confiança de 95%.</p></li>
@@ -350,169 +417,176 @@ footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify
       <li><h3>Classificação</h3><p>Compatível, compatível sob condições específicas, incompatível nas condições avaliadas ou evidência insuficiente.</p></li>
       <li><h3>Avaliação</h3><p>Sensibilidade aos limites de 10%, 20% e 30%, consistência entre laboratório e semicampo e comparação com a IOBC/WPRS.</p></li>
     </ol>
-  </div>
+  </div></div>
 
-  <div class="block">
-    <h2>Três experimentos alimentam o modelo</h2>
-    <div class="exps" id="exps"></div>
-  </div>
+  <div class="band"><div class="wrap block">
+    <div class="block-head"><h2>Três experimentos alimentam o modelo</h2><p>Dois de seletividade fisiológica, em laboratório, e um de seletividade ecológica, em semicampo.</p></div>
+    <div class="grid3" id="exps"></div>
+  </div></div>
 
-  <div class="block">
-    <h2>No site</h2>
+  <div class="band alt"><div class="wrap block">
+    <div class="block-head"><h2>No site</h2></div>
     <ul class="atalhos" id="atalhos"></ul>
-  </div>
+  </div></div>
 </section>
 
 <!-- ============ COMPATIBILIDADE ============ -->
 <section class="view" data-view="compatibilidade" hidden>
-  <div class="intro">
-    <h2>Clorantraniliprole e <i>Trichogramma pretiosum</i></h2>
+  <div class="page-head"><div class="wrap">
+    <h1>Clorantraniliprole e <i>Trichogramma pretiosum</i></h1>
     <p>Milho, <i>Spodoptera frugiperda</i> e clorantraniliprole 200 g L⁻¹ SC na dose de bula (125 mL p.c. ha⁻¹). Os valores são hipotéticos, no formato que os experimentos vão gerar.</p>
-  </div>
-  <div class="barra">
-    <div class="lim-wrap"><span id="lim-c">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-c"></div></div>
-    <div class="legend"><span><span class="chip s-ok">Preservado</span>intervalo abaixo do limite</span><span><span class="chip s-inc">Inconclusivo</span>cruza o limite</span><span><span class="chip s-ruim">Prejudicado</span>acima do limite</span><span><span class="chip s-nd">Não avaliado</span></span></div>
-  </div>
-  <div id="verdict"></div>
-  <div class="tabs" id="tabs" role="group" aria-label="Partes da avaliação">
-    <button data-v="condicoes">Condições de manejo</button><button data-v="matrizes">Matrizes</button><button data-v="incerteza">Magnitude e incerteza</button><button data-v="sensibilidade">Sensibilidade</button><button data-v="iobc">Comparação com a IOBC</button><button data-v="regras">Regras</button>
-  </div>
-  <div id="tab-out" class="stack" style="gap:24px"></div>
+  </div></div>
+  <div class="band lift"><div class="wrap stack" style="gap:24px">
+    <div class="panel controles">
+      <div class="lim-wrap"><span id="lim-c">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-c"></div></div>
+      <div class="legend"><span><span class="chip s-ok">Preservado</span>intervalo abaixo do limite</span><span><span class="chip s-inc">Inconclusivo</span>cruza o limite</span><span><span class="chip s-ruim">Prejudicado</span>acima do limite</span><span><span class="chip s-nd">Não avaliado</span></span></div>
+    </div>
+    <div id="verdict"></div>
+    <div class="tabs" id="tabs" role="group" aria-label="Partes da avaliação">
+      <button data-v="condicoes">Condições de manejo</button><button data-v="matrizes">Matrizes</button><button data-v="incerteza">Magnitude e incerteza</button><button data-v="sensibilidade">Sensibilidade</button><button data-v="iobc">Comparação com a IOBC</button><button data-v="regras">Regras</button>
+    </div>
+    <div id="tab-out" class="tabpanel"></div>
+  </div></div>
 </section>
 
 <!-- ============ DADOS ============ -->
 <section class="view" data-view="dados" hidden>
-  <div class="intro">
-    <h2>Base de resultados</h2>
+  <div class="page-head"><div class="wrap">
+    <h1>Base de resultados</h1>
     <p>Uma linha por experimento, condição, geração e indicador, com o intervalo, o modelo estatístico e a classificação. Clique em uma linha para abrir a ficha.</p>
-  </div>
-  <div class="filters">
-    <div class="field"><label for="d-q">Busca</label><input id="d-q" type="search" placeholder="Condição, indicador ou geração…" autocomplete="off"></div>
-    <div class="field"><label for="d-exp">Experimento</label><select id="d-exp"></select></div>
-    <div class="field"><label for="d-grp">Grupo de indicador</label><select id="d-grp"><option value="">Todos</option><option value="p">Prioritário</option><option value="c">Complementar</option></select></div>
-    <div class="field"><label for="d-cls">Classificação</label><select id="d-cls"><option value="">Todas</option><option value="ok">Preservado</option><option value="inc">Inconclusivo</option><option value="ruim">Prejudicado</option><option value="nd">Não avaliado</option></select></div>
-  </div>
-  <div class="row" style="justify-content:space-between">
-    <div class="row"><div class="lim-wrap"><span id="lim-d">Limite</span><div class="lim" data-lim role="group" aria-labelledby="lim-d"></div></div><span class="muted num" id="d-count" style="font-size:15px" aria-live="polite"></span></div>
-    <button class="btn" id="copiar-csv">Copiar CSV</button>
-  </div>
-  <div id="d-out"></div>
-  <div class="block">
-    <h3>Três bases, um fluxo</h3>
-    <div class="scroll"><table>
-      <thead><tr><th>Base</th><th>Conteúdo</th><th>Onde aparece</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Dados brutos</th><td>Observações de cada experimento, tratamento e repetição.</td><td>Planilhas versionadas, para análise e reanálise.</td></tr>
-        <tr><th scope="row">Resultados estatísticos</th><td>Estimativas dos efeitos, reduções percentuais e intervalos de confiança.</td><td>Esta tabela.</td></tr>
-        <tr><th scope="row">Classificação</th><td>Resultado das regras de decisão para cada indicador e condição de manejo.</td><td>Coluna de classificação e página de compatibilidade.</td></tr>
-      </tbody>
-    </table></div>
-  </div>
+  </div></div>
+  <div class="band lift"><div class="wrap stack" style="gap:24px">
+    <div class="panel stack">
+      <div class="filters">
+        <div class="field"><label for="d-q">Busca</label><input id="d-q" name="busca" type="search" placeholder="Condição, indicador ou geração…" autocomplete="off"></div>
+        <div class="field"><label for="d-exp">Experimento</label><select id="d-exp" name="experimento"></select></div>
+        <div class="field"><label for="d-grp">Grupo de indicador</label><select id="d-grp" name="grupo"><option value="">Todos</option><option value="p">Prioritário</option><option value="c">Complementar</option></select></div>
+        <div class="field"><label for="d-cls">Classificação</label><select id="d-cls" name="classificacao"><option value="">Todas</option><option value="ok">Preservado</option><option value="inc">Inconclusivo</option><option value="ruim">Prejudicado</option><option value="nd">Não avaliado</option></select></div>
+      </div>
+      <div class="row" style="justify-content:space-between">
+        <div class="row"><div class="lim-wrap"><span id="lim-d">Limite</span><div class="lim" data-lim role="group" aria-labelledby="lim-d"></div></div><span class="muted num" id="d-count" style="font-size:15px" aria-live="polite"></span></div>
+        <button class="btn" id="copiar-csv">Copiar CSV</button>
+      </div>
+    </div>
+    <div id="d-out"></div>
+  </div></div>
+  <div class="band alt"><div class="wrap block">
+    <div class="block-head"><h2>Três bases, um fluxo</h2><p>Os dados passam por três estruturas até virar classificação.</p></div>
+    <div class="grid3">
+      <div class="panel flat stack" style="gap:8px"><span class="tag">1</span><h3>Dados brutos</h3><p class="muted">Observações de cada experimento, tratamento e repetição, em planilhas versionadas para análise e reanálise.</p></div>
+      <div class="panel flat stack" style="gap:8px"><span class="tag">2</span><h3>Resultados estatísticos</h3><p class="muted">Estimativas dos efeitos, reduções percentuais e intervalos de confiança: a tabela acima.</p></div>
+      <div class="panel flat stack" style="gap:8px"><span class="tag">3</span><h3>Classificação</h3><p class="muted">Resultado das regras de decisão para cada indicador e condição de manejo, mostrado na página de compatibilidade.</p></div>
+    </div>
+  </div></div>
 </section>
 
 <!-- ============ MÉTODOS ============ -->
 <section class="view" data-view="metodos" hidden>
-  <div class="intro">
-    <h2>Métodos</h2>
+  <div class="page-head"><div class="wrap">
+    <h1>Métodos</h1>
     <p>Os protocolos do projeto em ordem de execução, da criação dos insetos ao modelo integrado. Abra cada um para ver procedimento, delineamento, variáveis, análise estatística e referências.</p>
-  </div>
-  <div class="row"><button class="btn" id="abrir-todos">Abrir todos</button><button class="btn" id="fechar-todos">Fechar todos</button></div>
-  <div class="metodos" id="met-out"></div>
+  </div></div>
+  <div class="band alt lift"><div class="wrap stack" style="gap:20px">
+    <div class="row"><button class="btn" id="abrir-todos">Abrir todos</button><button class="btn" id="fechar-todos">Fechar todos</button></div>
+    <div class="metodos" id="met-out"></div>
+  </div></div>
 </section>
 
 <!-- ============ LITERATURA ============ -->
 <section class="view" data-view="literatura" hidden>
-  <div class="intro">
-    <h2>Literatura</h2>
+  <div class="page-head"><div class="wrap">
+    <h1>Literatura</h1>
     <p>Os estudos experimentais que o projeto usa como panorama e a lista completa de referências, com DOI.</p>
-  </div>
-  <div class="block">
-    <h3>Onde os estudos foram feitos</h3>
-    <div class="bars" id="bars" role="img"></div>
-    <p class="muted" id="bars-nota" style="font-size:15px;max-width:78ch"></p>
-  </div>
-  <div class="tabs" id="tabs-lit" role="group" aria-label="Literatura">
-    <button data-v="estudos">Estudos de seletividade</button><button data-v="referencias">Referências do projeto</button>
-  </div>
-  <div id="lit-estudos" class="stack">
-    <div class="filters">
-      <div class="field"><label for="e-q">Espécie ou produto</label><input id="e-q" type="search" placeholder="Ex.: clorantraniliprole, Doru…" autocomplete="off"></div>
-      <div class="field"><label for="e-grp">Inimigo natural</label><select id="e-grp"><option value="">Todos</option><option>Predador</option><option>Parasitoide</option><option>Predadores e parasitoides</option></select></div>
-      <div class="field"><label for="e-nv">Condição do ensaio</label><select id="e-nv"><option value="">Todas</option><option value="laborat">Laboratório</option><option value="semicampo">Semicampo</option><option value="campo">Campo</option></select></div>
-      <div class="field"><label for="e-sel">Seletividade</label><select id="e-sel"><option value="">Todas</option><option value="fisiol">Fisiológica</option><option value="ecol">Ecológica</option><option value="transg">Transgeracional</option></select></div>
+  </div></div>
+  <div class="band lift"><div class="wrap stack" style="gap:24px">
+    <div class="panel grid2" style="align-items:center">
+      <div class="stack" style="gap:14px"><h2>Onde os estudos foram feitos</h2><div class="bars" id="bars" role="img"></div></div>
+      <div class="grid2" id="destaques"></div>
     </div>
-    <p class="muted num" id="e-count" style="font-size:15px" aria-live="polite"></p>
-    <div id="e-out"></div>
-  </div>
-  <div id="lit-refs" class="stack" hidden>
-    <div class="filters">
-      <div class="field"><label for="b-q">Autor, título ou periódico</label><input id="b-q" type="search" placeholder="Ex.: Hassan, sublethal…" autocomplete="off"></div>
-      <div class="field"><label for="b-tema">Tema</label><select id="b-tema"></select></div>
+    <div class="tabs" id="tabs-lit" role="group" aria-label="Literatura">
+      <button data-v="estudos">Estudos de seletividade</button><button data-v="referencias">Referências do projeto</button>
     </div>
-    <p class="muted num" id="b-count" style="font-size:15px" aria-live="polite"></p>
-    <ul class="bib" id="bib-list"></ul>
-  </div>
+    <div id="lit-estudos" class="stack">
+      <div class="panel filters">
+        <div class="field"><label for="e-q">Espécie ou produto</label><input id="e-q" name="estudo" type="search" placeholder="Ex.: clorantraniliprole, Doru…" autocomplete="off"></div>
+        <div class="field"><label for="e-grp">Inimigo natural</label><select id="e-grp" name="inimigo"><option value="">Todos</option><option>Predador</option><option>Parasitoide</option><option>Predadores e parasitoides</option></select></div>
+        <div class="field"><label for="e-nv">Condição do ensaio</label><select id="e-nv" name="condicao"><option value="">Todas</option><option value="laborat">Laboratório</option><option value="semicampo">Semicampo</option><option value="campo">Campo</option></select></div>
+        <div class="field"><label for="e-sel">Seletividade</label><select id="e-sel" name="seletividade"><option value="">Todas</option><option value="fisiol">Fisiológica</option><option value="ecol">Ecológica</option><option value="transg">Transgeracional</option></select></div>
+      </div>
+      <p class="muted num" id="e-count" style="font-size:15px" aria-live="polite"></p>
+      <div id="e-out"></div>
+    </div>
+    <div id="lit-refs" class="stack" hidden>
+      <div class="panel filters">
+        <div class="field"><label for="b-q">Autor, título ou periódico</label><input id="b-q" name="referencia" type="search" placeholder="Ex.: Hassan, sublethal…" autocomplete="off"></div>
+        <div class="field"><label for="b-tema">Tema</label><select id="b-tema" name="tema"></select></div>
+      </div>
+      <p class="muted num" id="b-count" style="font-size:15px" aria-live="polite"></p>
+      <div class="panel"><ul class="bib" id="bib-list"></ul></div>
+    </div>
+  </div></div>
 </section>
 
 <!-- ============ FERRAMENTAS ============ -->
 <section class="view" data-view="ferramentas" hidden>
-  <div class="intro">
-    <h2>Ferramentas</h2>
+  <div class="page-head"><div class="wrap">
+    <h1>Ferramentas</h1>
     <p>As mesmas contas e regras usadas na avaliação, para conferir um resultado ou testar outro limite.</p>
-  </div>
+  </div></div>
+  <div class="band alt lift"><div class="wrap">
   <div class="calcs">
-    <div class="calc" id="c-red">
-      <h3>Redução em relação à testemunha</h3>
+    <div class="panel calc" id="c-red">
+      <h2 style="font-size:22px">Redução em relação à testemunha</h2>
       <p class="formula">R = (1 − Xt ÷ Xc) × 100</p>
       <div class="inputs">
-        <div class="field"><label for="r-xc">Testemunha (Xc)</label><input id="r-xc" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
-        <div class="field"><label for="r-xt">Inseticida (Xt)</label><input id="r-xt" type="number" inputmode="decimal" min="0" step="any" value="65"></div>
-        <div class="field"><label for="r-nv">Ensaio</label><select id="r-nv"><option value="lab">Laboratório</option><option value="semi">Semicampo</option></select></div>
-        <div class="field"><label for="r-l">Limite (%)</label><input id="r-l" type="number" inputmode="numeric" min="1" max="99" value="20"></div>
+        <div class="field"><label for="r-xc">Testemunha (Xc)</label><input id="r-xc" name="xc" type="number" inputmode="decimal" min="0" step="any" value="100" autocomplete="off"></div>
+        <div class="field"><label for="r-xt">Inseticida (Xt)</label><input id="r-xt" name="xt" type="number" inputmode="decimal" min="0" step="any" value="65" autocomplete="off"></div>
+        <div class="field"><label for="r-nv">Ensaio</label><select id="r-nv" name="ensaio"><option value="lab">Laboratório</option><option value="semi">Semicampo</option></select></div>
+        <div class="field"><label for="r-l">Limite (%)</label><input id="r-l" name="limite" type="number" inputmode="numeric" min="1" max="99" value="20" autocomplete="off"></div>
       </div>
       <output id="r-out" aria-live="polite"></output>
       <small>Estimativa pontual. No modelo, a classificação usa o intervalo de confiança.</small>
     </div>
-    <div class="calc" id="c-abbott">
-      <h3>Mortalidade corrigida</h3>
+    <div class="panel calc" id="c-abbott">
+      <h2 style="font-size:22px">Mortalidade corrigida</h2>
       <p class="formula">Mc = (Mt − Mtest) ÷ (100 − Mtest) × 100</p>
       <div class="inputs">
-        <div class="field"><label for="a-mt">Mortos no tratamento</label><input id="a-mt" type="number" inputmode="numeric" min="0" value="14"></div>
-        <div class="field"><label for="a-nt">Total no tratamento</label><input id="a-nt" type="number" inputmode="numeric" min="1" value="30"></div>
-        <div class="field"><label for="a-mc">Mortos na testemunha</label><input id="a-mc" type="number" inputmode="numeric" min="0" value="1"></div>
-        <div class="field"><label for="a-nc">Total na testemunha</label><input id="a-nc" type="number" inputmode="numeric" min="1" value="30"></div>
-        <div class="field"><label for="a-nv">Ensaio</label><select id="a-nv"><option value="lab">Laboratório</option><option value="semi">Semicampo</option></select></div>
+        <div class="field"><label for="a-mt">Mortos no tratamento</label><input id="a-mt" name="mt" type="number" inputmode="numeric" min="0" value="14" autocomplete="off"></div>
+        <div class="field"><label for="a-nt">Total no tratamento</label><input id="a-nt" name="nt" type="number" inputmode="numeric" min="1" value="30" autocomplete="off"></div>
+        <div class="field"><label for="a-mc">Mortos na testemunha</label><input id="a-mc" name="mc" type="number" inputmode="numeric" min="0" value="1" autocomplete="off"></div>
+        <div class="field"><label for="a-nc">Total na testemunha</label><input id="a-nc" name="nc" type="number" inputmode="numeric" min="1" value="30" autocomplete="off"></div>
+        <div class="field"><label for="a-nv">Ensaio</label><select id="a-nv" name="ensaio-a"><option value="lab">Laboratório</option><option value="semi">Semicampo</option></select></div>
       </div>
       <output id="a-out" aria-live="polite"></output>
       <small>Abbott (1925), com as classes da IOBC/WPRS do item 5.6 do projeto.</small>
     </div>
-    <div class="calc" id="c-pef">
-      <h3>Parasitismo efetivo</h3>
+    <div class="panel calc" id="c-pef">
+      <h2 style="font-size:22px">Parasitismo efetivo</h2>
       <p class="formula">P efetivo = S × Ps</p>
       <div class="inputs">
-        <div class="field"><label for="p-sc">Sobrevivência na testemunha (%)</label><input id="p-sc" type="number" inputmode="decimal" min="0" max="100" value="100"></div>
-        <div class="field"><label for="p-pc">Ovos por sobrevivente, testemunha</label><input id="p-pc" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
-        <div class="field"><label for="p-st">Sobrevivência no inseticida (%)</label><input id="p-st" type="number" inputmode="decimal" min="0" max="100" value="50"></div>
-        <div class="field"><label for="p-pt">Ovos por sobrevivente, inseticida</label><input id="p-pt" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
+        <div class="field"><label for="p-sc">Sobrevivência na testemunha (%)</label><input id="p-sc" name="sc" type="number" inputmode="decimal" min="0" max="100" value="100" autocomplete="off"></div>
+        <div class="field"><label for="p-pc">Ovos por sobrevivente, testemunha</label><input id="p-pc" name="pc" type="number" inputmode="decimal" min="0" step="any" value="100" autocomplete="off"></div>
+        <div class="field"><label for="p-st">Sobrevivência no inseticida (%)</label><input id="p-st" name="st" type="number" inputmode="decimal" min="0" max="100" value="50" autocomplete="off"></div>
+        <div class="field"><label for="p-pt">Ovos por sobrevivente, inseticida</label><input id="p-pt" name="pt" type="number" inputmode="decimal" min="0" step="any" value="100" autocomplete="off"></div>
       </div>
       <output id="p-out" aria-live="polite"></output>
       <small>Parasitismo por fêmea inicialmente exposta: junta o efeito letal e o subletal em um indicador funcional.</small>
     </div>
-    <div class="calc" id="c-ic">
-      <h3>Classificação pelo intervalo de confiança</h3>
+    <div class="panel calc" id="c-ic">
+      <h2 style="font-size:22px">Classificação pelo intervalo de confiança</h2>
       <p class="formula">Preservado se o limite superior ≤ L; prejudicado se o inferior &gt; L; inconclusivo se cruza L.</p>
       <div class="inputs">
-        <div class="field"><label for="i-e">Redução estimada (%)</label><input id="i-e" type="number" inputmode="decimal" step="any" value="15"></div>
-        <div class="field"><label for="i-lo">Limite inferior do IC</label><input id="i-lo" type="number" inputmode="decimal" step="any" value="5"></div>
-        <div class="field"><label for="i-hi">Limite superior do IC</label><input id="i-hi" type="number" inputmode="decimal" step="any" value="30"></div>
-        <div class="field"><label for="i-l">Limite (%)</label><input id="i-l" type="number" inputmode="numeric" min="1" max="99" value="20"></div>
+        <div class="field"><label for="i-e">Redução estimada (%)</label><input id="i-e" name="estimativa" type="number" inputmode="decimal" step="any" value="15" autocomplete="off"></div>
+        <div class="field"><label for="i-lo">Limite inferior do IC</label><input id="i-lo" name="ic-inf" type="number" inputmode="decimal" step="any" value="5" autocomplete="off"></div>
+        <div class="field"><label for="i-hi">Limite superior do IC</label><input id="i-hi" name="ic-sup" type="number" inputmode="decimal" step="any" value="30" autocomplete="off"></div>
+        <div class="field"><label for="i-l">Limite (%)</label><input id="i-l" name="limite-ic" type="number" inputmode="numeric" min="1" max="99" value="20" autocomplete="off"></div>
       </div>
       <output id="i-out" aria-live="polite"></output>
       <small>Lógica de não inferioridade (Lakens, 2017; Van der Voet et al., 2019).</small>
     </div>
-    <div class="calc" id="c-pers">
-      <h3>Persistência da atividade prejudicial</h3>
-      <div class="field"><label for="s-txt">Redução do parasitismo por período, uma linha por período (dias: %)</label><textarea id="s-txt" spellcheck="false">0: 60
+    <div class="panel calc" id="c-pers">
+      <h2 style="font-size:22px">Persistência da atividade prejudicial</h2>
+      <div class="field"><label for="s-txt">Redução do parasitismo por período, uma linha por período (dias: %)</label><textarea id="s-txt" name="serie" spellcheck="false" autocomplete="off">0: 60
 3: 45
 7: 25
 10: 12
@@ -524,74 +598,74 @@ footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify
       <small>Duração: primeiro período com redução abaixo de 30%, mantida nos seguintes. Classes da IOBC/WPRS (item 5.6).</small>
     </div>
   </div>
+  </div></div>
 </section>
 
 <!-- ============ PROJETO ============ -->
 <section class="view" data-view="projeto" hidden>
-  <div class="intro">
-    <h2>Repensando a seletividade de inseticidas: desenvolvimento de um modelo de compatibilidade entre controle químico e biológico</h2>
-    <p>Projeto de pesquisa de 24 meses de Emile Dayara Rabelo Santana, apresentado ao concurso para Professor do Magistério Superior da UFRGS (Edital nº 09/2026), Faculdade de Agronomia, Departamento de Fitossanidade, subárea Entomologia Agrícola. O MIPintegra é a base de dados e a plataforma de consulta prevista no projeto.</p>
-  </div>
+  <div class="page-head"><div class="wrap">
+    <h1>Repensando a seletividade de inseticidas: desenvolvimento de um modelo de compatibilidade entre controle químico e biológico</h1>
+    <p>Projeto de pesquisa de 24 meses de Emile Dayara Rabelo Santana, apresentado ao concurso para Professor do Magistério Superior da UFRGS (Edital nº 09/2026), Faculdade de Agronomia, Departamento de Fitossanidade, subárea Entomologia Agrícola.</p>
+  </div></div>
 
-  <div class="block">
-    <h3>Resumo</h3>
-    <p class="resumo">A integração entre controle químico e biológico é um dos fundamentos do Manejo Integrado de Pragas, mas sua aplicação ainda é um desafio. Os estudos de seletividade avançaram, porém nem sempre permitem dizer em quais condições os métodos podem ser usados de forma compatível, porque os efeitos dos inseticidas sobre os inimigos naturais dependem dos parâmetros avaliados e das condições de exposição. O projeto desenvolve e avalia um modelo de classificação da compatibilidade que integra evidências de seletividade fisiológica e ecológica, usando como sistema experimental o milho, <i>Spodoptera frugiperda</i>, o parasitoide de ovos <i>Trichogramma pretiosum</i> e o clorantraniliprole. Em laboratório e semicampo serão avaliados efeitos letais e subletais, a persistência residual e a influência do momento da pulverização e dos intervalos entre aplicação e liberação. Os resultados alimentam o modelo e uma base de dados para futura disponibilização, com fundamentos para ampliar a abordagem a outros sistemas agrícolas.</p>
-  </div>
+  <div class="band lift"><div class="wrap">
+    <div class="panel stack" style="gap:16px">
+      <h2>Resumo</h2>
+      <p class="resumo">A integração entre controle químico e biológico é um dos fundamentos do Manejo Integrado de Pragas, mas sua aplicação ainda é um desafio. Os estudos de seletividade avançaram, porém nem sempre permitem dizer em quais condições os métodos podem ser usados de forma compatível, porque os efeitos dos inseticidas sobre os inimigos naturais dependem dos parâmetros avaliados e das condições de exposição. O projeto desenvolve e avalia um modelo de classificação da compatibilidade que integra evidências de seletividade fisiológica e ecológica, usando como sistema experimental o milho, <i>Spodoptera frugiperda</i>, o parasitoide de ovos <i>Trichogramma pretiosum</i> e o clorantraniliprole. Em laboratório e semicampo serão avaliados efeitos letais e subletais, a persistência residual e a influência do momento da pulverização e dos intervalos entre aplicação e liberação. Os resultados alimentam o modelo e a base de dados do MIPintegra, com fundamentos para ampliar a abordagem a outros sistemas agrícolas.</p>
+    </div>
+  </div></div>
 
-  <div class="two">
-    <div class="prose">
-      <h3>Hipóteses</h3>
+  <div class="band"><div class="wrap block">
+    <div class="block-head"><h2>Sistema-modelo</h2></div>
+    <dl class="sistema">
+      <div class="panel flat"><dt>Cultura</dt><dd>Milho</dd><dd class="desc">Principal hospedeira da praga no sistema de sucessão.</dd></div>
+      <div class="panel flat"><dt>Praga</dt><dd><i>Spodoptera frugiperda</i></dd><dd class="desc">Polífaga, de ampla distribuição e difícil controle, com resistência a inseticidas e a proteínas Bt.</dd></div>
+      <div class="panel flat"><dt>Inimigo natural</dt><dd><i>Trichogramma pretiosum</i></dd><dd class="desc">Parasitoide de ovos produzido e comercializado no Brasil, com ampla base de estudos de seletividade.</dd></div>
+      <div class="panel flat"><dt>Inseticida</dt><dd>Clorantraniliprole</dd><dd class="desc">Diamida antranílica que atua nos receptores de rianodina; relevante no controle de lepidópteros.</dd></div>
+    </dl>
+  </div></div>
+
+  <div class="band alt"><div class="wrap grid2">
+    <div class="panel stack">
+      <h2>Hipóteses</h2>
       <p>A integração de evidências de seletividade fisiológica e ecológica permite uma classificação mais abrangente e contextualizada da compatibilidade do que classificações baseadas em indicadores isolados.</p>
-      <ul class="plain">
-        <li><b>H1.</b> A suscetibilidade ao clorantraniliprole difere entre <i>S. frugiperda</i> e <i>T. pretiosum</i>, e a caracterização dos efeitos sobre o parasitoide depende dos indicadores e das condições de exposição avaliados.</li>
-        <li><b>H2.</b> A persistência residual e o momento da exposição influenciam sobrevivência, parasitismo e descendência; certos intervalos e sequências reduzem os efeitos adversos.</li>
-        <li><b>H3.</b> O uso conjunto do clorantraniliprole e de <i>T. pretiosum</i> pode ser compatível sob condições de manejo que preservem a atividade do parasitoide.</li>
+      <ul class="hip">
+        <li><b>H1</b><span>A suscetibilidade ao clorantraniliprole difere entre <i>S. frugiperda</i> e <i>T. pretiosum</i>, e a caracterização dos efeitos sobre o parasitoide depende dos indicadores e das condições de exposição avaliados.</span></li>
+        <li><b>H2</b><span>A persistência residual e o momento da exposição influenciam sobrevivência, parasitismo e descendência; certos intervalos e sequências reduzem os efeitos adversos.</span></li>
+        <li><b>H3</b><span>O uso conjunto do clorantraniliprole e de <i>T. pretiosum</i> pode ser compatível sob condições de manejo que preservem a atividade do parasitoide.</span></li>
       </ul>
     </div>
-    <div class="prose">
-      <h3>Objetivos</h3>
+    <div class="panel stack">
+      <h2>Objetivos</h2>
       <p>Desenvolver e avaliar um modelo que integre evidências de seletividade fisiológica e ecológica para classificar a compatibilidade entre controle químico e biológico.</p>
-      <ol class="plain">
-        <li>Caracterizar a seletividade fisiológica do clorantraniliprole sobre <i>T. pretiosum</i> em laboratório e semicampo.</li>
-        <li>Investigar a seletividade ecológica: persistência dos resíduos e sequência e intervalos entre aplicação e liberação.</li>
-        <li>Avaliar o modelo, confrontando suas classificações com os resultados do uso conjunto.</li>
-        <li>Estruturar a base de dados e os fundamentos da plataforma de consulta.</li>
+      <ol class="obj">
+        <li><span>Caracterizar a seletividade fisiológica do clorantraniliprole sobre <i>T. pretiosum</i> em laboratório e semicampo.</span></li>
+        <li><span>Investigar a seletividade ecológica: persistência dos resíduos e sequência e intervalos entre aplicação e liberação.</span></li>
+        <li><span>Avaliar o modelo, confrontando suas classificações com os resultados do uso conjunto.</span></li>
+        <li><span>Estruturar a base de dados e os fundamentos da plataforma de consulta.</span></li>
       </ol>
     </div>
-  </div>
+  </div></div>
 
-  <div class="block">
-    <h3>Sistema-modelo</h3>
-    <div class="scroll"><table>
-      <thead><tr><th>Componente</th><th>Escolha</th><th>Por quê</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Cultura</th><td>Milho (<i>Zea mays</i>)</td><td>Principal hospedeira da praga no sistema de sucessão.</td></tr>
-        <tr><th scope="row">Praga</th><td><i>Spodoptera frugiperda</i></td><td>Polífaga, de ampla distribuição e difícil controle, com casos de resistência a inseticidas e a proteínas Bt.</td></tr>
-        <tr><th scope="row">Inimigo natural</th><td><i>Trichogramma pretiosum</i></td><td>Parasitoide de ovos produzido e comercializado no Brasil, com ampla base de estudos de seletividade.</td></tr>
-        <tr><th scope="row">Inseticida</th><td>Clorantraniliprole</td><td>Diamida antranílica que atua nos receptores de rianodina; relevante no controle de lepidópteros.</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="block">
-    <h3>Metas</h3>
+  <div class="band"><div class="wrap block">
+    <div class="block-head"><h2>Metas</h2></div>
     <div class="scroll"><table>
       <thead><tr><th>Meta</th><th>Indicador</th><th class="n">Meses</th></tr></thead>
       <tbody id="metas"></tbody>
     </table></div>
-  </div>
+  </div></div>
 
-  <div class="block">
-    <h3>Cronograma</h3>
-    <div class="scroll"><table>
+  <div class="band alt"><div class="wrap block">
+    <div class="block-head"><h2>Cronograma</h2><p>Quatro semestres; as barras marcam quando cada atividade ocorre.</p></div>
+    <div class="scroll"><table class="gantt">
       <thead><tr><th>Atividade</th><th>1º semestre</th><th>2º semestre</th><th>3º semestre</th><th>4º semestre</th></tr></thead>
       <tbody id="crono"></tbody>
     </table></div>
-  </div>
+  </div></div>
 
-  <div class="two">
-    <div class="prose">
-      <h3>Resultados esperados e alcance</h3>
+  <div class="band"><div class="wrap grid2">
+    <div class="panel stack">
+      <h2>Resultados esperados e alcance</h2>
       <ul class="plain">
         <li>Um modelo inicial de classificação da compatibilidade, com as informações necessárias e as limitações explícitas.</li>
         <li>Uma base de dados padronizada, rastreável e pronta para receber outros sistemas.</li>
@@ -600,8 +674,8 @@ footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify
         <li>Em 24 meses não se pretende emitir recomendação definitiva de campo, e sim uma abordagem metodológica que oriente estudos seguintes.</li>
       </ul>
     </div>
-    <div class="prose">
-      <h3>Rede de colaboração prevista</h3>
+    <div class="panel stack">
+      <h2>Rede de colaboração prevista</h2>
       <ul class="plain">
         <li>Docentes do Departamento de Fitossanidade da UFRGS que trabalham com organismos não alvo e com métodos de controle.</li>
         <li>Universidade Federal de Lavras, Embrapa Soja e ESALQ/USP, incluindo o centro SPARCBio.</li>
@@ -609,34 +683,33 @@ footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify
       </ul>
       <p class="muted" style="font-size:16px">A longo prazo, a proposta prevê a articulação de pesquisadores brasileiros da área e a futura constituição de um comitê nacional dedicado à seletividade.</p>
     </div>
-  </div>
+  </div></div>
 
-  <div class="block">
-    <h3>Onde o MIPintegra se encaixa</h3>
+  <div class="band alt"><div class="wrap block">
+    <div class="block-head"><h2>Onde o MIPintegra se encaixa</h2><p>O MIPintegra não tem vínculo com IRAC, IOBC/WPRS ou Michigan State University e não pretende substituir os métodos da IOBC/WPRS.</p></div>
     <div class="scroll"><table>
-      <thead><tr><th></th><th>IRAC</th><th>IOBC/WPRS</th><th>APRD (Michigan State)</th><th>MIPintegra</th></tr></thead>
+      <thead><tr><th><span class="sr">Critério</span></th><th>IRAC</th><th>IOBC/WPRS</th><th>APRD (Michigan State)</th><th>MIPintegra</th></tr></thead>
       <tbody>
         <tr><th scope="row">Pergunta</th><td>A praga está resistente?</td><td>O produto afeta organismos benéficos neste ensaio?</td><td>Onde há resistência documentada?</td><td>Em quais condições de manejo o inseticida e o inimigo natural podem ser usados juntos?</td></tr>
         <tr><th scope="row">O que oferece</th><td>Classificação por modo de ação e métodos de teste numerados</td><td>Métodos padronizados e classes de efeito por nível de ensaio</td><td>Base pesquisável em que cada caso aponta para a fonte</td><td>Estimativas com intervalo, matriz de decisão e classificação em quatro categorias, ligadas aos métodos</td></tr>
-        <tr><th scope="row">O que aproveitamos</th><td>Ficha numerada por método</td><td>Métodos e classes como referência de comparação</td><td>Registro sempre ligado à fonte</td><td></td></tr>
+        <tr><th scope="row">O que aproveitamos</th><td>Ficha numerada por método</td><td>Métodos e classes como referência de comparação</td><td>Registro sempre ligado à fonte</td><td>—</td></tr>
       </tbody>
     </table></div>
-    <p class="muted" style="font-size:15px">O MIPintegra não tem vínculo com IRAC, IOBC/WPRS ou Michigan State University e não pretende substituir os métodos da IOBC/WPRS.</p>
-  </div>
-
-  <div class="prose">
-    <h3>Como citar</h3>
-    <p>Santana, E. D. R. (2026). MIPintegra: plataforma de consulta da compatibilidade entre controle químico e biológico. Versão 0.5. UFRGS.</p>
-    <p class="muted" style="font-size:16px">Coordenação: Emile Dayara Rabelo Santana. Contato: <a href="mailto:emiledayara23@gmail.com">emiledayara23@gmail.com</a></p>
-  </div>
+  </div></div>
 </section>
 
 </main>
 
-<footer><div class="wrap"><span>MIPintegra, protótipo 0.5, UFRGS</span><span>Sem vínculo com IRAC, IOBC/WPRS ou Michigan State University.</span></div></footer>
+<footer>
+  <div class="wrap cols">
+    <div><h2><span translate="no">MIPintegra</span></h2><p>Plataforma de consulta da compatibilidade entre controle químico e biológico. Protótipo do projeto de pesquisa apresentado ao concurso da UFRGS, Faculdade de Agronomia, Departamento de Fitossanidade.</p></div>
+    <div><h2>Como citar</h2><p class="cite">Santana, E. D. R. (2026). <span translate="no">MIPintegra</span>: plataforma de consulta da compatibilidade entre controle químico e biológico. Versão 0.6. UFRGS.</p></div>
+    <div><h2>Contato</h2><p>Coordenação: Emile Dayara Rabelo Santana<br><a href="mailto:emiledayara23@gmail.com">emiledayara23@gmail.com</a></p></div>
+  </div>
+  <div class="wrap base"><span><span translate="no">MIPintegra</span>, protótipo 0.6, UFRGS</span><span>Sem vínculo com IRAC, IOBC/WPRS ou Michigan State University.</span></div>
+</footer>
 
 <dialog id="dlg" aria-labelledby="dlg-t"><div class="dlg-in" id="dlg-body"></div></dialog>
-
 <script>
 (function(){
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -788,7 +861,7 @@ function celula(exp,row,col,L){
 }
 function matriz(exp,L){
   const cs=colsOrd(exp), np=cs.filter(c=>IND[c.ind].g==='p').length, nc=cs.length-np;
-  let h=`<div class="scroll"><table class="matrix"><thead><tr class="grp"><th></th><th colspan="${np}">Indicadores prioritários</th>${nc?`<th colspan="${nc}">Complementares</th>`:''}<th></th></tr>
+  let h=`<div class="scroll"><table class="matrix"><thead><tr class="grp"><th><span class="sr">${esc(exp.linha)}</span></th><th colspan="${np}">Indicadores prioritários</th>${nc?`<th colspan="${nc}">Complementares</th>`:''}<th><span class="sr">Classificação</span></th></tr>
    <tr><th scope="col">${esc(exp.linha)}</th>${cs.map(c=>`<th scope="col">${esc(c.l)}<small>${esc([c.s,c.ger].filter(Boolean).join(', '))}</small></th>`).join('')}<th scope="col">Classificação</th></tr></thead><tbody>`;
   exp.rows.forEach(r=>{ const c=condCls(exp,r,L);
     h+=`<tr><th scope="row">${esc(r.l)}${r.s?`<small>${esc(r.s)}</small>`:''}</th>${cs.map(col=>celula(exp,r,col,L)).join('')}<td><button class="chip s-${c}" data-cond="${exp.id}|${r.id}">${esc(CC[c][0])}</button></td></tr>`; });
@@ -867,9 +940,12 @@ function renderHero(){
 function renderInicio(){
   renderLim(); renderHero();
   $('#exps').innerHTML=EXPS.map(id=>{ const e=EXP[id], prior=colsOrd(e).filter(c=>IND[c.ind].g==='p').map(c=>c.l.toLowerCase());
-    return `<div class="exp"><h3>${esc(e.t)}</h3><p class="q">${esc(e.q)}</p><dl>
-      <dt>Item</dt><dd>${e.item}, ${esc(e.sel.toLowerCase())}</dd><dt>Onde</dt><dd>${esc(e.nvl)}</dd><dt>Desenho</dt><dd>${esc(e.del)}</dd><dt>Prioritários</dt><dd>${esc(prior.join(', '))}</dd></dl>
-      <div class="foot"><a href="#compatibilidade/matrizes">Ver a matriz</a></div></div>`; }).join('');
+    const minis=e.rows.map(r=>{ const c=condCls(e,r,st.L); return `<span class="d s-${c}" title="${esc(r.l)}: ${esc(CC[c][0])}"></span>`; }).join('');
+    return `<div class="panel exp"><div class="row" style="gap:8px"><span class="tag${id==='semicampo'?' eco':''}">${esc(e.sel)}</span><span class="tag">item ${e.item}</span></div>
+      <h3>${esc(e.t)}</h3><p class="q">${esc(e.q)}</p>
+      <div class="stack" style="gap:6px"><small>Classificação de cada linha com limite de ${st.L}%</small><div class="minis" role="img" aria-label="${esc(e.rows.map(r=>r.l+': '+CC[condCls(e,r,st.L)][0]).join('; '))}">${minis}</div></div>
+      <dl><dt>Onde</dt><dd>${esc(e.nvl)}</dd><dt>Desenho</dt><dd>${esc(e.del)}</dd><dt>Prioritários</dt><dd>${esc(prior.join(', '))}</dd></dl>
+      <div class="foot"><a class="btn" href="#compatibilidade/matrizes">Ver a matriz</a></div></div>`; }).join('');
   $('#atalhos').innerHTML=[
    ['compatibilidade','Compatibilidade','Classificação da combinação, matrizes, incerteza, sensibilidade ao limite e comparação com a IOBC.',EXP.semicampo.rows.length+' condições'],
    ['dados','Dados','Cada redução com intervalo, unidades, modelo estatístico e classificação. Exporta CSV.',ALL.length+' estimativas'],
@@ -886,7 +962,8 @@ function renderVerdict(){
   const grupos={pres:[],ress:[],insuf:[],prej:[]};
   EXP.semicampo.rows.forEach(r=>grupos[condCls(EXP.semicampo,r,L)].push(r.c));
   const j=janela(L);
-  $('#verdict').innerHTML=`<div class="verdict v${k}">
+  $('#verdict').innerHTML=`<div class="panel verdict v${k}">
+    <span class="ic" aria-hidden="true">${({1:'✓',2:'≈',4:'✕',0:'?'})[k]}</span>
     <span class="muted">Classificação da combinação com limite de ${L}%</span>
     <span class="big">${esc(t)}</span>
     <p>${esc(d)} ${grupos.pres.length?`Pulverização com desempenho preservado: <b>${esc(grupos.pres.join('; '))}</b>.`:''}</p>
@@ -895,6 +972,7 @@ function renderVerdict(){
 }
 function renderTab(){
   const L=st.L, o=$('#tab-out');
+  o.className=st.tab==='matrizes'?'tabpanel':'tabpanel panel';
   $$('#tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===st.tab));
   if(st.tab==='condicoes'){
     const exp=EXP.semicampo;
@@ -906,7 +984,7 @@ function renderTab(){
       let extra='';
       if(id==='residuo'){ const d=persistencia(e.rows.map(r=>[r.dias,r.v.paras[0]])), j=janela(L);
         extra=`<p class="note">IOBC/WPRS: atividade prejudicial até ${d} dias (redução do parasitismo abaixo de 30% a partir daí), classe ${persCl(d)}, ${PERS[persCl(d)]}. Modelo integrado com limite de ${L}%: ${j===null?'nenhum período com desempenho preservado.':'desempenho preservado a partir de '+j+' dias.'}</p>`; }
-      return `<div class="stack"><div class="exp-head"><h3>${esc(e.t)}</h3><small>Item ${e.item}, ${esc(e.sel.toLowerCase())}. ${esc(e.nvl)}.</small><p class="muted">${esc(e.q)}</p></div>${matriz(e,L)}${extra}</div>`; }).join('');
+      return `<div class="panel stack"><div class="exp-head"><div class="row"><span class="tag${id==='semicampo'?' eco':''}">${esc(e.sel)}</span><span class="tag">item ${e.item}</span></div><h2 style="font-size:26px">${esc(e.t)}</h2><p class="muted">${esc(e.q)} ${esc(e.nvl)}.</p></div>${matriz(e,L)}${extra}</div>`; }).join('');
   } else if(st.tab==='incerteza'){
     const e=EXP[st.fexp]; if(!e.cols.some(c=>c.k===st.fcol)) st.fcol=e.cols[0].k;
     const col=e.cols.find(c=>c.k===st.fcol);
@@ -947,26 +1025,26 @@ function renderTab(){
     <p class="note">Exemplo da diferença: na pulverização sobre pupas, a redução de 35% no parasitismo da geração F0 é classe 1 (inócuo) pela escala de laboratório, mas o intervalo inteiro fica acima de 20%, e o modelo registra prejuízo à função de controle biológico.</p>`;
   } else {
     o.innerHTML=`<div class="two">
-     <div class="prose"><h3>Indicador</h3><ul class="plain">
+     <div class="prose"><h2 class="h-s">Indicador</h2><ul class="plain">
       <li>Redução em relação à testemunha, R = (1 − Xt ÷ Xc) × 100, com IC 95%. Mortalidade corrigida por Abbott; longevidade pelo tempo médio restrito de sobrevivência.</li>
       <li><b>Preservado</b>: limite superior do IC igual ou menor que o limite. <b>Prejudicado</b>: limite inferior maior que o limite. <b>Inconclusivo</b>: o IC cruza o limite.</li>
       <li>Limite operacional inicial de 20%, justificado pela relevância biológica (EFSA, 2011; 2017), e não como valor universal.</li></ul></div>
-     <div class="prose"><h3>Condição</h3><ul class="plain">
+     <div class="prose"><h2 class="h-s">Condição</h2><ul class="plain">
       <li>Prioritários: parasitismo, sobrevivência e emergência. Complementares: longevidade, voo, razão sexual e tempo de desenvolvimento.</li>
       <li>Sem pesos e sem média: prejuízo em prioritário define a condição como prejudicial.</li>
       <li>Prioritário inconclusivo ou não avaliado: evidência insuficiente. Falta de dado não vira ausência de efeito.</li>
       <li>Prejuízo só em complementar: preservado, com ressalva.</li></ul></div>
-     <div class="prose"><h3>Combinação</h3><ul class="plain">
+     <div class="prose"><h2 class="h-s">Combinação</h2><ul class="plain">
       <li><b>Compatível</b>: todas as condições de manejo preservadas.</li>
       <li><b>Compatível sob condições específicas</b>: ao menos uma condição preservada.</li>
       <li><b>Incompatível nas condições avaliadas</b>: todas prejudiciais.</li>
       <li><b>Evidência insuficiente</b>: nenhuma preservada e nem todas prejudiciais.</li></ul></div>
-     <div class="prose"><h3>Alcance</h3><ul class="plain">
+     <div class="prose"><h2 class="h-s">Alcance</h2><ul class="plain">
       <li>Compatibilidade do ponto de vista da preservação do parasitoide, não da eficácia sobre <i>S. frugiperda</i>.</li>
       <li>Laboratório e semicampo ficam lado a lado; divergências são mostradas, não promediadas.</li>
       <li>As regras desta demonstração são uma proposta inicial e serão fixadas antes da execução dos experimentos.</li></ul></div>
     </div>
-    <h3>Implementação no R</h3>
+    <h2 class="h-s">Implementação no R</h2>
 <pre class="code">classificar_indicador &lt;- function(ic_inf, ic_sup, limite = 20) {
   if (is.na(ic_inf) || is.na(ic_sup)) return("Evidência insuficiente")
   if (ic_sup &lt;= limite) return("Desempenho preservado")
@@ -976,8 +1054,9 @@ function renderTab(){
 # repetido com limite = 10, 20 e 30 para a análise de sensibilidade</pre>`;
   }
 }
-function renderCompat(){ renderLim(); renderVerdict(); renderTab(); }
-$('#tabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ st.tab=b.dataset.v; history.replaceState(null,'','#compatibilidade/'+st.tab); renderTab(); }});
+function rolaveis(){ const vistos={}; $$('.scroll').forEach(s=>{ if(s.querySelector('button,a[href]')) return; const h=s.closest('.block,.panel,.tabpanel')?.querySelector('h2,h3'); let nome='Tabela'+(h?': '+h.textContent.trim():''); vistos[nome]=(vistos[nome]||0)+1; if(vistos[nome]>1) nome+=' ('+vistos[nome]+')'; s.tabIndex=0; s.setAttribute('role','region'); s.setAttribute('aria-label',nome); }); }
+function renderCompat(){ renderLim(); renderVerdict(); renderTab(); rolaveis(); }
+$('#tabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ st.tab=b.dataset.v; history.replaceState(null,'','#compatibilidade/'+st.tab); renderTab(); rolaveis(); }});
 
 /* ---------- dados ---------- */
 const ALL=[];
@@ -1059,19 +1138,20 @@ const MET=[
 ];
 function renderMetodos(){
   $('#met-out').innerHTML=MET.map(m=>`<details class="met" id="${m.id}">
-   <summary><span class="cod">${m.id}</span><span class="tit">${esc(m.t)}<small>${esc(m.etapa)}, item ${m.item}. ${esc(m.nivel)}.</small></span><span class="seta"><span class="abrir">Abrir</span><span class="fechar">Fechar</span></span></summary>
-   <div class="met-body"><div>
-    <p>${esc(m.obj)}</p>
-    <h3>Procedimento</h3><ol>${m.passos.map(p=>`<li>${p}</li>`).join('')}</ol>
-    <dl class="kv">
-     ${m.del?`<dt>Delineamento</dt><dd>${esc(m.del)}</dd>`:''}
-     ${m.vars?`<dt>Variáveis</dt><dd>${esc(m.vars)}</dd>`:''}
-     ${m.an?`<dt>Análise</dt><dd>${esc(m.an)}</dd>`:''}
-     ${m.calc?`<dt>Cálculo</dt><dd>${esc(m.calc)}</dd>`:''}
-     ${m.exp?`<dt>Resultados</dt><dd><a href="#compatibilidade/${m.exp==='avaliacao'?'regras':'matrizes'}">Ver na avaliação de compatibilidade</a></dd>`:''}
-    </dl>
-    ${m.refs.length?`<h3>Referências</h3><ul>${m.refs.map(k=>{const b=BIB.find(x=>x[0]===k); return b?`<li>${esc(b[1])} (${b[2]}). ${esc(b[3])}. ${esc(b[4])}.</li>`:''}).join('')}</ul>`:''}
-   </div></div></details>`).join('');
+   <summary><span class="cod">${m.id}</span><span class="tit">${esc(m.t)}<small>${esc(m.etapa)}, item ${m.item}. ${esc(m.nivel)}.</small></span><span class="seta" aria-hidden="true">+</span></summary>
+   <div class="met-body">
+    <div class="col"><p>${esc(m.obj)}</p><p class="sub-h">Procedimento</p><ol>${m.passos.map(p=>`<li>${p}</li>`).join('')}</ol></div>
+    <div class="col">
+     <dl class="kv">
+      ${m.del?`<dt>Delineamento</dt><dd>${esc(m.del)}</dd>`:''}
+      ${m.vars?`<dt>Variáveis</dt><dd>${esc(m.vars)}</dd>`:''}
+      ${m.an?`<dt>Análise</dt><dd>${esc(m.an)}</dd>`:''}
+      ${m.calc?`<dt>Cálculo</dt><dd>${esc(m.calc)}</dd>`:''}
+      ${m.exp?`<dt>Resultados</dt><dd><a href="#compatibilidade/${m.exp==='avaliacao'?'regras':'matrizes'}">Ver na avaliação de compatibilidade</a></dd>`:''}
+     </dl>
+     ${m.refs.length?`<p class="sub-h">Referências</p><ul>${m.refs.map(k=>{const b=BIB.find(x=>x[0]===k); return b?`<li>${esc(b[1])} (${b[2]}). ${esc(b[3])}. ${esc(b[4])}.</li>`:''}).join('')}</ul>`:''}
+    </div>
+   </div></details>`).join('');
 }
 $('#abrir-todos').addEventListener('click',()=>$$('details.met').forEach(d=>d.open=true));
 $('#fechar-todos').addEventListener('click',()=>$$('details.met').forEach(d=>d.open=false));
@@ -1184,7 +1264,7 @@ function renderBarras(){
   $('#bars').setAttribute('aria-label','Estudos por condição de ensaio: '+xs.map(([k,v])=>k+', '+v).join('; '));
   $('#bars').innerHTML=xs.map(([k,v])=>`<div class="bar-row" title="${esc(k)}: ${v} estudos"><span>${esc(k)}</span><div class="bar-t"><div class="bar-f" style="width:${v/max*100}%"></div><b>${v}</b></div></div>`).join('');
   const clor=ESTUDOS.filter(e=>norm(e[2]).includes('clorantraniliprole')).length, so=cont['Laboratório']||0;
-  $('#bars-nota').textContent=`${so} dos ${ESTUDOS.length} estudos da tabela do projeto foram feitos só em laboratório, e ${clor} avaliam o clorantraniliprole. É a lacuna que o modelo trata: integrar laboratório e condições de uso.`;
+  $('#destaques').innerHTML=`<div class="destaque"><b>${so} de ${ESTUDOS.length}</b><span>estudos da tabela do projeto foram feitos só em laboratório</span></div><div class="destaque"><b>${clor}</b><span>estudos avaliam o clorantraniliprole</span></div><p class="muted" style="grid-column:1 / -1;font-size:15px">É a lacuna que o modelo trata: integrar o laboratório às condições de uso.</p>`;
 }
 function renderEstudos(){
   const q=norm($('#e-q').value), g=$('#e-grp').value, nv=$('#e-nv').value, sl=$('#e-sel').value;
@@ -1279,11 +1359,11 @@ $('#crono').innerHTML=[
  ['Artigo 2 (Crop Protection, periódico-alvo preliminar)',[4]],
  ['Dois resumos científicos (CBE e Sincobiol)',[4]],
  ['Relatório final',[4]]
-].map(([a,s])=>s?`<tr><td>${esc(a).replace('T. pretiosum','<i>T. pretiosum</i>')}</td>${[1,2,3,4].map(i=>`<td class="mark">${s.includes(i)?'<span class="dot" role="img" aria-label="previsto"></span>':''}</td>`).join('')}</tr>`:`<tr class="sub"><th colspan="5">${esc(a)}</th></tr>`).join('');
+].map(([a,s])=>s?`<tr><td>${esc(a).replace('T. pretiosum','<i>T. pretiosum</i>')}</td>${[1,2,3,4].map(i=>`<td class="g ${s.includes(i)?'on':'off'}"><span></span><span class="sr">${s.includes(i)?'previsto':'não previsto'}</span></td>`).join('')}</tr>`:`<tr class="sub"><th colspan="5">${esc(a)}</th></tr>`).join('');
 
 /* ---------- eventos globais e rotas ---------- */
 document.addEventListener('click',e=>{
-  const l=e.target.closest('[data-l]'); if(l){ st.L=+l.dataset.l; renderLim(); const v=vista(); if(v==='dados') renderDados(); else if(v==='compatibilidade'){ renderVerdict(); renderTab(); } else renderHero(); return; }
+  const l=e.target.closest('[data-l]'); if(l){ st.L=+l.dataset.l; renderLim(); const v=vista(); if(v==='dados') renderDados(); else if(v==='compatibilidade'){ renderVerdict(); renderTab(); } else renderInicio(); return; }
   const n=e.target.closest('[data-mom]'); if(n){ st.mom=n.dataset.mom; renderHero(); return; }
   const c=e.target.closest('[data-cel]'); if(c){ const [a,b,k]=c.dataset.cel.split('|'); fichaCelula(a,b,k); return; }
   const d=e.target.closest('[data-cond]'); if(d){ const [a,b]=d.dataset.cond.split('|'); fichaCond(a,b); return; }
@@ -1300,7 +1380,7 @@ function rota(){
   if(v==='dados') renderDados();
   if(v==='literatura'){ if(sub==='referencias'||sub==='estudos') st.lit=sub; renderLit(); }
   if(v==='metodos'&&sub){ const d=document.getElementById(sub); if(d&&d.tagName==='DETAILS'){ d.open=true; requestAnimationFrame(()=>d.scrollIntoView({block:'start'})); return; } }
-  window.scrollTo(0,0);
+  rolaveis(); window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',rota);
 renderMetodos(); renderBarras(); renderEstudos(); renderBib(); rota();
