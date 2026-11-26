@@ -4,303 +4,405 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MIPintegra</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<meta name="description" content="Modelo de compatibilidade entre controle químico e biológico: clorantraniliprole e Trichogramma pretiosum. Protótipo da plataforma de consulta do projeto de pesquisa, UFRGS.">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
-/* Layout: cabeçalho branco com o logo, barra de navegação verde-escura, coluna de 1120px; tabelas e listas no lugar de cartões. Cores tiradas do logo; tema claro único. */
+/* MIPintegra 0.5. Branco, verde-mata do logo para texto e estrutura, verde-folha para gráficos, ouro só para o limite e o foco.
+   Alegreya nos títulos, Source Sans 3 no texto e nas tabelas. O destaque é a linha do tempo da pulverização com as cartelas de ovos. */
 :root{
   color-scheme:light;
-  --bg:#ffffff; --band:#f3f5ee; --ink:#1a2117; --muted:#566052; --line:#d5dacb; --line-strong:#9aa391;
-  --green-d:#0b3a14; --green:#3f6b12; --leaf:#538318; --on-dark:#ffffff; --on-dark-soft:#d6e2c8; --hover-dark:#1c4d24;
-  --gold:#c4911e; --gold-soft:#fbf1d6; --gold-line:#ecd9a0; --gold-ink:#5c4306;
-  --k0-bg:#e6e9ec; --k0-fg:#2e3f4f;
-  --k1-bg:#cfeeda; --k1-fg:#0f4a2a;
-  --k2-bg:#f8eba6; --k2-fg:#5b4700;
-  --k3-bg:#fbd3a6; --k3-fg:#6d3300;
-  --k4-bg:#f6c3bd; --k4-fg:#741a15;
-  --c-ok:#1e7a45; --c-inc:#9a7400; --c-ruim:#b42318; --c-nd:#4b5d6e;
-  --shade:rgba(8,20,10,.55);
-  --f-head:'Montserrat','Segoe UI',Arial,sans-serif;
+  --paper:#ffffff; --band:#f2f4ee; --ink:#18211a; --muted:#545e52; --line:#d6dbcf; --line-strong:#a3ab99;
+  --mata:#032f0d; --mata-2:#0f4a1d; --folha:#538318; --folha-ink:#3f6b12;
+  --ouro:#c4911e; --ouro-soft:#faf1da; --ouro-line:#ead6a0; --ouro-ink:#5c4306;
+  --ok:#1e7a45; --ok-bg:#d7f0df; --inc:#7c5e00; --inc-bg:#f6eab0; --ruim:#b42318; --ruim-bg:#f8d3ce; --nd:#45576a; --nd-bg:#e4e9ee; --ress:#8a4b0f; --ress-bg:#fbe0c4;
+  --cartela:#dbe7f2; --ovo:#efe3c6; --ovo-p:#2b2420;
+  --f-head:'Alegreya',Georgia,'Times New Roman',serif;
   --f-body:'Source Sans 3','Segoe UI',Arial,sans-serif;
+  --wrap:1160px;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--f-body)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--f-head);text-wrap:balance;margin:0}
-h1{font-size:clamp(27px,3.8vw,38px);font-weight:800;line-height:1.18;color:var(--green-d)}
-h2{font-size:clamp(22px,2.8vw,27px);font-weight:700;line-height:1.22;color:var(--green-d)}
-h3{font-size:17px;font-weight:700;line-height:1.3}
-p{margin:0}
-a{color:var(--green)}
+html{scroll-padding-top:96px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--f-body);-webkit-text-size-adjust:100%}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-head);color:var(--mata);margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,6vw,68px);font-weight:700;line-height:1.02;letter-spacing:-.01em;max-width:21ch}
+h2{font-size:clamp(25px,3vw,34px);font-weight:700;line-height:1.12}
+h3{font-size:21px;font-weight:700;line-height:1.2}
+p{margin:0;text-wrap:pretty}
+a{color:var(--folha-ink);text-underline-offset:3px}
+a:hover{color:var(--mata)}
 small{font-size:14px;color:var(--muted)}
-:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.eyebrow{font-size:15px;font-weight:600;color:var(--green)}
-.lead{font-size:19px;color:var(--muted);max-width:68ch}
+i,em{font-style:italic}
+:focus-visible{outline:3px solid var(--ouro);outline-offset:2px}
+button,select,input,textarea{font:inherit;color:inherit}
+button,a{touch-action:manipulation}
 .muted{color:var(--muted)}
-.mono{font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
 .stack{display:flex;flex-direction:column;gap:16px}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.skip{position:absolute;left:12px;top:-60px;background:var(--mata);color:#fff;padding:8px 14px;z-index:30;border-radius:4px}
+.skip:focus{top:12px}
 
-/* aviso, cabeçalho e navegação */
-.demo{background:var(--gold-soft);color:var(--gold-ink);font-size:15px;border-bottom:1px solid var(--gold-line)}
-.demo .wrap{padding-block:6px}
-header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
-.brand{display:block;flex:none}
-.brand img{display:block;height:68px;width:auto;max-width:100%}
-.inst{font-size:15px;color:var(--muted);text-align:right;min-width:0}
-nav.main{background:var(--green-d);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
-nav.main .wrap{display:flex;overflow-x:auto;scrollbar-width:none}
-nav.main a{flex:none;padding:12px 15px 9px;border-bottom:3px solid transparent;color:var(--on-dark);text-decoration:none;font:600 15px var(--f-head)}
-nav.main a:hover{background:var(--hover-dark)}
-nav.main a[aria-current="page"]{background:var(--hover-dark);border-bottom-color:var(--gold)}
+/* aviso e cabeçalho */
+.aviso{background:var(--ouro-soft);color:var(--ouro-ink);font-size:15px;border-bottom:1px solid var(--ouro-line)}
+.aviso .wrap{padding-block:7px}
+header.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.4) blur(6px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:24px;min-height:68px}
+.brand{flex:none;display:block}
+.brand img{display:block;height:44px;width:auto}
+nav.main{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+nav.main a{flex:none;padding:22px 12px 19px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;border-bottom:3px solid transparent}
+nav.main a:hover{color:var(--mata);border-bottom-color:var(--line-strong)}
+nav.main a[aria-current="page"]{color:var(--mata);border-bottom-color:var(--ouro)}
 
-main{padding-block:32px 56px}
-section.view{display:flex;flex-direction:column;gap:28px}
-.view-head{display:flex;flex-direction:column;gap:8px}
+main{padding-bottom:72px}
+section.view{display:flex;flex-direction:column;gap:56px;padding-top:40px}
+.block{display:flex;flex-direction:column;gap:20px}
+.intro{display:flex;flex-direction:column;gap:10px;max-width:72ch}
+.intro p{font-size:19px;color:var(--muted)}
 
 /* controles */
-button,select,input,textarea{font:inherit;color:inherit}
-.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--green-d);background:var(--bg);color:var(--green-d);border-radius:4px;padding:8px 16px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
-.btn:hover{background:var(--band)}
-.btn.primary{background:var(--green-d);color:var(--on-dark)}
-.btn.primary:hover{background:var(--hover-dark)}
-.field{display:flex;flex-direction:column;gap:3px;min-width:0}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--mata);background:var(--paper);color:var(--mata);border-radius:4px;padding:9px 18px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none;transition:background-color .15s,color .15s}
+.btn:hover{background:var(--band);color:var(--mata)}
+.btn.primary{background:var(--mata);color:#fff}
+.btn.primary:hover{background:var(--mata-2);color:#fff}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
 .field label{font-size:15px;font-weight:600}
-.field select,.field input,.field textarea{border:1px solid var(--line-strong);background:var(--bg);border-radius:3px;padding:7px 9px;min-width:0;width:100%}
-.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px 16px;align-items:end;background:var(--band);border:1px solid var(--line);padding:14px 16px}
-.seg{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line-strong)}
-.seg button{border:0;background:none;padding:8px 14px 6px;border-bottom:3px solid transparent;cursor:pointer;font:600 15px var(--f-head);color:var(--muted)}
-.seg button:hover{color:var(--green-d)}
-.seg button[aria-pressed="true"]{color:var(--green-d);border-bottom-color:var(--gold)}
-.lim{display:inline-flex;border:1px solid var(--green-d);border-radius:4px;overflow:hidden}
-.lim button{border:0;background:var(--bg);color:var(--green-d);padding:6px 14px;font:600 15px var(--f-head);cursor:pointer;font-variant-numeric:tabular-nums}
-.lim button + button{border-left:1px solid var(--green-d)}
-.lim button[aria-pressed="true"]{background:var(--green-d);color:var(--on-dark)}
-.bar{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;background:var(--band);border:1px solid var(--line);padding:12px 16px}
-.bar .lbl{font-weight:600;font-size:15px}
+.field select,.field input,.field textarea{border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:4px;padding:8px 10px;width:100%;min-width:0}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px 16px;align-items:end;background:var(--band);padding:16px;border-radius:6px}
+.lim{display:inline-flex;border:1.5px solid var(--mata);border-radius:999px;overflow:hidden;flex:none}
+.lim button{border:0;background:var(--paper);color:var(--mata);padding:6px 16px;font-weight:700;font-size:15px;cursor:pointer;font-variant-numeric:tabular-nums;min-height:34px}
+.lim button + button{border-left:1.5px solid var(--mata)}
+.lim button[aria-pressed="true"]{background:var(--mata);color:#fff}
+.lim-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lim-wrap span{font-weight:600;font-size:15px}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line-strong)}
+.tabs button{border:0;background:none;padding:10px 14px 8px;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer;font-weight:600;font-size:16px;color:var(--muted)}
+.tabs button:hover{color:var(--mata)}
+.tabs button[aria-pressed="true"]{color:var(--mata);border-bottom-color:var(--ouro)}
+.linkbtn{background:none;border:0;padding:0;color:var(--folha-ink);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.linkbtn:hover{color:var(--mata)}
 
-/* início */
-.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:start}
-.hero .stack{gap:16px}
-.ficha{background:var(--band);border:1px solid var(--line);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
-.ficha ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:16px}
-.ficha li{display:flex;flex-direction:column;gap:2px}
-.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:3px solid var(--green-d);border-bottom:1px solid var(--line)}
-.pillar{padding:18px 20px 20px 0;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
-.pillar + .pillar{border-left:1px solid var(--line);padding-left:20px}
-.pillar h3{color:var(--green);text-decoration:underline;text-underline-offset:3px}
-.pillar:hover h3{color:var(--green-d)}
-.pillar .n{font:800 32px/1.1 var(--f-head);font-variant-numeric:tabular-nums;color:var(--green-d)}
-.pillar p{color:var(--muted);font-size:16px}
-.question{border-left:4px solid var(--gold);padding:6px 0 6px 16px;font:600 clamp(18px,2.2vw,21px)/1.4 var(--f-head);color:var(--green-d);max-width:62ch}
-ol.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px 22px;counter-reset:etapa}
-ol.flow li{counter-increment:etapa;border-top:3px solid var(--green-d);padding-top:10px;display:flex;flex-direction:column;gap:4px}
-ol.flow li::before{content:"Etapa " counter(etapa);font-size:15px;font-weight:600;color:var(--green)}
-ol.flow p{font-size:16px;color:var(--muted)}
-.linkbtn{background:none;border:0;padding:0;color:var(--green);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
-.linkbtn:hover{color:var(--green-d)}
-
-/* classes */
-.chip{display:inline-flex;align-items:center;font:600 14px var(--f-body);padding:2px 8px;border-radius:3px;border:1px solid transparent;margin:2px 0;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* rótulos de classe */
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 14px/1.3 var(--f-body);padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 button.chip{cursor:pointer}
 button.chip:hover{border-color:currentColor}
-.k0{background:var(--k0-bg);color:var(--k0-fg)} .k1{background:var(--k1-bg);color:var(--k1-fg)} .k2{background:var(--k2-bg);color:var(--k2-fg)} .k3{background:var(--k3-bg);color:var(--k3-fg)} .k4{background:var(--k4-bg);color:var(--k4-fg)}
-.tag{display:inline-block;font-size:13px;font-weight:600;padding:0 6px;border:1px solid var(--line);border-radius:3px;color:var(--muted);background:var(--bg)}
-.tag.demo-tag{background:var(--gold-soft);border-color:var(--gold-line);color:var(--gold-ink)}
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:15px;color:var(--muted);align-items:center}
+.s-pres,.s-ok,.s-1{background:var(--ok-bg);color:var(--ok)}
+.s-inc,.s-2{background:var(--inc-bg);color:var(--inc)}
+.s-prej,.s-ruim,.s-4{background:var(--ruim-bg);color:var(--ruim)}
+.s-insuf,.s-nd,.s-0{background:var(--nd-bg);color:var(--nd)}
+.s-ress,.s-3{background:var(--ress-bg);color:var(--ress)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:15px;color:var(--muted);align-items:center}
 .legend > span{display:inline-flex;gap:6px;align-items:center}
 
-/* veredito */
-.verdict{border:1px solid var(--line);border-left:6px solid var(--k0-fg);padding:16px 20px;display:flex;flex-direction:column;gap:10px}
-.verdict.v1{border-left-color:var(--c-ok)} .verdict.v2{border-left-color:var(--gold)} .verdict.v4{border-left-color:var(--c-ruim)} .verdict.v0{border-left-color:var(--c-nd)}
-.verdict .big{font:800 clamp(21px,2.6vw,26px)/1.2 var(--f-head)}
-.verdict.v1 .big{color:var(--c-ok)} .verdict.v2 .big{color:#7a5a00} .verdict.v4 .big{color:var(--c-ruim)} .verdict.v0 .big{color:var(--c-nd)}
-ul.conds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-ul.conds li{display:grid;grid-template-columns:minmax(160px,250px) 1fr;gap:6px 18px;padding:12px 0;border-top:1px solid var(--line)}
-ul.conds .why{font-size:16px;display:flex;flex-direction:column;gap:4px}
+/* ===== hero: linha do tempo e cartelas ===== */
+.hero{display:flex;flex-direction:column;gap:36px;padding-top:12px}
+.demo{display:flex;flex-direction:column;gap:22px;border-top:2px solid var(--mata);padding-top:22px}
+.demo-head{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:flex-end}
+.demo-head h2{font-size:clamp(22px,2.6vw,28px);max-width:30ch}
+.tl{position:relative;height:118px;margin:0 46px}
+.tl-axis{position:absolute;left:0;right:0;top:54px;height:2px;background:var(--line-strong)}
+.tl-tick{position:absolute;top:49px;width:1px;height:12px;background:var(--line-strong)}
+.tl-rel{position:absolute;top:6px;height:26px;width:0;border-left:2px dashed var(--ouro)}
+.tl-rel span{position:absolute;top:-4px;left:8px;font-size:14px;font-weight:600;color:var(--ouro-ink);white-space:nowrap}
+.tl-node{position:absolute;top:34px;width:42px;height:42px;margin-left:-21px;border-radius:50%;border:2px solid currentColor;cursor:pointer;display:flex;align-items:center;justify-content:center;font:700 15px var(--f-body);font-variant-numeric:tabular-nums;padding:0;transition:transform .2s,box-shadow .2s}
+.tl-node:hover{transform:scale(1.08)}
+.tl-node[aria-pressed="true"]{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ouro);transform:scale(1.12)}
+.tl-lab{position:absolute;top:84px;transform:translateX(-50%);font-size:13px;line-height:1.25;color:var(--muted);text-align:center;width:84px}
+.tl-cap{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin:0 4px}
+.detalhe{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:24px 28px;align-items:start}
+.cartela-box{display:flex;flex-direction:column;gap:8px}
+.cartela-box h3{font:600 16px var(--f-body);color:var(--ink)}
+.cartela{display:grid;grid-template-columns:repeat(15,10px);gap:3px 4px;background:var(--cartela);padding:12px;border-radius:3px;width:max-content}
+.cartela i{display:block;width:10px;height:12px;border-radius:50%;background:var(--ovo);transition:background-color .35s}
+.cartela i.p{background:var(--ovo-p)}
+.cartela-box small{font-variant-numeric:tabular-nums}
+.leitura{display:flex;flex-direction:column;gap:10px;min-width:0}
+.leitura .valor{font:700 clamp(30px,3.6vw,42px)/1 var(--f-head);color:var(--mata);font-variant-numeric:tabular-nums}
+.leitura .valor small{font:400 16px var(--f-body);color:var(--muted)}
+.veredito{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;background:var(--band);padding:14px 18px;border-radius:6px;font-size:17px}
+.veredito b{font-family:var(--f-head);font-size:21px}
+.nota-demo{font-size:14px;color:var(--muted)}
+
+/* início: etapas, experimentos, atalhos */
+ol.etapas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;counter-reset:e}
+ol.etapas li{counter-increment:e;display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:2px solid var(--mata)}
+ol.etapas li::before{content:counter(e);font:700 30px/1 var(--f-head);color:var(--folha)}
+ol.etapas h3{font-size:19px}
+ol.etapas p{font-size:16px;color:var(--muted)}
+.exps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.exp{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:2px solid var(--mata)}
+.exp .q{font-size:17px}
+.exp dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px}
+.exp dt{font-weight:600;color:var(--muted)}
+.exp dd{margin:0}
+.exp .foot{margin-top:auto}
+.atalhos{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.atalhos li{border-bottom:1px solid var(--line)}
+.atalhos a{display:grid;grid-template-columns:minmax(160px,220px) 1fr auto;gap:6px 24px;align-items:baseline;padding:16px 4px;text-decoration:none;color:var(--ink)}
+.atalhos a:hover{background:var(--band)}
+.atalhos b{font:700 21px var(--f-head);color:var(--mata)}
+.atalhos span{color:var(--muted)}
+.atalhos em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--muted);font-size:15px}
+
+/* compatibilidade */
+.barra{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--band);border-radius:6px}
+.verdict{border-left:6px solid var(--nd);padding:6px 0 6px 20px;display:flex;flex-direction:column;gap:8px}
+.verdict.v1{border-left-color:var(--ok)} .verdict.v2{border-left-color:var(--ouro)} .verdict.v4{border-left-color:var(--ruim)} .verdict.v0{border-left-color:var(--nd)}
+.verdict .big{font:700 clamp(26px,3vw,34px)/1.15 var(--f-head)}
+.verdict.v1 .big{color:var(--ok)} .verdict.v2 .big{color:#6e5000} .verdict.v4 .big{color:var(--ruim)} .verdict.v0 .big{color:var(--nd)}
+.verdict p{max-width:78ch}
+ul.conds{list-style:none;margin:0;padding:0}
+ul.conds li{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:6px 24px;padding:16px 0;border-top:1px solid var(--line)}
+ul.conds li:last-child{border-bottom:1px solid var(--line)}
+ul.conds b{font:700 19px var(--f-head);color:var(--mata)}
+ul.conds small{display:block}
+ul.conds .why{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 ul.conds .ctx{font-size:15px;color:var(--muted)}
+.exp-head{display:flex;flex-direction:column;gap:4px;max-width:78ch}
+.exp-head small{font-size:15px}
 
 /* tabelas */
-.scroll{overflow-x:auto;border:1px solid var(--line)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
 table{border-collapse:collapse;width:100%;font-size:16px}
-th,td{padding:9px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
-thead th{border-top:0;font:600 14px var(--f-head);color:var(--on-dark);background:var(--green-d);vertical-align:bottom}
-thead th small{color:var(--on-dark-soft);font-family:var(--f-body)}
-thead tr.grp th{background:#082d10;text-align:center;font-size:13px;letter-spacing:.02em;padding-block:6px;border-left:1px solid var(--hover-dark)}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+thead th{border-top:0;font:600 14px/1.3 var(--f-body);color:var(--ink);background:var(--band);vertical-align:bottom;border-bottom:2px solid var(--mata)}
+thead th small{font-weight:400}
+thead tr.grp th{background:var(--paper);border-bottom:1px solid var(--line);text-align:center;font-size:13px;color:var(--muted);padding-block:6px}
 th small,td small{display:block;font-weight:400}
-tbody tr:nth-child(even){background:var(--band)}
-tbody tr.sub th{background:var(--band);font:600 14px var(--f-head);color:var(--green-d)}
-table.matrix tbody th{font-weight:600;min-width:150px;position:sticky;left:0;background:var(--bg);z-index:1}
-table.matrix tbody tr:nth-child(even) th{background:var(--band)}
-table.matrix thead tr:not(.grp) th:first-child,table.matrix thead tr.grp th:first-child{position:sticky;left:0;z-index:2}
+tbody tr:nth-child(even){background:#fafbf8}
+tbody tr.sub th{background:var(--band);font:700 16px var(--f-head);color:var(--mata)}
+table.matrix tbody th{font-weight:600;min-width:150px;position:sticky;left:0;background:var(--paper);z-index:1}
+table.matrix tbody tr:nth-child(even) th{background:#fafbf8}
+table.matrix thead th:first-child{position:sticky;left:0;z-index:2}
 table.matrix td{min-width:108px;padding:6px}
-.cellbtn{display:flex;flex-direction:column;align-items:flex-start;width:100%;border:1px solid transparent;border-radius:3px;padding:5px 8px;cursor:pointer;text-align:left;font:inherit}
-.cellbtn:hover{border-color:currentColor}
-.cellbtn b{font:700 16px var(--f-head);font-variant-numeric:tabular-nums}
-.cellbtn small{font-size:13px;color:inherit;opacity:.85;font-variant-numeric:tabular-nums;white-space:nowrap}
-.cellbtn.nd{border:1px dashed var(--k0-fg)}
-.na{color:var(--line-strong);padding:5px 8px;display:inline-block}
+.cel{display:flex;flex-direction:column;align-items:flex-start;width:100%;border:1px solid transparent;border-radius:4px;padding:6px 9px;cursor:pointer;text-align:left}
+.cel:hover{border-color:currentColor}
+.cel b{font:700 17px var(--f-body);font-variant-numeric:tabular-nums}
+.cel small{font-size:13px;color:inherit;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cel.s-nd{border:1px dashed var(--nd)}
+.na{color:var(--line-strong);padding:6px 9px;display:inline-block}
 table.list tbody tr{cursor:pointer}
-table.list tbody tr:hover{background:var(--gold-soft)}
-td.num,td.mono{font-variant-numeric:tabular-nums;white-space:nowrap}
+table.list tbody tr:hover{background:var(--ouro-soft)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .empty{padding:28px;text-align:center;color:var(--muted)}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green-d)}
-td.mark{text-align:center;color:var(--green-d)}
+td.mark{text-align:center}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--folha)}
 
-/* gráfico de estimativas */
-.fp{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);padding:12px 16px}
-.fp-row{display:grid;grid-template-columns:minmax(140px,230px) minmax(0,1fr) 150px;gap:14px;align-items:center;min-height:32px}
+/* estimativas com intervalo */
+.fp{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:6px;padding:14px 18px}
+.fp-row{display:grid;grid-template-columns:minmax(140px,220px) minmax(0,1fr) 150px;gap:14px;align-items:center;min-height:34px}
 .fp-l{font-size:15px;line-height:1.3}
-.fp-l small,ul.conds small{display:block;font-size:13px}
+.fp-l small{display:block;font-size:13px}
 .fp-t{position:relative;height:24px}
-.fp-zone{position:absolute;top:0;bottom:0;background:var(--k1-bg)}
+.fp-zone{position:absolute;top:0;bottom:0;background:var(--ok-bg);border-radius:2px}
 .fp-zero{position:absolute;top:0;bottom:0;width:1px;background:var(--line-strong)}
-.fp-lim{position:absolute;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--gold)}
+.fp-lim{position:absolute;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--ouro)}
 .fp-m{position:absolute;inset:0}
 .fp-ci{position:absolute;top:10px;height:4px;background:currentColor;border-radius:2px}
-.fp-pt{position:absolute;top:5px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:currentColor;border:2px solid var(--bg)}
-.c-ok{color:var(--c-ok)} .c-inc{color:var(--c-inc)} .c-ruim{color:var(--c-ruim)} .c-nd{color:var(--c-nd)}
-.fp-v{font-size:14px;font-variant-numeric:tabular-nums}
+.fp-pt{position:absolute;top:4px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:currentColor;border:2px solid var(--paper)}
+.c-ok{color:var(--ok)} .c-inc{color:var(--inc)} .c-ruim{color:var(--ruim)} .c-nd{color:var(--nd)}
+.fp-v{font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink)}
 .fp-v small{display:inline;font-size:13px}
 .fp-axis{position:relative;height:18px;border-top:1px solid var(--line-strong)}
 .fp-axis span{position:absolute;top:2px;transform:translateX(-50%);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 
-/* métodos, literatura, ferramentas */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.card{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--green-d);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.card p{font-size:16px;color:var(--muted)}
-.note{border-left:3px solid var(--gold);padding:2px 0 2px 12px;font-size:16px}
-ul.bib{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-ul.bib li{padding:12px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
-ul.bib .cit{max-width:86ch}
-.calc output{display:block;background:var(--band);border:1px solid var(--line);padding:12px 14px;font-size:16px}
-.calc output b{font:700 20px var(--f-head);font-variant-numeric:tabular-nums}
-.calc .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
-.calc textarea{min-height:120px;font:14px/1.5 Consolas,'Courier New',monospace}
-.formula{font:14px/1.5 Consolas,'Courier New',monospace;background:var(--band);padding:7px 10px;overflow-x:auto;white-space:nowrap}
-pre.code{margin:0;font:13px/1.5 Consolas,'Courier New',monospace;background:var(--band);border:1px solid var(--line);padding:12px 14px;overflow-x:auto}
-
-/* sobre o projeto */
-.prose{display:flex;flex-direction:column;gap:10px;max-width:72ch}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px 40px}
-.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
-dl.kv{margin:0;display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:6px 16px;font-size:16px}
+/* métodos */
+.metodos{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+details.met{border-bottom:1px solid var(--line)}
+details.met > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:86px 1fr auto;gap:4px 20px;align-items:baseline;padding:18px 4px}
+details.met > summary::-webkit-details-marker{display:none}
+details.met > summary:hover{background:var(--band)}
+details.met .cod{font:700 16px var(--f-body);color:var(--folha-ink);font-variant-numeric:tabular-nums}
+details.met .tit{font:700 21px/1.25 var(--f-head);color:var(--mata)}
+details.met .tit small{display:block;font:400 15px var(--f-body);color:var(--muted);margin-top:3px}
+details.met .seta{font-size:15px;color:var(--muted);white-space:nowrap}
+details.met[open] .seta .abrir{display:none}
+details.met:not([open]) .seta .fechar{display:none}
+.met-body{display:grid;grid-template-columns:86px minmax(0,1fr);gap:0 20px;padding:0 4px 24px}
+.met-body > div{grid-column:2;display:flex;flex-direction:column;gap:14px;max-width:80ch}
+.met-body ol,.met-body ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
+dl.kv{margin:0;display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:8px 18px}
 dl.kv dt{font-weight:600}
 dl.kv dd{margin:0}
+.note{border-left:3px solid var(--ouro);padding:2px 0 2px 14px;font-size:16px}
 
-/* ficha em diálogo */
-dialog{border:1px solid var(--line-strong);border-top:4px solid var(--green-d);border-radius:0;background:var(--bg);color:var(--ink);padding:0;width:min(760px,calc(100vw - 32px));max-height:min(86vh,900px)}
-dialog::backdrop{background:var(--shade)}
-.dlg-in{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
-.dlg-in dl{margin:0;display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:6px 16px;font-size:16px}
-.dlg-in dt{font-weight:600}
-.dlg-in dd{margin:0;min-width:0}
-.dlg-in ol,.dlg-in ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:16px}
-.dlg-in textarea{width:100%;min-height:180px;font:13px Consolas,'Courier New',monospace;border:1px solid var(--line-strong);background:var(--band);color:var(--ink);padding:10px}
-.dlg-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+/* literatura */
+.bars{display:flex;flex-direction:column;gap:8px;max-width:760px}
+.bar-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:14px;align-items:center}
+.bar-row span{font-size:15px}
+.bar-t{display:flex;align-items:center;gap:10px}
+.bar-f{height:18px;background:var(--folha);border-radius:0 4px 4px 0;min-width:3px}
+.bar-t b{font-variant-numeric:tabular-nums;font-size:15px}
+ul.bib{list-style:none;margin:0;padding:0}
+ul.bib li{padding:14px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+ul.bib .cit{max-width:86ch}
+.tag{display:inline-block;font-size:13px;font-weight:600;padding:1px 8px;border-radius:999px;color:var(--muted);background:var(--band)}
 
-footer{background:var(--green-d);color:var(--on-dark-soft);font-size:15px}
-footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
+/* ferramentas */
+.calcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:36px 32px}
+.calc{display:flex;flex-direction:column;gap:12px;padding-top:14px;border-top:2px solid var(--mata);min-width:0}
+.calc .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.calc output{display:block;background:var(--band);padding:12px 14px;font-size:16px;border-radius:6px}
+.calc output b{font:700 22px var(--f-head);font-variant-numeric:tabular-nums}
+.calc textarea{min-height:130px;font:14px/1.5 Consolas,'Courier New',monospace}
+.formula{font-size:16px;font-style:italic;color:var(--mata)}
+pre.code{margin:0;font:13px/1.5 Consolas,'Courier New',monospace;background:var(--band);padding:14px 16px;overflow-x:auto;border-radius:6px}
 
+/* projeto */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px 48px}
+.prose{display:flex;flex-direction:column;gap:12px;max-width:74ch}
+.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+.resumo{font-size:18px;line-height:1.65;max-width:76ch}
+
+/* diálogo */
+dialog{border:0;border-top:5px solid var(--mata);border-radius:6px;background:var(--paper);color:var(--ink);padding:0;width:min(780px,calc(100vw - 32px));max-height:min(88vh,920px);overscroll-behavior:contain;box-shadow:0 20px 60px rgba(3,47,13,.25)}
+dialog::backdrop{background:rgba(3,22,8,.55)}
+.dlg-in{padding:24px 26px;display:flex;flex-direction:column;gap:14px}
+.dlg-in ol,.dlg-in ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.dlg-in textarea{width:100%;min-height:180px;font:13px Consolas,'Courier New',monospace;border:1px solid var(--line-strong);background:var(--band);padding:10px}
+.dlg-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
+.tag-h{font-size:13px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--ouro-soft);color:var(--ouro-ink);white-space:nowrap}
+
+footer{border-top:2px solid var(--mata);font-size:15px;color:var(--muted)}
+footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:6px 28px;justify-content:space-between}
+
+@media (max-width:980px){
+  ol.etapas{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .exps{grid-template-columns:1fr}
+  .detalhe{grid-template-columns:auto auto}
+  .leitura{grid-column:1 / -1}
+}
 @media (max-width:760px){
   body{font-size:16px}
-  .hero{grid-template-columns:1fr;gap:24px}
-  .brand img{height:44px}
-  .inst{display:none}
-  .pillar{padding-right:0}
-  .pillar + .pillar{border-left:0;border-top:1px solid var(--line);padding-left:0}
+  header.top .wrap{flex-direction:column;align-items:stretch;gap:0;min-height:0;padding-top:8px}
+  .brand img{height:36px}
+  nav.main{margin-left:-8px}
+  nav.main a{padding:12px 10px 9px;font-size:15px}
+  ol.etapas{grid-template-columns:1fr}
+  .tl{height:96px;margin:0 18px}
+  .tl-node{width:30px;height:30px;margin-left:-15px;font-size:13px;top:40px}
+  .tl-lab{display:none}
+  .tl-cap{margin:0}
+  .detalhe{grid-template-columns:1fr 1fr;gap:18px 14px}
+  .cartela{grid-template-columns:repeat(15,6px);gap:2px 3px;padding:8px}
+  .cartela i{width:6px;height:8px}
   ul.conds li{grid-template-columns:1fr}
   .fp-row{grid-template-columns:1fr;gap:2px;padding-block:4px}
   .fp-row.fp-axisrow > span:first-child{display:none}
+  .atalhos a{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:1fr;gap:2px}
+  details.met > summary{grid-template-columns:1fr;gap:2px}
+  details.met .seta{display:none}
+  .met-body{grid-template-columns:1fr}
+  .met-body > div{grid-column:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
 
-<div class="demo"><div class="wrap"><b>Protótipo 0.4.</b> Os resultados são hipotéticos, criados para mostrar como o modelo funciona: os experimentos ainda serão conduzidos. Métodos, estudos e referências seguem o projeto de pesquisa.</div></div>
+<div class="aviso"><div class="wrap"><b>Protótipo 0.5.</b> Os resultados são hipotéticos e mostram como o modelo funciona; os experimentos ainda serão conduzidos. Métodos, estudos e referências seguem o projeto de pesquisa.</div></div>
 
 <header class="top"><div class="wrap">
-  <a class="brand" href="#inicio"><img src="logo.png" alt="MIPintegra" width="900" height="296"></a>
-  <p class="inst">UFRGS · Faculdade de Agronomia · Departamento de Fitossanidade</p>
+  <a class="brand" href="#inicio"><img src="logo.png" alt="MIPintegra, página inicial" width="900" height="296"></a>
+  <nav class="main" aria-label="Seções">
+    <a href="#inicio">Início</a><a href="#compatibilidade">Compatibilidade</a><a href="#dados">Dados</a><a href="#metodos">Métodos</a><a href="#literatura">Literatura</a><a href="#ferramentas">Ferramentas</a><a href="#projeto">Projeto</a>
+  </nav>
 </div></header>
-<nav class="main" aria-label="Seções"><div class="wrap">
-  <a href="#inicio">Início</a><a href="#compatibilidade">Compatibilidade</a><a href="#dados">Dados</a><a href="#metodos">Métodos</a><a href="#literatura">Literatura</a><a href="#ferramentas">Ferramentas</a><a href="#projeto">Sobre o projeto</a>
-</div></nav>
 
-<main class="wrap">
+<main class="wrap" id="conteudo">
 
 <!-- ============ INÍCIO ============ -->
 <section class="view" data-view="inicio">
   <div class="hero">
-    <div class="stack">
-      <span class="eyebrow">Plataforma de consulta · UFRGS</span>
-      <h1>Compatibilidade entre controle químico e biológico, por condição de uso e com a incerteza à vista.</h1>
-      <p class="lead">O MIPintegra reúne evidências de seletividade fisiológica e ecológica e as integra em um modelo de decisão. O resultado não é uma nota para o inseticida: é a indicação das condições de manejo em que ele e o inimigo natural podem ser usados juntos.</p>
-      <div class="row"><a class="btn primary" href="#compatibilidade">Ver a avaliação</a><a class="btn" href="#metodos">Como os dados são gerados</a></div>
+    <h1>Modelo de compatibilidade entre controle químico e biológico</h1>
+
+    <div class="demo" aria-label="Demonstração do modelo">
+      <div class="demo-head">
+        <h2>Quando pulverizar clorantraniliprole em relação à liberação de <i>Trichogramma pretiosum</i>?</h2>
+        <div class="lim-wrap"><span id="lim-h">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-h"></div></div>
+      </div>
+      <div>
+        <div class="tl" id="tl"></div>
+        <div class="tl-cap"><span>antes da liberação</span><span>dias em relação à liberação</span><span>depois</span></div>
+      </div>
+      <div class="detalhe" id="detalhe"></div>
+      <div class="veredito" id="veredito" aria-live="polite"></div>
+      <p class="nota-demo">Dados hipotéticos de semicampo (milho em casa de vegetação, 10 plantas por momento). A cartela ilustra 150 ovos de <i>Ephestia kuehniella</i>: os escuros estão parasitados.</p>
     </div>
-    <div class="ficha" id="home-ficha" aria-label="Avaliação em destaque"></div>
   </div>
 
-  <p class="question">Em quais condições de manejo é possível integrar o inseticida ao controle biológico, preservando o desempenho do inimigo natural?</p>
-
-  <div class="pillars" id="pillars"></div>
-
-  <div class="stack">
+  <div class="block">
     <h2>Como o modelo chega à classificação</h2>
-    <ol class="flow">
-      <li><h3>Evidências</h3><p>Seletividade fisiológica (efeitos letais, subletais, transgeracionais e persistência) e ecológica (sequência e intervalos entre pulverização e liberação).</p></li>
+    <ol class="etapas">
+      <li><h3>Evidências</h3><p>Seletividade fisiológica, com efeitos letais, subletais, transgeracionais e persistência, e ecológica, com a sequência e os intervalos entre pulverização e liberação.</p></li>
       <li><h3>Padronização</h3><p>Cada indicador vira redução em relação à testemunha, com intervalo de confiança de 95%.</p></li>
-      <li><h3>Matriz de decisão</h3><p>Regras hierárquicas e não compensatórias: um prejuízo em indicador prioritário não é diluído pelos demais. Limite inicial de 20%.</p></li>
+      <li><h3>Matriz de decisão</h3><p>Regras hierárquicas e não compensatórias: um prejuízo em indicador prioritário não é diluído pelos demais.</p></li>
       <li><h3>Classificação</h3><p>Compatível, compatível sob condições específicas, incompatível nas condições avaliadas ou evidência insuficiente.</p></li>
-      <li><h3>Avaliação do modelo</h3><p>Sensibilidade aos limites de 10%, 20% e 30%, consistência entre laboratório e semicampo e comparação com a IOBC/WPRS.</p></li>
+      <li><h3>Avaliação</h3><p>Sensibilidade aos limites de 10%, 20% e 30%, consistência entre laboratório e semicampo e comparação com a IOBC/WPRS.</p></li>
     </ol>
+  </div>
+
+  <div class="block">
+    <h2>Três experimentos alimentam o modelo</h2>
+    <div class="exps" id="exps"></div>
+  </div>
+
+  <div class="block">
+    <h2>No site</h2>
+    <ul class="atalhos" id="atalhos"></ul>
   </div>
 </section>
 
 <!-- ============ COMPATIBILIDADE ============ -->
 <section class="view" data-view="compatibilidade" hidden>
-  <div class="view-head">
-    <span class="eyebrow">Avaliação de compatibilidade · sistema-modelo</span>
-    <h2>Clorantraniliprole × <i>Trichogramma pretiosum</i></h2>
-    <p class="lead">Milho, <i>Spodoptera frugiperda</i> e clorantraniliprole 200 g L⁻¹ SC na dose de bula (125 mL p.c. ha⁻¹). Dados hipotéticos, no formato que os experimentos vão gerar.</p>
+  <div class="intro">
+    <h2>Clorantraniliprole e <i>Trichogramma pretiosum</i></h2>
+    <p>Milho, <i>Spodoptera frugiperda</i> e clorantraniliprole 200 g L⁻¹ SC na dose de bula (125 mL p.c. ha⁻¹). Os valores são hipotéticos, no formato que os experimentos vão gerar.</p>
   </div>
-  <div class="bar">
-    <div class="row"><span class="lbl" id="lim-lbl-c">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-lbl-c"></div></div>
-    <div class="legend"><span><span class="chip k1">Preservado</span>IC abaixo do limite</span><span><span class="chip k2">Inconclusivo</span>IC cruza o limite</span><span><span class="chip k4">Prejudicado</span>IC acima do limite</span><span><span class="chip k0">Não avaliado</span></span></div>
+  <div class="barra">
+    <div class="lim-wrap"><span id="lim-c">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-c"></div></div>
+    <div class="legend"><span><span class="chip s-ok">Preservado</span>intervalo abaixo do limite</span><span><span class="chip s-inc">Inconclusivo</span>cruza o limite</span><span><span class="chip s-ruim">Prejudicado</span>acima do limite</span><span><span class="chip s-nd">Não avaliado</span></span></div>
   </div>
   <div id="verdict"></div>
-  <div class="seg" id="seg-tab" role="group" aria-label="Partes da avaliação">
-    <button data-v="sintese">Condições de manejo</button><button data-v="matriz">Matrizes</button><button data-v="incerteza">Magnitude e incerteza</button><button data-v="sens">Sensibilidade</button><button data-v="iobc">Comparação com a IOBC</button><button data-v="regras">Regras</button>
+  <div class="tabs" id="tabs" role="group" aria-label="Partes da avaliação">
+    <button data-v="condicoes">Condições de manejo</button><button data-v="matrizes">Matrizes</button><button data-v="incerteza">Magnitude e incerteza</button><button data-v="sensibilidade">Sensibilidade</button><button data-v="iobc">Comparação com a IOBC</button><button data-v="regras">Regras</button>
   </div>
-  <div id="tab-out" class="stack"></div>
+  <div id="tab-out" class="stack" style="gap:24px"></div>
 </section>
 
 <!-- ============ DADOS ============ -->
 <section class="view" data-view="dados" hidden>
-  <div class="view-head">
-    <span class="eyebrow">Base de resultados</span>
-    <h2>Cada estimativa, com intervalo, modelo e classificação</h2>
-    <p class="lead">Uma linha por experimento, condição, geração e indicador. Clique em uma linha para abrir a ficha. Os valores são hipotéticos.</p>
+  <div class="intro">
+    <h2>Base de resultados</h2>
+    <p>Uma linha por experimento, condição, geração e indicador, com o intervalo, o modelo estatístico e a classificação. Clique em uma linha para abrir a ficha.</p>
   </div>
   <div class="filters">
-    <div class="field"><label for="d-q">Busca livre</label><input id="d-q" type="search" placeholder="Condição, indicador, geração"></div>
+    <div class="field"><label for="d-q">Busca</label><input id="d-q" type="search" placeholder="Condição, indicador ou geração…" autocomplete="off"></div>
     <div class="field"><label for="d-exp">Experimento</label><select id="d-exp"></select></div>
     <div class="field"><label for="d-grp">Grupo de indicador</label><select id="d-grp"><option value="">Todos</option><option value="p">Prioritário</option><option value="c">Complementar</option></select></div>
     <div class="field"><label for="d-cls">Classificação</label><select id="d-cls"><option value="">Todas</option><option value="ok">Preservado</option><option value="inc">Inconclusivo</option><option value="ruim">Prejudicado</option><option value="nd">Não avaliado</option></select></div>
   </div>
   <div class="row" style="justify-content:space-between">
-    <div class="row"><span class="lbl" style="font-weight:600;font-size:15px" id="lim-lbl-d">Limite</span><div class="lim" data-lim role="group" aria-labelledby="lim-lbl-d"></div><span class="muted" id="d-count" style="font-size:14px"></span></div>
+    <div class="row"><div class="lim-wrap"><span id="lim-d">Limite</span><div class="lim" data-lim role="group" aria-labelledby="lim-d"></div></div><span class="muted num" id="d-count" style="font-size:15px" aria-live="polite"></span></div>
     <button class="btn" id="copiar-csv">Copiar CSV</button>
   </div>
   <div id="d-out"></div>
-  <div class="stack">
+  <div class="block">
     <h3>Três bases, um fluxo</h3>
     <div class="scroll"><table>
       <thead><tr><th>Base</th><th>Conteúdo</th><th>Onde aparece</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Dados brutos</th><td>Observações individuais de cada experimento, tratamento e repetição.</td><td>Planilhas versionadas, para análise e reanálise.</td></tr>
+        <tr><th scope="row">Dados brutos</th><td>Observações de cada experimento, tratamento e repetição.</td><td>Planilhas versionadas, para análise e reanálise.</td></tr>
         <tr><th scope="row">Resultados estatísticos</th><td>Estimativas dos efeitos, reduções percentuais e intervalos de confiança.</td><td>Esta tabela.</td></tr>
         <tr><th scope="row">Classificação</th><td>Resultado das regras de decisão para cada indicador e condição de manejo.</td><td>Coluna de classificação e página de compatibilidade.</td></tr>
       </tbody>
@@ -310,105 +412,107 @@ footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify
 
 <!-- ============ MÉTODOS ============ -->
 <section class="view" data-view="metodos" hidden>
-  <div class="view-head">
-    <span class="eyebrow">Métodos</span>
-    <h2>Como cada evidência é gerada e analisada</h2>
-    <p class="lead">Protocolos do projeto, em ordem de execução. Cada ficha traz procedimento, delineamento, variáveis, análise estatística, cálculo e referências.</p>
+  <div class="intro">
+    <h2>Métodos</h2>
+    <p>Os protocolos do projeto em ordem de execução, da criação dos insetos ao modelo integrado. Abra cada um para ver procedimento, delineamento, variáveis, análise estatística e referências.</p>
   </div>
-  <div id="met-out"></div>
-  <p class="note">Os protocolos seguem o projeto de pesquisa (itens 5.2 a 5.8). As análises estatísticas foram detalhadas por tipo de variável para que cada estimativa chegue ao modelo como redução com intervalo de confiança.</p>
+  <div class="row"><button class="btn" id="abrir-todos">Abrir todos</button><button class="btn" id="fechar-todos">Fechar todos</button></div>
+  <div class="metodos" id="met-out"></div>
 </section>
 
 <!-- ============ LITERATURA ============ -->
 <section class="view" data-view="literatura" hidden>
-  <div class="view-head">
-    <span class="eyebrow">Literatura</span>
-    <h2>Estudos de seletividade e referências do projeto</h2>
-    <p class="lead">Os estudos experimentais usados como panorama no projeto, filtráveis por inimigo natural, produto e abordagem, e a lista completa de referências com DOI.</p>
+  <div class="intro">
+    <h2>Literatura</h2>
+    <p>Os estudos experimentais que o projeto usa como panorama e a lista completa de referências, com DOI.</p>
   </div>
-  <div class="seg" id="seg-lit" role="group" aria-label="Literatura">
-    <button data-v="estudos">Estudos de seletividade</button><button data-v="refs">Referências do projeto</button>
+  <div class="block">
+    <h3>Onde os estudos foram feitos</h3>
+    <div class="bars" id="bars" role="img"></div>
+    <p class="muted" id="bars-nota" style="font-size:15px;max-width:78ch"></p>
+  </div>
+  <div class="tabs" id="tabs-lit" role="group" aria-label="Literatura">
+    <button data-v="estudos">Estudos de seletividade</button><button data-v="referencias">Referências do projeto</button>
   </div>
   <div id="lit-estudos" class="stack">
     <div class="filters">
-      <div class="field"><label for="e-q">Espécie ou produto</label><input id="e-q" type="search" placeholder="Ex.: clorantraniliprole, Doru"></div>
+      <div class="field"><label for="e-q">Espécie ou produto</label><input id="e-q" type="search" placeholder="Ex.: clorantraniliprole, Doru…" autocomplete="off"></div>
       <div class="field"><label for="e-grp">Inimigo natural</label><select id="e-grp"><option value="">Todos</option><option>Predador</option><option>Parasitoide</option><option>Predadores e parasitoides</option></select></div>
       <div class="field"><label for="e-nv">Condição do ensaio</label><select id="e-nv"><option value="">Todas</option><option value="laborat">Laboratório</option><option value="semicampo">Semicampo</option><option value="campo">Campo</option></select></div>
       <div class="field"><label for="e-sel">Seletividade</label><select id="e-sel"><option value="">Todas</option><option value="fisiol">Fisiológica</option><option value="ecol">Ecológica</option><option value="transg">Transgeracional</option></select></div>
     </div>
-    <p class="muted" id="e-count" style="font-size:14px"></p>
+    <p class="muted num" id="e-count" style="font-size:15px" aria-live="polite"></p>
     <div id="e-out"></div>
   </div>
   <div id="lit-refs" class="stack" hidden>
     <div class="filters">
-      <div class="field"><label for="b-q">Autor, título ou periódico</label><input id="b-q" type="search" placeholder="Ex.: Hassan, sublethal, Trichogramma"></div>
+      <div class="field"><label for="b-q">Autor, título ou periódico</label><input id="b-q" type="search" placeholder="Ex.: Hassan, sublethal…" autocomplete="off"></div>
       <div class="field"><label for="b-tema">Tema</label><select id="b-tema"></select></div>
     </div>
-    <p class="muted" id="b-count" style="font-size:14px"></p>
+    <p class="muted num" id="b-count" style="font-size:15px" aria-live="polite"></p>
     <ul class="bib" id="bib-list"></ul>
   </div>
 </section>
 
 <!-- ============ FERRAMENTAS ============ -->
 <section class="view" data-view="ferramentas" hidden>
-  <div class="view-head">
-    <span class="eyebrow">Ferramentas</span>
-    <h2>Calculadoras do modelo</h2>
-    <p class="lead">As mesmas contas e regras usadas na avaliação, para conferir um resultado ou testar um limite.</p>
+  <div class="intro">
+    <h2>Ferramentas</h2>
+    <p>As mesmas contas e regras usadas na avaliação, para conferir um resultado ou testar outro limite.</p>
   </div>
-  <div class="grid">
-    <div class="card calc" id="c-red">
+  <div class="calcs">
+    <div class="calc" id="c-red">
       <h3>Redução em relação à testemunha</h3>
-      <div class="formula">R = (1 − Xt ÷ Xc) × 100</div>
+      <p class="formula">R = (1 − Xt ÷ Xc) × 100</p>
       <div class="inputs">
-        <div class="field"><label for="r-xc">Testemunha (Xc)</label><input id="r-xc" type="number" min="0" step="any" value="100"></div>
-        <div class="field"><label for="r-xt">Inseticida (Xt)</label><input id="r-xt" type="number" min="0" step="any" value="65"></div>
+        <div class="field"><label for="r-xc">Testemunha (Xc)</label><input id="r-xc" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
+        <div class="field"><label for="r-xt">Inseticida (Xt)</label><input id="r-xt" type="number" inputmode="decimal" min="0" step="any" value="65"></div>
         <div class="field"><label for="r-nv">Ensaio</label><select id="r-nv"><option value="lab">Laboratório</option><option value="semi">Semicampo</option></select></div>
-        <div class="field"><label for="r-l">Limite (%)</label><input id="r-l" type="number" min="1" max="99" value="20"></div>
+        <div class="field"><label for="r-l">Limite (%)</label><input id="r-l" type="number" inputmode="numeric" min="1" max="99" value="20"></div>
       </div>
-      <output id="r-out"></output>
+      <output id="r-out" aria-live="polite"></output>
       <small>Estimativa pontual. No modelo, a classificação usa o intervalo de confiança.</small>
     </div>
-    <div class="card calc" id="c-abbott">
+    <div class="calc" id="c-abbott">
       <h3>Mortalidade corrigida</h3>
-      <div class="formula">Mc = (Mt − Mtest) ÷ (100 − Mtest) × 100</div>
+      <p class="formula">Mc = (Mt − Mtest) ÷ (100 − Mtest) × 100</p>
       <div class="inputs">
-        <div class="field"><label for="a-mt">Mortos no tratamento</label><input id="a-mt" type="number" min="0" value="14"></div>
-        <div class="field"><label for="a-nt">Total no tratamento</label><input id="a-nt" type="number" min="1" value="30"></div>
-        <div class="field"><label for="a-mc">Mortos na testemunha</label><input id="a-mc" type="number" min="0" value="1"></div>
-        <div class="field"><label for="a-nc">Total na testemunha</label><input id="a-nc" type="number" min="1" value="30"></div>
+        <div class="field"><label for="a-mt">Mortos no tratamento</label><input id="a-mt" type="number" inputmode="numeric" min="0" value="14"></div>
+        <div class="field"><label for="a-nt">Total no tratamento</label><input id="a-nt" type="number" inputmode="numeric" min="1" value="30"></div>
+        <div class="field"><label for="a-mc">Mortos na testemunha</label><input id="a-mc" type="number" inputmode="numeric" min="0" value="1"></div>
+        <div class="field"><label for="a-nc">Total na testemunha</label><input id="a-nc" type="number" inputmode="numeric" min="1" value="30"></div>
         <div class="field"><label for="a-nv">Ensaio</label><select id="a-nv"><option value="lab">Laboratório</option><option value="semi">Semicampo</option></select></div>
       </div>
-      <output id="a-out"></output>
-      <small>Abbott (1925); classes da IOBC/WPRS como no item 5.6 do projeto.</small>
+      <output id="a-out" aria-live="polite"></output>
+      <small>Abbott (1925), com as classes da IOBC/WPRS do item 5.6 do projeto.</small>
     </div>
-    <div class="card calc" id="c-pef">
+    <div class="calc" id="c-pef">
       <h3>Parasitismo efetivo</h3>
-      <div class="formula">P efetivo = S × Ps</div>
+      <p class="formula">P efetivo = S × Ps</p>
       <div class="inputs">
-        <div class="field"><label for="p-sc">Sobrevivência na testemunha (%)</label><input id="p-sc" type="number" min="0" max="100" value="100"></div>
-        <div class="field"><label for="p-pc">Ovos por sobrevivente, testemunha</label><input id="p-pc" type="number" min="0" step="any" value="100"></div>
-        <div class="field"><label for="p-st">Sobrevivência no inseticida (%)</label><input id="p-st" type="number" min="0" max="100" value="50"></div>
-        <div class="field"><label for="p-pt">Ovos por sobrevivente, inseticida</label><input id="p-pt" type="number" min="0" step="any" value="100"></div>
+        <div class="field"><label for="p-sc">Sobrevivência na testemunha (%)</label><input id="p-sc" type="number" inputmode="decimal" min="0" max="100" value="100"></div>
+        <div class="field"><label for="p-pc">Ovos por sobrevivente, testemunha</label><input id="p-pc" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
+        <div class="field"><label for="p-st">Sobrevivência no inseticida (%)</label><input id="p-st" type="number" inputmode="decimal" min="0" max="100" value="50"></div>
+        <div class="field"><label for="p-pt">Ovos por sobrevivente, inseticida</label><input id="p-pt" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
       </div>
-      <output id="p-out"></output>
-      <small>Parasitismo por fêmea inicialmente exposta. Junta o efeito letal e o subletal em um só indicador funcional.</small>
+      <output id="p-out" aria-live="polite"></output>
+      <small>Parasitismo por fêmea inicialmente exposta: junta o efeito letal e o subletal em um indicador funcional.</small>
     </div>
-    <div class="card calc" id="c-ic">
+    <div class="calc" id="c-ic">
       <h3>Classificação pelo intervalo de confiança</h3>
-      <div class="formula">preservado: IC sup ≤ L · prejudicado: IC inf &gt; L · inconclusivo: o IC cruza L</div>
+      <p class="formula">Preservado se o limite superior ≤ L; prejudicado se o inferior &gt; L; inconclusivo se cruza L.</p>
       <div class="inputs">
-        <div class="field"><label for="i-e">Redução estimada (%)</label><input id="i-e" type="number" step="any" value="15"></div>
-        <div class="field"><label for="i-lo">IC 95% inferior</label><input id="i-lo" type="number" step="any" value="5"></div>
-        <div class="field"><label for="i-hi">IC 95% superior</label><input id="i-hi" type="number" step="any" value="30"></div>
-        <div class="field"><label for="i-l">Limite (%)</label><input id="i-l" type="number" min="1" max="99" value="20"></div>
+        <div class="field"><label for="i-e">Redução estimada (%)</label><input id="i-e" type="number" inputmode="decimal" step="any" value="15"></div>
+        <div class="field"><label for="i-lo">Limite inferior do IC</label><input id="i-lo" type="number" inputmode="decimal" step="any" value="5"></div>
+        <div class="field"><label for="i-hi">Limite superior do IC</label><input id="i-hi" type="number" inputmode="decimal" step="any" value="30"></div>
+        <div class="field"><label for="i-l">Limite (%)</label><input id="i-l" type="number" inputmode="numeric" min="1" max="99" value="20"></div>
       </div>
-      <output id="i-out"></output>
+      <output id="i-out" aria-live="polite"></output>
       <small>Lógica de não inferioridade (Lakens, 2017; Van der Voet et al., 2019).</small>
     </div>
-    <div class="card calc" id="c-pers">
+    <div class="calc" id="c-pers">
       <h3>Persistência da atividade prejudicial</h3>
-      <div class="field"><label for="s-txt">Redução do parasitismo por período (dias: %)</label><textarea id="s-txt" spellcheck="false">0: 60
+      <div class="field"><label for="s-txt">Redução do parasitismo por período, uma linha por período (dias: %)</label><textarea id="s-txt" spellcheck="false">0: 60
 3: 45
 7: 25
 10: 12
@@ -416,24 +520,28 @@ footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify
 21: 5
 28: 3
 35: 0</textarea></div>
-      <output id="s-out"></output>
-      <small>Duração = primeiro período com redução abaixo de 30%, mantida nos seguintes. Classes da IOBC/WPRS (item 5.6).</small>
+      <output id="s-out" aria-live="polite"></output>
+      <small>Duração: primeiro período com redução abaixo de 30%, mantida nos seguintes. Classes da IOBC/WPRS (item 5.6).</small>
     </div>
   </div>
 </section>
 
-<!-- ============ SOBRE O PROJETO ============ -->
+<!-- ============ PROJETO ============ -->
 <section class="view" data-view="projeto" hidden>
-  <div class="view-head">
-    <span class="eyebrow">Sobre o projeto</span>
+  <div class="intro">
     <h2>Repensando a seletividade de inseticidas: desenvolvimento de um modelo de compatibilidade entre controle químico e biológico</h2>
-    <p class="lead">Projeto de pesquisa de 24 meses de Emile Dayara Rabelo Santana, apresentado ao concurso para Professor do Magistério Superior da UFRGS (Edital nº 09/2026), Faculdade de Agronomia, Departamento de Fitossanidade, subárea Entomologia Agrícola. O MIPintegra é a base de dados e a plataforma de consulta prevista no projeto.</p>
+    <p>Projeto de pesquisa de 24 meses de Emile Dayara Rabelo Santana, apresentado ao concurso para Professor do Magistério Superior da UFRGS (Edital nº 09/2026), Faculdade de Agronomia, Departamento de Fitossanidade, subárea Entomologia Agrícola. O MIPintegra é a base de dados e a plataforma de consulta prevista no projeto.</p>
+  </div>
+
+  <div class="block">
+    <h3>Resumo</h3>
+    <p class="resumo">A integração entre controle químico e biológico é um dos fundamentos do Manejo Integrado de Pragas, mas sua aplicação ainda é um desafio. Os estudos de seletividade avançaram, porém nem sempre permitem dizer em quais condições os métodos podem ser usados de forma compatível, porque os efeitos dos inseticidas sobre os inimigos naturais dependem dos parâmetros avaliados e das condições de exposição. O projeto desenvolve e avalia um modelo de classificação da compatibilidade que integra evidências de seletividade fisiológica e ecológica, usando como sistema experimental o milho, <i>Spodoptera frugiperda</i>, o parasitoide de ovos <i>Trichogramma pretiosum</i> e o clorantraniliprole. Em laboratório e semicampo serão avaliados efeitos letais e subletais, a persistência residual e a influência do momento da pulverização e dos intervalos entre aplicação e liberação. Os resultados alimentam o modelo e uma base de dados para futura disponibilização, com fundamentos para ampliar a abordagem a outros sistemas agrícolas.</p>
   </div>
 
   <div class="two">
     <div class="prose">
-      <h3>Hipótese</h3>
-      <p>A integração de evidências de seletividade fisiológica e ecológica permite uma classificação mais abrangente e contextualizada da compatibilidade entre controle químico e biológico do que classificações baseadas em indicadores isolados.</p>
+      <h3>Hipóteses</h3>
+      <p>A integração de evidências de seletividade fisiológica e ecológica permite uma classificação mais abrangente e contextualizada da compatibilidade do que classificações baseadas em indicadores isolados.</p>
       <ul class="plain">
         <li><b>H1.</b> A suscetibilidade ao clorantraniliprole difere entre <i>S. frugiperda</i> e <i>T. pretiosum</i>, e a caracterização dos efeitos sobre o parasitoide depende dos indicadores e das condições de exposição avaliados.</li>
         <li><b>H2.</b> A persistência residual e o momento da exposição influenciam sobrevivência, parasitismo e descendência; certos intervalos e sequências reduzem os efeitos adversos.</li>
@@ -442,17 +550,17 @@ footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify
     </div>
     <div class="prose">
       <h3>Objetivos</h3>
-      <p>Desenvolver e avaliar um modelo que integre evidências de seletividade fisiológica e ecológica para classificar a compatibilidade entre controle químico e biológico, tendo como sistema experimental <i>S. frugiperda</i> no milho, o parasitoide <i>T. pretiosum</i> e o clorantraniliprole.</p>
+      <p>Desenvolver e avaliar um modelo que integre evidências de seletividade fisiológica e ecológica para classificar a compatibilidade entre controle químico e biológico.</p>
       <ol class="plain">
         <li>Caracterizar a seletividade fisiológica do clorantraniliprole sobre <i>T. pretiosum</i> em laboratório e semicampo.</li>
         <li>Investigar a seletividade ecológica: persistência dos resíduos e sequência e intervalos entre aplicação e liberação.</li>
-        <li>Avaliar o modelo de compatibilidade, confrontando suas classificações com os resultados do uso conjunto.</li>
+        <li>Avaliar o modelo, confrontando suas classificações com os resultados do uso conjunto.</li>
         <li>Estruturar a base de dados e os fundamentos da plataforma de consulta.</li>
       </ol>
     </div>
   </div>
 
-  <div class="stack">
+  <div class="block">
     <h3>Sistema-modelo</h3>
     <div class="scroll"><table>
       <thead><tr><th>Componente</th><th>Escolha</th><th>Por quê</th></tr></thead>
@@ -465,18 +573,18 @@ footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify
     </table></div>
   </div>
 
-  <div class="stack">
+  <div class="block">
     <h3>Metas</h3>
     <div class="scroll"><table>
-      <thead><tr><th>Meta</th><th>Indicador</th><th>Meses</th></tr></thead>
+      <thead><tr><th>Meta</th><th>Indicador</th><th class="n">Meses</th></tr></thead>
       <tbody id="metas"></tbody>
     </table></div>
   </div>
 
-  <div class="stack">
+  <div class="block">
     <h3>Cronograma</h3>
     <div class="scroll"><table>
-      <thead><tr><th>Atividade</th><th>1º sem.</th><th>2º sem.</th><th>3º sem.</th><th>4º sem.</th></tr></thead>
+      <thead><tr><th>Atividade</th><th>1º semestre</th><th>2º semestre</th><th>3º semestre</th><th>4º semestre</th></tr></thead>
       <tbody id="crono"></tbody>
     </table></div>
   </div>
@@ -499,11 +607,11 @@ footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify
         <li>Universidade Federal de Lavras, Embrapa Soja e ESALQ/USP, incluindo o centro SPARCBio.</li>
         <li>University of Nebraska–Lincoln e Texas A&amp;M University.</li>
       </ul>
-      <p class="muted" style="font-size:15px">A longo prazo, a proposta prevê a articulação de pesquisadores brasileiros da área e a futura constituição de um comitê nacional dedicado à seletividade.</p>
+      <p class="muted" style="font-size:16px">A longo prazo, a proposta prevê a articulação de pesquisadores brasileiros da área e a futura constituição de um comitê nacional dedicado à seletividade.</p>
     </div>
   </div>
 
-  <div class="stack">
+  <div class="block">
     <h3>Onde o MIPintegra se encaixa</h3>
     <div class="scroll"><table>
       <thead><tr><th></th><th>IRAC</th><th>IOBC/WPRS</th><th>APRD (Michigan State)</th><th>MIPintegra</th></tr></thead>
@@ -518,14 +626,14 @@ footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 24px;justify
 
   <div class="prose">
     <h3>Como citar</h3>
-    <p>Santana, E. D. R. (2026). MIPintegra: plataforma de consulta da compatibilidade entre controle químico e biológico. Versão 0.4. UFRGS.</p>
-    <p class="muted" style="font-size:15px">Coordenação: Emile Dayara Rabelo Santana · Contato: <a href="mailto:emiledayara23@gmail.com">emiledayara23@gmail.com</a></p>
+    <p>Santana, E. D. R. (2026). MIPintegra: plataforma de consulta da compatibilidade entre controle químico e biológico. Versão 0.5. UFRGS.</p>
+    <p class="muted" style="font-size:16px">Coordenação: Emile Dayara Rabelo Santana. Contato: <a href="mailto:emiledayara23@gmail.com">emiledayara23@gmail.com</a></p>
   </div>
 </section>
 
 </main>
 
-<footer><div class="wrap"><span>MIPintegra · protótipo 0.4 · UFRGS</span><span>Sem vínculo com IRAC, IOBC/WPRS ou Michigan State University.</span></div></footer>
+<footer><div class="wrap"><span>MIPintegra, protótipo 0.5, UFRGS</span><span>Sem vínculo com IRAC, IOBC/WPRS ou Michigan State University.</span></div></footer>
 
 <dialog id="dlg" aria-labelledby="dlg-t"><div class="dlg-in" id="dlg-body"></div></dialog>
 
@@ -537,14 +645,14 @@ const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const fmt=x=>(Math.round(x*10)/10).toLocaleString('pt-BR',{maximumFractionDigits:1}).replace('-','−');
 const pct=x=>fmt(x)+'%';
 const ic=v=>fmt(v[1])+' a '+fmt(v[2]);
-const chip=(par)=>`<span class="chip k${par[1]}">${esc(par[0])}</span>`;
+const chip=(par,cls)=>`<span class="chip s-${cls}">${esc(par[0])}</span>`;
 
 /* ---------- indicadores e modelos ---------- */
 const IND={
  sobr:{n:'Sobrevivência',g:'p',d:'Mortalidade corrigida pela testemunha (Abbott, 1925).'},
  emerg:{n:'Emergência',g:'p',d:'Ovos com orifício de saída sobre ovos parasitados.'},
  paras:{n:'Parasitismo',g:'p',d:'Ovos parasitados.'},
- pefet:{n:'Parasitismo efetivo',g:'p',d:'Proporção de sobreviventes × parasitismo médio por sobrevivente: parasitismo por fêmea inicialmente exposta.'},
+ pefet:{n:'Parasitismo efetivo',g:'p',d:'Proporção de sobreviventes multiplicada pelo parasitismo médio por sobrevivente: parasitismo por fêmea inicialmente exposta.'},
  imat:{n:'Emergência dos imaturos expostos',g:'p',d:'Emergência dos parasitoides que estavam dentro dos ovos hospedeiros no momento da pulverização.'},
  long:{n:'Longevidade',g:'c',d:'Tempo médio restrito de sobrevivência (RMST) até um horizonte comum aos dois tratamentos.'},
  voo:{n:'Capacidade de voo',g:'c',d:'Proporção de voadores entre os parasitoides recuperados no cilindro.'},
@@ -567,8 +675,9 @@ const MOD={
 const resRow=([d,m,p,e,em,r])=>({id:'d'+d,dias:d,l:d===0?'0 dia':d+' dias',s:d===0?'resíduo recém-seco':'após a pulverização',
   v:{sobr:[m,m-11,m+11],paras:[p,p-10,p+10],pefet:[e,e-9,e+9],emerg:[em,em-6,em+6],rs:[r,r-8,r+8]}});
 const EXP={
- pupas:{id:'pupas',t:'Pulverização direta sobre pupas',item:'5.4.1',sel:'Seletividade fisiológica',nivel:'lab',nvl:'Laboratório',met:'MIP-02',linha:'Geração',
+ pupas:{id:'pupas',t:'Pulverização direta sobre pupas',item:'5.4.1',sel:'Seletividade fisiológica',nivel:'lab',nvl:'Laboratório, torre de Potter',met:'MIP-02',linha:'Geração',
   q:'Qual o efeito da pulverização sobre os parasitoides em desenvolvimento dentro dos ovos, na geração exposta e nas seguintes?',
+  del:'2 tratamentos, 30 cartelas de cerca de 150 ovos; 30 fêmeas por tratamento',
   cols:[{k:'emerg',ind:'emerg',l:'Emergência',mod:'bin',n:'30 cartelas'},
         {k:'paras',ind:'paras',l:'Parasitismo total',s:'ovos por fêmea',mod:'cont',n:'30 fêmeas'},
         {k:'long',ind:'long',l:'Longevidade',mod:'surv',n:'30 fêmeas'},
@@ -579,16 +688,18 @@ const EXP={
    {id:'F0',l:'F0',s:'adultos das pupas pulverizadas',ger:'F0',v:{emerg:[5.3,1.2,9.6],paras:[35,25.1,44],long:[16.7,6.5,26],voo:[20,12.4,27.3],rs:[5,-3.1,12.8],tdev:[3,0.5,5.8]}},
    {id:'F1',l:'F1',s:'descendentes, sem nova exposição',ger:'F1',v:{emerg:[1.1,-2.5,4.6],paras:[5,-4,12],long:[8.3,-1.9,17.6],voo:[2.2,-3.9,8.1],rs:[2.5,-4.8,9.5]}},
    {id:'F2',l:'F2',s:'segunda geração descendente',ger:'F2',v:{emerg:[1.1,-2.2,4.3],rs:[1.3,-5.5,7.9]}}]},
- residuo:{id:'residuo',t:'Persistência da atividade residual',item:'5.4.2',sel:'Seletividade fisiológica · persistência',nivel:'lab',nvl:'Resíduo envelhecido em semicampo, exposição em laboratório',met:'MIP-05',linha:'Idade do resíduo',
+ residuo:{id:'residuo',t:'Persistência da atividade residual',item:'5.4.2',sel:'Seletividade fisiológica e persistência',nivel:'lab',nvl:'Resíduo envelhecido em semicampo, exposição em laboratório',met:'MIP-05',linha:'Idade do resíduo',
   q:'Por quanto tempo o resíduo nas folhas de milho continua prejudicando o parasitoide?',
+  del:'2 tratamentos, 8 períodos (0 a 35 dias), 30 fêmeas por combinação',
   cols:[{k:'sobr',ind:'sobr',l:'Sobrevivência',s:'mortalidade corrigida',ger:'F0',mod:'bern',n:'30 fêmeas'},
         {k:'paras',ind:'paras',l:'Parasitismo por sobrevivente',s:'ovos em 24 h',ger:'F0',mod:'cont',n:'30 fêmeas'},
         {k:'pefet',ind:'pefet',l:'Parasitismo efetivo',s:'S × Ps',ger:'F0',mod:'delta',n:'30 fêmeas'},
         {k:'emerg',ind:'emerg',l:'Emergência',s:'descendência',ger:'F1',mod:'bin',n:'30 fêmeas'},
         {k:'rs',ind:'rs',l:'Razão sexual',s:'descendência',ger:'F1',mod:'bin',n:'30 fêmeas'}],
   rows:[[0,45,60,78,25,15],[3,30,45,61.5,18,10],[7,15,25,36.3,10,5],[10,5,12,16.4,5,3],[14,3,8,10.8,3,2],[21,2,5,6.9,2,0],[28,0,3,3,0,0],[35,0,0,0,0,0]].map(resRow)},
- semicampo:{id:'semicampo',t:'Sequência e intervalos entre pulverização e liberação',item:'5.5.1',sel:'Seletividade ecológica',nivel:'semi',nvl:'Semicampo (casa de vegetação)',met:'MIP-06',linha:'Momento da pulverização',
+ semicampo:{id:'semicampo',t:'Sequência e intervalos entre pulverização e liberação',item:'5.5.1',sel:'Seletividade ecológica',nivel:'semi',nvl:'Semicampo, casa de vegetação',met:'MIP-06',linha:'Momento da pulverização',
   q:'Em que momento, em relação à liberação, a pulverização preserva o parasitismo e a descendência?',
+  del:'Fatorial 2 × 7 (produto e momento), 10 plantas por combinação',
   cols:[{k:'paras',ind:'paras',l:'Parasitismo acumulado',s:'ovos por planta em 6 dias',ger:'F0',mod:'glmm',n:'10 plantas'},
         {k:'apos',ind:'paras',l:'Parasitismo após a pulverização',s:'adultos presentes',ger:'F0',mod:'glmm',n:'10 plantas'},
         {k:'imat',ind:'imat',l:'Imaturos expostos',s:'emergência',ger:'F1',mod:'bin',n:'10 plantas'},
@@ -608,12 +719,13 @@ const ger=(col,row)=>col.ger||row.ger;
 const colsOrd=exp=>[...exp.cols.filter(c=>IND[c.ind].g==='p'),...exp.cols.filter(c=>IND[c.ind].g==='c')];
 
 /* ---------- regras de decisão ---------- */
-const CI1={ok:['Preservado',1],inc:['Inconclusivo',2],ruim:['Prejudicado',4],nd:['Não avaliado',0]};
-const CC={pres:['Desempenho preservado',1],ress:['Preservado, com ressalva',3],insuf:['Evidência insuficiente',0],prej:['Efeito prejudicial',4]};
+const CI1={ok:['Preservado'],inc:['Inconclusivo'],ruim:['Prejudicado'],nd:['Não avaliado']};
+const CC={pres:['Desempenho preservado'],ress:['Preservado, com ressalva'],insuf:['Evidência insuficiente'],prej:['Efeito prejudicial']};
 const C2={compat:['Compatível',1,'O desempenho do parasitoide foi preservado em todas as condições de manejo avaliadas.'],
  cond:['Compatível sob condições específicas',2,'Há condições de manejo com desempenho preservado e outras com efeito prejudicial.'],
  incomp:['Incompatível nas condições avaliadas',4,'Todas as condições de manejo avaliadas tiveram efeito prejudicial.'],
  insuf:['Evidência insuficiente',0,'Nenhuma condição demonstrou preservação, e nem todas mostraram efeito prejudicial.']};
+const C2s={compat:'pres',cond:'inc',incomp:'prej',insuf:'insuf'};
 const cls=(v,L)=>v==='nd'?'nd':(v[2]<=L?'ok':(v[1]>L?'ruim':'inc'));
 function condCls(exp,row,L){
   const p=[],c=[];
@@ -637,7 +749,7 @@ const PERS={1:'pouco persistente',2:'ligeiramente persistente',3:'moderadamente 
 const persCl=d=>d<5?1:d<=15?2:d<=30?3:4;
 function persistencia(serie){ for(let i=0;i<serie.length;i++){ if(serie.slice(i).every(x=>x[1]<30)) return serie[i][0]; } return null; }
 function motivo(exp,row,L){
-  const c=condCls(exp,row,L); if(c==='pres') return 'Todos os indicadores prioritários com o IC 95% abaixo do limite.';
+  const c=condCls(exp,row,L); if(c==='pres') return 'Todos os indicadores prioritários têm o intervalo de confiança abaixo do limite.';
   const out=[];
   exp.cols.forEach(col=>{ const v=row.v[col.k]; if(v===undefined) return; const k=cls(v,L), pri=IND[col.ind].g==='p';
     if((c==='prej'&&pri&&k==='ruim')||(c==='insuf'&&pri&&(k==='inc'||k==='nd'))||(c==='ress'&&!pri&&k==='ruim'))
@@ -646,9 +758,9 @@ function motivo(exp,row,L){
 }
 function contexto(row,L){
   if(row.res){ const r=EXP.residuo.rows.find(x=>x.id===row.res), cr=condCls(EXP.residuo,r,L), cs=condCls(EXP.semicampo,row,L);
-    return `Ensaio residual com ${r.l} de resíduo: ${chip(CC[cr])} ${cr===cs?'· concorda com o semicampo':'· <b>diverge do semicampo</b>, exige interpretação adicional'}`; }
+    return `Ensaio residual com ${r.l} de resíduo: ${chip(CC[cr],cr)} ${cr===cs?'concorda com o semicampo.':'<b>diverge do semicampo</b> e exige interpretação adicional.'}`; }
   if(row.mom>0){ const f0=EXP.pupas.rows[0], c0=condCls(EXP.pupas,f0,L);
-    return `Pulverização direta sobre pupas em laboratório, geração F0: ${chip(CC[c0])}`; }
+    return `Pulverização direta sobre pupas em laboratório, geração F0: ${chip(CC[c0],c0)}`; }
   return 'Sem ensaio de laboratório correspondente: o ensaio residual não inclui o período de 1 dia.';
 }
 
@@ -663,23 +775,23 @@ function fp(items,L){
     const head=`<span class="fp-l">${esc(i.l)}${i.s?`<small>${esc(i.s)}</small>`:''}</span>`;
     if(i.v==='nd') return `<div class="fp-row">${head}<div class="fp-t"><span class="fp-zone" style="left:0;width:${P(L)}%"></span><span class="fp-lim" style="left:${P(L)}%"></span></div><span class="fp-v c-nd">não avaliado</span></div>`;
     const k=cls(i.v,L);
-    return `<div class="fp-row">${head}<div class="fp-t" role="img" aria-label="${esc(i.l)}: redução de ${pct(i.v[0])}, IC 95% de ${ic(i.v)}, ${CI1[k][0].toLowerCase()}"><span class="fp-zone" style="left:0;width:${P(L)}%"></span><span class="fp-zero" style="left:${P(0)}%"></span><span class="fp-lim" style="left:${P(L)}%"></span><span class="fp-m c-${k}"><span class="fp-ci" style="left:${P(i.v[1])}%;width:${P(i.v[2])-P(i.v[1])}%"></span><span class="fp-pt" style="left:${P(i.v[0])}%"></span></span></div><span class="fp-v c-${k}"><b>${pct(i.v[0])}</b> <small>(${ic(i.v)})</small></span></div>`;
+    return `<div class="fp-row">${head}<div class="fp-t" role="img" aria-label="${esc(i.l)}: redução de ${pct(i.v[0])}, intervalo de ${ic(i.v)}, ${CI1[k][0].toLowerCase()}"><span class="fp-zone" style="left:0;width:${P(L)}%"></span><span class="fp-zero" style="left:${P(0)}%"></span><span class="fp-lim" style="left:${P(L)}%"></span><span class="fp-m c-${k}"><span class="fp-ci" style="left:${P(i.v[1])}%;width:${P(i.v[2])-P(i.v[1])}%"></span><span class="fp-pt" style="left:${P(i.v[0])}%"></span></span></div><span class="fp-v"><b>${pct(i.v[0])}</b> <small>(${ic(i.v)})</small></span></div>`;
   };
-  return `<div class="fp">${items.map(linha).join('')}<div class="fp-row fp-axisrow"><span></span><div class="fp-axis">${ticks.map(t=>`<span style="left:${P(t)}%">${fmt(t)}</span>`).join('')}</div><span class="fp-v muted">redução (%) · limite ${L}%</span></div></div>`;
+  return `<div class="fp">${items.map(linha).join('')}<div class="fp-row fp-axisrow"><span></span><div class="fp-axis">${ticks.map(t=>`<span style="left:${P(t)}%">${fmt(t)}</span>`).join('')}</div><span class="fp-v muted">redução (%), limite de ${L}%</span></div></div>`;
 }
 function celula(exp,row,col,L){
   const v=row.v[col.k];
   if(v===undefined) return '<td><span class="na" title="Não se aplica a esta linha">—</span></td>';
   const a=`data-cel="${exp.id}|${row.id}|${col.k}"`, k=cls(v,L);
-  if(k==='nd') return `<td><button class="cellbtn k0 nd" ${a} aria-label="${esc(col.l)}, ${esc(row.l)}: não avaliado"><b>n.a.</b><small>não avaliado</small></button></td>`;
-  return `<td><button class="cellbtn k${CI1[k][1]}" ${a} aria-label="${esc(col.l)}, ${esc(row.l)}: redução de ${pct(v[0])}, ${CI1[k][0]}"><b>${pct(v[0])}</b><small>${ic(v)}</small></button></td>`;
+  if(k==='nd') return `<td><button class="cel s-nd" ${a} aria-label="${esc(col.l)}, ${esc(row.l)}: não avaliado"><b>n.a.</b><small>não avaliado</small></button></td>`;
+  return `<td><button class="cel s-${k}" ${a} aria-label="${esc(col.l)}, ${esc(row.l)}: redução de ${pct(v[0])}, ${CI1[k][0]}"><b>${pct(v[0])}</b><small>${ic(v)}</small></button></td>`;
 }
 function matriz(exp,L){
   const cs=colsOrd(exp), np=cs.filter(c=>IND[c.ind].g==='p').length, nc=cs.length-np;
   let h=`<div class="scroll"><table class="matrix"><thead><tr class="grp"><th></th><th colspan="${np}">Indicadores prioritários</th>${nc?`<th colspan="${nc}">Complementares</th>`:''}<th></th></tr>
-   <tr><th scope="col">${esc(exp.linha)}</th>${cs.map(c=>`<th scope="col">${esc(c.l)}<small>${esc([c.s,c.ger].filter(Boolean).join(' · '))}</small></th>`).join('')}<th scope="col">Classificação</th></tr></thead><tbody>`;
+   <tr><th scope="col">${esc(exp.linha)}</th>${cs.map(c=>`<th scope="col">${esc(c.l)}<small>${esc([c.s,c.ger].filter(Boolean).join(', '))}</small></th>`).join('')}<th scope="col">Classificação</th></tr></thead><tbody>`;
   exp.rows.forEach(r=>{ const c=condCls(exp,r,L);
-    h+=`<tr><th scope="row">${esc(r.l)}${r.s?`<small>${esc(r.s)}</small>`:''}</th>${cs.map(col=>celula(exp,r,col,L)).join('')}<td><button class="chip k${CC[c][1]}" data-cond="${exp.id}|${r.id}">${esc(CC[c][0])}</button></td></tr>`; });
+    h+=`<tr><th scope="row">${esc(r.l)}${r.s?`<small>${esc(r.s)}</small>`:''}</th>${cs.map(col=>celula(exp,r,col,L)).join('')}<td><button class="chip s-${c}" data-cond="${exp.id}|${r.id}">${esc(CC[c][0])}</button></td></tr>`; });
   return h+'</tbody></table></div>';
 }
 
@@ -691,53 +803,82 @@ dlg.addEventListener('click',e=>{ if(e.target===dlg||e.target.closest('[data-clo
 function fichaCelula(eid,rid,ck){
   const exp=EXP[eid], row=exp.rows.find(r=>r.id===rid), col=exp.cols.find(c=>c.k===ck), v=row.v[ck], L=st.L;
   const m=MET.find(x=>x.id===exp.met);
-  const porL=[10,20,30].map(l=>`<span class="chip k${CI1[cls(v,l)][1]}">${l}%: ${CI1[cls(v,l)][0]}</span>`).join(' ');
-  abrir(`<div class="dlg-top"><span class="eyebrow">${esc(exp.t)} · item ${exp.item}</span><span class="tag demo-tag">Hipotético</span></div>
-  <h2 id="dlg-t">${esc(col.l)} · ${esc(row.l)}</h2>
-  ${v==='nd'?'<p class="note">Indicador essencial que não foi avaliado nesta condição. A falta do dado não é lida como ausência de efeito: a condição só pode ser classificada como preservada se os indicadores prioritários forem demonstrados.</p>':fp([{l:col.l,s:row.l,v}],L)}
-  <dl>
-   <dt>Condição</dt><dd>${esc(row.l)}${row.s?' · '+esc(row.s):''}</dd>
+  const porL=[10,20,30].map(l=>{const k=cls(v,l); return `<span class="chip s-${k}">${l}%: ${CI1[k][0]}</span>`;}).join(' ');
+  abrir(`<div class="dlg-top"><span>${esc(exp.t)}, item ${exp.item}</span><span class="tag-h">Hipotético</span></div>
+  <h2 id="dlg-t">${esc(col.l)}: ${esc(row.l)}</h2>
+  ${v==='nd'?'<p class="note">Indicador essencial que não foi avaliado nesta condição. A falta do dado não é lida como ausência de efeito: a condição só é classificada como preservada se os indicadores prioritários forem demonstrados.</p>':fp([{l:col.l,s:row.l,v}],L)}
+  <dl class="kv">
+   <dt>Condição</dt><dd>${esc(row.l)}${row.s?', '+esc(row.s):''}</dd>
    <dt>Geração</dt><dd>${esc(ger(col,row))}</dd>
    <dt>Indicador</dt><dd>${esc(IND[col.ind].n)} (${GRUPO[IND[col.ind].g].toLowerCase()}). ${esc(IND[col.ind].d)}</dd>
-   ${v==='nd'?'':`<dt>Redução</dt><dd><b>${pct(v[0])}</b>, IC 95% de ${ic(v)}</dd><dt>Por limite</dt><dd>${porL}</dd>
+   ${v==='nd'?'':`<dt>Redução</dt><dd><b>${pct(v[0])}</b>, IC 95% de ${ic(v)}</dd><dt>Por limite</dt><dd class="row" style="gap:6px">${porL}</dd>
    <dt>IOBC/WPRS</dt><dd>Classe ${iobc(v[0],exp.nivel)}, ${IOBC[iobc(v[0],exp.nivel)]} (escala de ${exp.nivel==='semi'?'semicampo':'laboratório'})</dd>`}
    <dt>Unidades</dt><dd>${esc(col.n)} por tratamento</dd>
    <dt>Modelo</dt><dd>${esc(MOD[col.mod])}</dd>
-   <dt>Método</dt><dd><button class="linkbtn" data-met="${m.id}">${m.id} · ${esc(m.t)}</button></dd>
+   <dt>Método</dt><dd><a href="#metodos/${m.id}" data-close>${m.id}: ${esc(m.t)}</a></dd>
   </dl>
   ${row.antes&&ck==='apos'?`<p class="note">Verificação: no período antes da pulverização, a redução do parasitismo foi de ${pct(row.antes[0])} (IC ${ic(row.antes)}), como esperado, pois as plantas ainda não tinham sido tratadas.</p>`:''}`);
 }
 function fichaCond(eid,rid){
   const exp=EXP[eid], row=exp.rows.find(r=>r.id===rid), L=st.L, c=condCls(exp,row,L);
   const linhas=colsOrd(exp).filter(col=>row.v[col.k]!==undefined).map(col=>{ const v=row.v[col.k], k=cls(v,L);
-    return `<tr><td>${esc(col.l)}<small>${GRUPO[IND[col.ind].g]} · ${esc(ger(col,row))}</small></td><td class="num">${v==='nd'?'—':pct(v[0])+' <small>'+ic(v)+'</small>'}</td><td>${chip(CI1[k])}</td></tr>`; }).join('');
-  abrir(`<div class="dlg-top"><span class="eyebrow">${esc(exp.t)} · Nível 1</span><span class="tag demo-tag">Hipotético</span></div>
-  <h2 id="dlg-t">${esc(row.l)}${row.s?' <small style="display:inline">'+esc(row.s)+'</small>':''}</h2>
-  <div>${chip(CC[c])}</div>
+    return `<tr><td>${esc(col.l)}<small>${GRUPO[IND[col.ind].g]}, ${esc(ger(col,row))}</small></td><td class="n">${v==='nd'?'—':pct(v[0])+'<small>'+ic(v)+'</small>'}</td><td>${chip(CI1[k],k)}</td></tr>`; }).join('');
+  abrir(`<div class="dlg-top"><span>${esc(exp.t)}, nível 1</span><span class="tag-h">Hipotético</span></div>
+  <h2 id="dlg-t">${esc(row.l)}${row.s?' '+esc(row.s):''}</h2>
+  <div>${chip(CC[c],c)}</div>
   <p>${esc(motivo(exp,row,L))}</p>
-  <div class="scroll"><table><thead><tr><th>Indicador</th><th>Redução</th><th>Limite de ${L}%</th></tr></thead><tbody>${linhas}</tbody></table></div>
+  <div class="scroll"><table><thead><tr><th>Indicador</th><th class="n">Redução</th><th>Limite de ${L}%</th></tr></thead><tbody>${linhas}</tbody></table></div>
   ${eid==='semicampo'?`<p class="note">${contexto(row,L)}</p>`:''}
-  <p class="muted" style="font-size:15px">Regra: prejuízo em qualquer indicador prioritário define a condição como prejudicial; sem prejuízo, mas com indicador prioritário inconclusivo ou não avaliado, a evidência é insuficiente; com prioritários preservados e prejuízo em complementar, a condição fica preservada com ressalva.</p>`);
-}
-function fichaMetodo(id){
-  const m=MET.find(x=>x.id===id);
-  abrir(`<div class="dlg-top"><span class="eyebrow mono">${m.id} · item ${m.item} · ${esc(m.etapa)}</span><span class="tag">${esc(m.nivel)}</span></div>
-  <h2 id="dlg-t">${esc(m.t)}</h2>
-  <p>${esc(m.obj)}</p>
-  <h3>Procedimento resumido</h3><ol>${m.passos.map(p=>`<li>${p}</li>`).join('')}</ol>
-  <dl>
-   ${m.del?`<dt>Delineamento</dt><dd>${esc(m.del)}</dd>`:''}
-   ${m.vars?`<dt>Variáveis</dt><dd>${esc(m.vars)}</dd>`:''}
-   ${m.an?`<dt>Análise</dt><dd>${m.an}</dd>`:''}
-   ${m.calc?`<dt>Cálculo</dt><dd>${esc(m.calc)}</dd>`:''}
-   ${m.exp?`<dt>Resultados</dt><dd><button class="linkbtn" data-go="${m.exp}">Ver na avaliação de compatibilidade</button></dd>`:''}
-  </dl>
-  ${m.refs.length?`<h3>Referências</h3><ul>${m.refs.map(k=>{const b=BIB.find(x=>x[0]===k); return b?`<li>${esc(b[1])} (${b[2]}). ${esc(b[3])}. ${esc(b[4])}.</li>`:''}).join('')}</ul>`:''}`);
+  <p class="muted" style="font-size:15px">Regra: prejuízo em qualquer indicador prioritário define a condição como prejudicial; sem prejuízo, mas com indicador prioritário inconclusivo ou não avaliado, a evidência é insuficiente; com os prioritários preservados e prejuízo em um complementar, a condição fica preservada com ressalva.</p>`);
 }
 
 /* ---------- estado ---------- */
-const st={L:20,tab:'sintese',fexp:'semicampo',fcol:'paras',dq:'',dexp:'',dgrp:'',dcls:'',lit:'estudos'};
+const TABS=['condicoes','matrizes','incerteza','sensibilidade','iobc','regras'];
+const st={L:20,mom:'m7',tab:'condicoes',fexp:'semicampo',fcol:'paras',dq:'',dexp:'',dgrp:'',dcls:'',lit:'estudos'};
 function renderLim(){ $$('[data-lim]').forEach(g=>{ g.innerHTML=[10,20,30].map(l=>`<button data-l="${l}" aria-pressed="${l===st.L}">${l}%</button>`).join(''); }); }
+
+/* ---------- início: linha do tempo e cartelas ---------- */
+const OVOS=150, BASE=92;
+const ordem=(()=>{ let s=7; const idx=[...Array(OVOS).keys()]; for(let i=OVOS-1;i>0;i--){ s=(s*1103515245+12345)%2147483648; const j=s%(i+1); [idx[i],idx[j]]=[idx[j],idx[i]]; } const r=Array(OVOS); idx.forEach((v,i)=>r[v]=i); return r; })();
+const cartela=id=>`<div class="cartela" id="${id}" aria-hidden="true">${'<i></i>'.repeat(OVOS)}</div>`;
+function pintar(id,n){ $$('#'+id+' i').forEach((e,i)=>e.classList.toggle('p',ordem[i]<n)); }
+function renderHero(){
+  const L=st.L, exp=EXP.semicampo, X=d=>(d+7)/10*100;
+  let h='<div class="tl-axis"></div>';
+  for(let d=-7;d<=3;d++) h+=`<span class="tl-tick" style="left:${X(d)}%"></span>`;
+  h+=`<span class="tl-rel" style="left:${X(0)}%"><span>liberação</span></span>`;
+  exp.rows.forEach(r=>{ const c=condCls(exp,r,L), lab=(r.mom>0?'+':'')+fmt(r.mom);
+    h+=`<button class="tl-node s-${c}" style="left:${X(r.mom)}%" data-mom="${r.id}" aria-pressed="${r.id===st.mom}" aria-label="Pulverização ${esc(r.c)}: ${esc(CC[c][0])}">${lab}</button><span class="tl-lab" style="left:${X(r.mom)}%">${esc(r.l)}</span>`; });
+  $('#tl').innerHTML=h;
+  if(!$('#ct-test')) $('#detalhe').innerHTML=`<div class="cartela-box"><h3>Testemunha</h3>${cartela('ct-test')}<small id="n-test"></small></div><div class="cartela-box"><h3>Clorantraniliprole</h3>${cartela('ct-ins')}<small id="n-ins"></small></div><div class="leitura" id="leitura"></div>`;
+  const r=exp.rows.find(x=>x.id===st.mom), v=r.v.paras, c=condCls(exp,r,L), mot=motivo(exp,r,L), n=Math.round(BASE*(1-Math.max(0,Math.min(100,v[0]))/100));
+  pintar('ct-test',BASE); pintar('ct-ins',n);
+  $('#n-test').textContent=BASE+' de '+OVOS+' ovos parasitados';
+  $('#n-ins').textContent=n+' de '+OVOS+' ovos parasitados';
+  $('#leitura').innerHTML=`<h3>Pulverização ${esc(r.c)}</h3>
+    <p class="valor">${pct(v[0])} <small>de redução no parasitismo acumulado (IC 95%: ${ic(v)})</small></p>
+    <div>${chip(CC[c],c)}</div>
+    ${mot.split('; ').some(x=>!x.startsWith('Parasitismo acumulado'))?`<p>${esc(mot)}</p>`:''}
+    <p class="muted" style="font-size:15px">${contexto(r,L)}</p>`;
+  const s=sintese(L);
+  $('#veredito').innerHTML=`<span>Com o limite de ${L}%, a combinação fica</span><b>${esc(C2[s][0])}</b><a href="#compatibilidade">Ver a avaliação completa</a>`;
+}
+
+function renderInicio(){
+  renderLim(); renderHero();
+  $('#exps').innerHTML=EXPS.map(id=>{ const e=EXP[id], prior=colsOrd(e).filter(c=>IND[c.ind].g==='p').map(c=>c.l.toLowerCase());
+    return `<div class="exp"><h3>${esc(e.t)}</h3><p class="q">${esc(e.q)}</p><dl>
+      <dt>Item</dt><dd>${e.item}, ${esc(e.sel.toLowerCase())}</dd><dt>Onde</dt><dd>${esc(e.nvl)}</dd><dt>Desenho</dt><dd>${esc(e.del)}</dd><dt>Prioritários</dt><dd>${esc(prior.join(', '))}</dd></dl>
+      <div class="foot"><a href="#compatibilidade/matrizes">Ver a matriz</a></div></div>`; }).join('');
+  $('#atalhos').innerHTML=[
+   ['compatibilidade','Compatibilidade','Classificação da combinação, matrizes, incerteza, sensibilidade ao limite e comparação com a IOBC.',EXP.semicampo.rows.length+' condições'],
+   ['dados','Dados','Cada redução com intervalo, unidades, modelo estatístico e classificação. Exporta CSV.',ALL.length+' estimativas'],
+   ['metodos','Métodos','Da criação dos insetos ao modelo integrado, com a análise estatística de cada variável.',MET.length+' protocolos'],
+   ['literatura','Literatura','Estudos de seletividade filtráveis e as referências do projeto com DOI.',ESTUDOS.length+' estudos, '+BIB.length+' referências'],
+   ['ferramentas','Ferramentas','Calculadoras de redução, Abbott, parasitismo efetivo, intervalo de confiança e persistência.','5 calculadoras'],
+   ['projeto','Projeto','Resumo, hipóteses, objetivos, metas, cronograma e alcance.','24 meses']
+  ].map(([h,t,d,n])=>`<li><a href="#${h}"><b>${t}</b><span>${d}</span><em>${n}</em></a></li>`).join('');
+}
 
 /* ---------- compatibilidade ---------- */
 function renderVerdict(){
@@ -746,76 +887,76 @@ function renderVerdict(){
   EXP.semicampo.rows.forEach(r=>grupos[condCls(EXP.semicampo,r,L)].push(r.c));
   const j=janela(L);
   $('#verdict').innerHTML=`<div class="verdict v${k}">
-    <span class="eyebrow">Classificação da combinação · Nível 2 · limite de ${L}%</span>
+    <span class="muted">Classificação da combinação com limite de ${L}%</span>
     <span class="big">${esc(t)}</span>
     <p>${esc(d)} ${grupos.pres.length?`Pulverização com desempenho preservado: <b>${esc(grupos.pres.join('; '))}</b>.`:''}</p>
-    <p class="muted" style="font-size:15px">Ensaio residual: ${j===null?'nenhum período demonstra preservação com este limite.':`desempenho preservado a partir de <b>${j} dias</b> de resíduo.`} Exemplo hipotético; a classificação real depende dos experimentos.</p>
+    <p class="muted" style="font-size:15px">Ensaio residual: ${j===null?'nenhum período demonstra preservação com este limite.':`desempenho preservado a partir de <b>${j} dias</b> de resíduo.`}</p>
   </div>`;
 }
 function renderTab(){
   const L=st.L, o=$('#tab-out');
-  $$('#seg-tab button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===st.tab));
-  if(st.tab==='sintese'){
+  $$('#tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===st.tab));
+  if(st.tab==='condicoes'){
     const exp=EXP.semicampo;
-    o.innerHTML=`<p class="muted">Cada linha é uma condição de manejo testada em semicampo (Nível 1). O ensaio de laboratório correspondente aparece como contexto, sem entrar em média com o semicampo.</p>
+    o.innerHTML=`<p class="muted" style="max-width:78ch">Cada linha é uma condição de manejo testada em semicampo. O ensaio de laboratório correspondente aparece como contexto, sem entrar em média com o semicampo.</p>
     <ul class="conds">${exp.rows.map(r=>{ const c=condCls(exp,r,L);
-      return `<li><div><b>${esc(r.l)}</b><small>${esc(r.s||'')}</small></div><div class="why"><div><button class="chip k${CC[c][1]}" data-cond="semicampo|${r.id}">${esc(CC[c][0])}</button></div><span>${esc(motivo(exp,r,L))}</span><span class="ctx">${contexto(r,L)}</span></div></li>`; }).join('')}</ul>`;
-  } else if(st.tab==='matriz'){
+      return `<li><div><b>${esc(r.l)}</b><small>${esc(r.s||'')}</small></div><div class="why"><button class="chip s-${c}" data-cond="semicampo|${r.id}">${esc(CC[c][0])}</button><span>${esc(motivo(exp,r,L))}</span><span class="ctx">${contexto(r,L)}</span></div></li>`; }).join('')}</ul>`;
+  } else if(st.tab==='matrizes'){
     o.innerHTML=EXPS.map(id=>{ const e=EXP[id];
       let extra='';
       if(id==='residuo'){ const d=persistencia(e.rows.map(r=>[r.dias,r.v.paras[0]])), j=janela(L);
-        extra=`<p class="note">IOBC/WPRS: atividade prejudicial até ${d} dias (redução do parasitismo abaixo de 30% a partir daí), classe ${persCl(d)}, ${PERS[persCl(d)]}. Modelo integrado, limite de ${L}%: ${j===null?'nenhum período com desempenho preservado.':'desempenho preservado a partir de '+j+' dias.'}</p>`; }
-      return `<div class="stack"><div class="stack" style="gap:4px"><span class="eyebrow">${esc(e.sel)} · item ${e.item} · ${esc(e.nvl)}</span><h3>${esc(e.t)}</h3><p class="muted" style="font-size:16px">${esc(e.q)}</p></div>${matriz(e,L)}${extra}</div>`; }).join('');
+        extra=`<p class="note">IOBC/WPRS: atividade prejudicial até ${d} dias (redução do parasitismo abaixo de 30% a partir daí), classe ${persCl(d)}, ${PERS[persCl(d)]}. Modelo integrado com limite de ${L}%: ${j===null?'nenhum período com desempenho preservado.':'desempenho preservado a partir de '+j+' dias.'}</p>`; }
+      return `<div class="stack"><div class="exp-head"><h3>${esc(e.t)}</h3><small>Item ${e.item}, ${esc(e.sel.toLowerCase())}. ${esc(e.nvl)}.</small><p class="muted">${esc(e.q)}</p></div>${matriz(e,L)}${extra}</div>`; }).join('');
   } else if(st.tab==='incerteza'){
     const e=EXP[st.fexp]; if(!e.cols.some(c=>c.k===st.fcol)) st.fcol=e.cols[0].k;
     const col=e.cols.find(c=>c.k===st.fcol);
     const items=e.rows.filter(r=>r.v[col.k]!==undefined).map(r=>({l:r.l,s:r.s,v:r.v[col.k]}));
     o.innerHTML=`<div class="filters"><div class="field"><label for="f-exp">Experimento</label><select id="f-exp">${EXPS.map(id=>`<option value="${id}"${id===st.fexp?' selected':''}>${esc(EXP[id].t)}</option>`).join('')}</select></div>
-     <div class="field"><label for="f-col">Indicador</label><select id="f-col">${colsOrd(e).map(c=>`<option value="${c.k}"${c.k===st.fcol?' selected':''}>${esc(c.l)}${c.ger?' · '+c.ger:''}</option>`).join('')}</select></div></div>
+     <div class="field"><label for="f-col">Indicador</label><select id="f-col">${colsOrd(e).map(c=>`<option value="${c.k}"${c.k===st.fcol?' selected':''}>${esc(c.l)}${c.ger?', '+c.ger:''}</option>`).join('')}</select></div></div>
      ${fp(items,L)}
-     <p class="muted" style="font-size:15px">Ponto: redução estimada. Barra: IC 95%. Faixa verde: até o limite de ${L}%. Um resultado só é lido como preservado quando a barra inteira fica dentro da faixa; não basta o teste estatístico dar p &gt; 0,05.</p>`;
+     <p class="muted" style="font-size:15px;max-width:78ch">O ponto é a redução estimada e a barra, o intervalo de confiança de 95%. A faixa verde vai até o limite de ${L}%. Um resultado só é lido como preservado quando a barra inteira fica dentro da faixa; não basta o teste estatístico dar p &gt; 0,05.</p>`;
     $('#f-exp').addEventListener('change',ev=>{ st.fexp=ev.target.value; renderTab(); });
     $('#f-col').addEventListener('change',ev=>{ st.fcol=ev.target.value; renderTab(); });
-  } else if(st.tab==='sens'){
+  } else if(st.tab==='sensibilidade'){
     const Ls=[10,20,30], e=EXP.semicampo;
-    const linha=(l,s,arr)=>{ const muda=new Set(arr.map(a=>a[0])).size>1; return `<tr><th scope="row">${esc(l)}${s?`<small>${esc(s)}</small>`:''}</th>${arr.map(a=>`<td>${chip(a)}</td>`).join('')}<td>${muda?'<b>muda com o limite</b>':'estável'}</td></tr>`; };
-    o.innerHTML=`<p class="muted">A mesma base classificada com limites de 10%, 20% e 30%. Linhas que mudam mostram onde o limite decide a conclusão.</p>
+    const linha=(l,s,arr)=>{ const muda=new Set(arr.map(a=>a[0][0])).size>1; return `<tr><th scope="row">${esc(l)}${s?`<small>${esc(s)}</small>`:''}</th>${arr.map(a=>`<td>${chip(a[0],a[1])}</td>`).join('')}<td>${muda?'<b>muda com o limite</b>':'estável'}</td></tr>`; };
+    o.innerHTML=`<p class="muted" style="max-width:78ch">A mesma base classificada com limites de 10%, 20% e 30%. Linhas que mudam mostram onde o limite decide a conclusão.</p>
     <div class="scroll"><table><thead><tr><th>Condição</th>${Ls.map(l=>`<th>${l}%</th>`).join('')}<th>Leitura</th></tr></thead><tbody>
      <tr class="sub"><th colspan="5">Semicampo: momento da pulverização</th></tr>
-     ${e.rows.map(r=>linha(r.l,r.s,Ls.map(l=>CC[condCls(e,r,l)]))).join('')}
+     ${e.rows.map(r=>linha(r.l,r.s,Ls.map(l=>{const c=condCls(e,r,l); return [CC[c],c];}))).join('')}
      <tr class="sub"><th colspan="5">Laboratório</th></tr>
-     ${linha('Ensaio residual','primeiro período preservado',Ls.map(l=>{const j=janela(l); return j===null?['nenhum',0]:[j+' dias',1];}))}
-     ${EXP.pupas.rows.map(r=>linha('Pupas pulverizadas, '+r.l,r.s,Ls.map(l=>CC[condCls(EXP.pupas,r,l)]))).join('')}
+     ${linha('Ensaio residual','primeiro período preservado',Ls.map(l=>{const j=janela(l); return j===null?[['nenhum'],'insuf']:[[j+' dias'],'pres'];}))}
+     ${EXP.pupas.rows.map(r=>linha('Pupas pulverizadas, '+r.l,r.s,Ls.map(l=>{const c=condCls(EXP.pupas,r,l); return [CC[c],c];}))).join('')}
      <tr class="sub"><th colspan="5">Combinação</th></tr>
-     ${linha('Clorantraniliprole × T. pretiosum','Nível 2',Ls.map(l=>C2[sintese(l)]))}
+     ${linha('Clorantraniliprole e T. pretiosum','nível 2',Ls.map(l=>{const s=sintese(l); return [C2[s],C2s[s]];}))}
     </tbody></table></div>`;
   } else if(st.tab==='iobc'){
     const lin=[];
-    EXP.pupas.rows.forEach(r=>colsOrd(EXP.pupas).forEach(c=>{ const v=r.v[c.k]; if(v===undefined||v==='nd') return; const k=iobc(v[0],'lab');
-      lin.push(`<tr><td>${esc(r.l)}</td><td>${esc(c.l)}</td><td class="num">${pct(v[0])} <small>${ic(v)}</small></td><td><span class="chip k${k}">Classe ${k} · ${IOBC[k]}</span></td><td>${chip(CI1[cls(v,st.L)])}</td></tr>`); }));
-    const sem=EXP.semicampo.rows.map(r=>{ const v=r.v.paras, k=iobc(v[0],'semi');
-      return `<tr><td>${esc(r.l)}<small>${esc(r.s)}</small></td><td>Parasitismo acumulado</td><td class="num">${pct(v[0])} <small>${ic(v)}</small></td><td><span class="chip k${k}">Classe ${k} · ${IOBC[k]}</span></td><td>${chip(CC[condCls(EXP.semicampo,r,st.L)])}</td></tr>`; }).join('');
+    EXP.pupas.rows.forEach(r=>colsOrd(EXP.pupas).forEach(c=>{ const v=r.v[c.k]; if(v===undefined||v==='nd') return; const k=iobc(v[0],'lab'), m=cls(v,st.L);
+      lin.push(`<tr><td>${esc(r.l)}</td><td>${esc(c.l)}</td><td class="n">${pct(v[0])}<small>${ic(v)}</small></td><td><span class="chip s-${k}">Classe ${k}, ${IOBC[k]}</span></td><td>${chip(CI1[m],m)}</td></tr>`); }));
+    const sem=EXP.semicampo.rows.map(r=>{ const v=r.v.paras, k=iobc(v[0],'semi'), c=condCls(EXP.semicampo,r,st.L);
+      return `<tr><td>${esc(r.l)}<small>${esc(r.s)}</small></td><td>Parasitismo acumulado</td><td class="n">${pct(v[0])}<small>${ic(v)}</small></td><td><span class="chip s-${k}">Classe ${k}, ${IOBC[k]}</span></td><td>${chip(CC[c],c)}</td></tr>`; }).join('');
     const d=persistencia(EXP.residuo.rows.map(r=>[r.dias,r.v.paras[0]])), j=janela(st.L);
-    o.innerHTML=`<p class="muted">A IOBC/WPRS classifica o efeito em cada ensaio. O modelo usa essas informações com as demais para responder outra pergunta: em que condição a integração preserva o parasitoide. A comparação é descritiva e não pretende substituir a IOBC.</p>
-    <div class="scroll"><table><thead><tr><th>Condição</th><th>Indicador</th><th>Redução</th><th>IOBC/WPRS</th><th>Modelo, limite de ${st.L}%</th></tr></thead><tbody>
-     <tr class="sub"><th colspan="5">Pulverização direta sobre pupas · escala de laboratório</th></tr>${lin.join('')}
+    o.innerHTML=`<p class="muted" style="max-width:78ch">A IOBC/WPRS classifica o efeito em cada ensaio. O modelo usa essas informações com as demais para responder outra pergunta: em que condição a integração preserva o parasitoide. A comparação é descritiva e não pretende substituir a IOBC.</p>
+    <div class="scroll"><table><thead><tr><th>Condição</th><th>Indicador</th><th class="n">Redução</th><th>IOBC/WPRS</th><th>Modelo, limite de ${st.L}%</th></tr></thead><tbody>
+     <tr class="sub"><th colspan="5">Pulverização direta sobre pupas, escala de laboratório</th></tr>${lin.join('')}
      <tr class="sub"><th colspan="5">Persistência residual</th></tr>
-     <tr><td>Resíduo nas folhas</td><td>Parasitismo por sobrevivente</td><td>abaixo de 30% a partir de ${d} dias</td><td><span class="chip k${persCl(d)}">Classe ${persCl(d)} · ${PERS[persCl(d)]}</span></td><td>${j===null?'<span class="chip k0">nenhum período preservado</span>':`<span class="chip k1">preservado a partir de ${j} dias</span>`}</td></tr>
-     <tr class="sub"><th colspan="5">Semicampo · escala de semicampo</th></tr>${sem}
+     <tr><td>Resíduo nas folhas</td><td>Parasitismo por sobrevivente</td><td class="n">abaixo de 30% a partir de ${d} dias</td><td><span class="chip s-${persCl(d)}">Classe ${persCl(d)}, ${PERS[persCl(d)]}</span></td><td>${j===null?'<span class="chip s-insuf">nenhum período preservado</span>':`<span class="chip s-pres">preservado a partir de ${j} dias</span>`}</td></tr>
+     <tr class="sub"><th colspan="5">Semicampo, escala de semicampo</th></tr>${sem}
     </tbody></table></div>
-    <p class="note">Exemplo da diferença: na pulverização sobre pupas, a redução de 35% no parasitismo da geração F0 é classe 1 (inócuo) pela escala de laboratório, mas o IC inteiro fica acima de 20%, e o modelo registra prejuízo à função de controle biológico.</p>`;
+    <p class="note">Exemplo da diferença: na pulverização sobre pupas, a redução de 35% no parasitismo da geração F0 é classe 1 (inócuo) pela escala de laboratório, mas o intervalo inteiro fica acima de 20%, e o modelo registra prejuízo à função de controle biológico.</p>`;
   } else {
     o.innerHTML=`<div class="two">
      <div class="prose"><h3>Indicador</h3><ul class="plain">
       <li>Redução em relação à testemunha, R = (1 − Xt ÷ Xc) × 100, com IC 95%. Mortalidade corrigida por Abbott; longevidade pelo tempo médio restrito de sobrevivência.</li>
       <li><b>Preservado</b>: limite superior do IC igual ou menor que o limite. <b>Prejudicado</b>: limite inferior maior que o limite. <b>Inconclusivo</b>: o IC cruza o limite.</li>
       <li>Limite operacional inicial de 20%, justificado pela relevância biológica (EFSA, 2011; 2017), e não como valor universal.</li></ul></div>
-     <div class="prose"><h3>Condição (Nível 1)</h3><ul class="plain">
+     <div class="prose"><h3>Condição</h3><ul class="plain">
       <li>Prioritários: parasitismo, sobrevivência e emergência. Complementares: longevidade, voo, razão sexual e tempo de desenvolvimento.</li>
       <li>Sem pesos e sem média: prejuízo em prioritário define a condição como prejudicial.</li>
       <li>Prioritário inconclusivo ou não avaliado: evidência insuficiente. Falta de dado não vira ausência de efeito.</li>
       <li>Prejuízo só em complementar: preservado, com ressalva.</li></ul></div>
-     <div class="prose"><h3>Combinação (Nível 2)</h3><ul class="plain">
+     <div class="prose"><h3>Combinação</h3><ul class="plain">
       <li><b>Compatível</b>: todas as condições de manejo preservadas.</li>
       <li><b>Compatível sob condições específicas</b>: ao menos uma condição preservada.</li>
       <li><b>Incompatível nas condições avaliadas</b>: todas prejudiciais.</li>
@@ -836,7 +977,7 @@ function renderTab(){
   }
 }
 function renderCompat(){ renderLim(); renderVerdict(); renderTab(); }
-$('#seg-tab').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ st.tab=b.dataset.v; renderTab(); }});
+$('#tabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ st.tab=b.dataset.v; history.replaceState(null,'','#compatibilidade/'+st.tab); renderTab(); }});
 
 /* ---------- dados ---------- */
 const ALL=[];
@@ -849,15 +990,16 @@ function renderDados(){
   $('#d-exp').innerHTML='<option value="">Todos</option>'+EXPS.map(id=>`<option value="${id}"${id===st.dexp?' selected':''}>${esc(EXP[id].t)}</option>`).join('');
   const xs=dadosFiltrados();
   $('#d-count').textContent=xs.length+' de '+ALL.length+' estimativas';
-  $('#d-out').innerHTML=xs.length?`<div class="scroll"><table class="list"><thead><tr><th>Experimento</th><th>Condição</th><th>Geração</th><th>Indicador</th><th>Redução</th><th>IC 95%</th><th>Limite de ${st.L}%</th><th>IOBC/WPRS</th></tr></thead><tbody>`+
+  $('#d-out').innerHTML=xs.length?`<div class="scroll"><table class="list"><thead><tr><th>Experimento</th><th>Condição</th><th>Geração</th><th>Indicador</th><th class="n">Redução</th><th class="n">IC 95%</th><th>Limite de ${st.L}%</th><th>IOBC/WPRS</th></tr></thead><tbody>`+
    xs.map(x=>{ const k=cls(x.v,st.L), io=x.v==='nd'?null:iobc(x.v[0],x.nivel);
-    return `<tr data-cel="${x.exp}|${x.row}|${x.col}"><td>${esc(x.et)}</td><td>${esc(x.cond)}</td><td>${x.ger}</td><td>${esc(x.ind)}<small>${GRUPO[x.grp]}</small></td><td class="num">${x.v==='nd'?'—':pct(x.v[0])}</td><td class="num">${x.v==='nd'?'—':ic(x.v)}</td><td>${chip(CI1[k])}</td><td>${io?`<span class="chip k${io}">Classe ${io}</span>`:'—'}</td></tr>`; }).join('')+'</tbody></table></div>'
-   :'<div class="scroll"><p class="empty">Nenhuma estimativa com esses filtros.</p></div>';
+    return `<tr data-cel="${x.exp}|${x.row}|${x.col}" tabindex="0"><td>${esc(x.et)}</td><td>${esc(x.cond)}</td><td>${x.ger}</td><td>${esc(x.ind)}<small>${GRUPO[x.grp]}</small></td><td class="n">${x.v==='nd'?'—':pct(x.v[0])}</td><td class="n">${x.v==='nd'?'—':ic(x.v)}</td><td>${chip(CI1[k],k)}</td><td>${io?`<span class="chip s-${io}">Classe ${io}</span>`:'—'}</td></tr>`; }).join('')+'</tbody></table></div>'
+   :'<div class="scroll"><p class="empty">Nenhuma estimativa com esses filtros. Limpe a busca ou escolha outro experimento.</p></div>';
 }
 $('#d-q').addEventListener('input',e=>{ st.dq=e.target.value; renderDados(); });
 $('#d-exp').addEventListener('change',e=>{ st.dexp=e.target.value; renderDados(); });
 $('#d-grp').addEventListener('change',e=>{ st.dgrp=e.target.value; renderDados(); });
 $('#d-cls').addEventListener('change',e=>{ st.dcls=e.target.value; renderDados(); });
+$('#d-out').addEventListener('keydown',e=>{ const tr=e.target.closest('tr[data-cel]'); if(tr&&(e.key==='Enter'||e.key===' ')){ e.preventDefault(); tr.click(); } });
 $('#copiar-csv').addEventListener('click',()=>{
   const cab=['experimento','condicao','geracao','indicador','grupo','reducao','ic_inf','ic_sup','unidades','modelo','classe_limite_'+st.L,'iobc','hipotetico'];
   const csv=[cab,...dadosFiltrados().map(x=>[x.et,x.cond,x.ger,x.ind,GRUPO[x.grp],x.v==='nd'?'':x.v[0],x.v==='nd'?'':x.v[1],x.v==='nd'?'':x.v[2],x.n,x.mod,CI1[cls(x.v,st.L)][0],x.v==='nd'?'':iobc(x.v[0],x.nivel),'sim'])]
@@ -876,14 +1018,14 @@ const MET=[
  {id:'MIP-02',item:'5.4.1',etapa:'Seletividade fisiológica',nivel:'Laboratório',exp:'pupas',t:'Pulverização direta sobre pupas: emergência, razão sexual, longevidade e parasitismo',
   obj:'Medir o efeito da pulverização sobre o parasitoide em desenvolvimento dentro do ovo hospedeiro e sobre o desempenho dos adultos que emergem.',
   passos:['Fêmeas de até 24 h parasitam por 24 h cartelas azul-claras de 5 × 2 cm com cerca de 150 ovos inviabilizados de <i>E. kuehniella</i>.','Cartelas usadas cerca de 48 h antes da emergência prevista (fase de pupa), com a idade confirmada em amostra.','Pulverização em torre de Potter (0,7 kgf cm⁻², 2 mL de calda, depósito de 1,8 ± 0,1 mg cm⁻²) com clorantraniliprole na dose de bula; testemunha com água.','Após a secagem, cartelas em tubos até a emergência: emergência, tempo até a emergência e razão sexual pelas antenas (Bowen e Stern, 1966).','Trinta fêmeas recém-emergidas por tratamento, individualizadas, recebem a cada dia uma cartela com cerca de 150 ovos não tratados, até a morte.'],
-  del:'Inteiramente casualizado, 2 tratamentos × 30 cartelas; 30 fêmeas por tratamento para longevidade e parasitismo.',
+  del:'Inteiramente casualizado, 2 tratamentos e 30 cartelas; 30 fêmeas por tratamento para longevidade e parasitismo.',
   vars:'Emergência (%), tempo até a emergência (dias), razão sexual, sobrevivência diária, longevidade (dias), parasitismo diário e total (ovos por fêmea).',
   an:'Emergência e razão sexual: GLM binomial por cartela (eventos sobre total), com teste de superdispersão e, se preciso, quasibinomial ou beta-binomial. Parasitismo diário: GLMM com efeito aleatório de fêmea, binomial quando os ovos ofertados são contados ou binomial negativa. Parasitismo total por fêmea: contagem, Poisson ou binomial negativa com ligação log. Longevidade: Kaplan–Meier, log-rank e Cox; para o modelo, tempo médio restrito de sobrevivência (RMST) com IC 95%. Tempo até a emergência: tempo até o evento em tempo discreto.',
   calc:'Redução em relação à testemunha com IC 95%; classes de laboratório da IOBC/WPRS.',refs:['hassan1985','bowen1966','desneux2007','moral2017']},
  {id:'MIP-03',item:'5.4.1.3',etapa:'Seletividade fisiológica',nivel:'Laboratório',exp:'pupas',t:'Capacidade de voo',
   obj:'Detectar efeitos sobre a dispersão que a emergência e o parasitismo em tubo não mostram.',
   passos:['Cilindro plástico de 18 × 11 cm, revestido de cartolina preta, com base de acrílico coberta por papel adesivo preto.','Anel de cola entomológica de 0,5 cm a 3,5 cm da base; tampa superior transparente com cola.','Cartela com cerca de 50 ovos parasitados e tratados, em tubo no centro da base, cerca de 2 dias antes da emergência.','Três dias após a emergência estimada: voadores (tampa), caminhadores (anel) e não voadores (base).'],
-  del:'Inteiramente casualizado, 2 tratamentos × 10 cilindros, nas gerações F0 e F1.',
+  del:'Inteiramente casualizado, 2 tratamentos e 10 cilindros, nas gerações F0 e F1.',
   vars:'Porcentagens de voadores, caminhadores e não voadores sobre o total recuperado.',
   an:'Modelo multinomial de logitos de categoria-base para as três categorias, com o cilindro como unidade experimental; ou GLM binomial para voadores sobre o total recuperado, com verificação de superdispersão.',
   calc:'Redução da proporção de voadores com IC 95%.',refs:['prezotti2002','dutton1995']},
@@ -895,30 +1037,44 @@ const MET=[
  {id:'MIP-05',item:'5.4.2',etapa:'Seletividade fisiológica',nivel:'Semicampo e laboratório',exp:'residuo',t:'Persistência da atividade residual',
   obj:'Estimar por quanto tempo o resíduo nas folhas de milho prejudica o parasitoide.',
   passos:['Milho em vasos de 10 L até V4, pulverizado com clorantraniliprole na dose de bula a 200 L ha⁻¹; testemunha com água.','Plantas protegidas da chuva e expostas à temperatura, umidade e luz do semicampo, com registro do ambiente.','Aos 0, 3, 7, 10, 14, 21, 28 e 35 dias: discos foliares de 4 cm de folhas já expandidas na aplicação, de plantas independentes.','Uma fêmea com menos de 24 h por tubo com o disco e mel, por 24 h a 25 ± 1 °C: mortalidade.','Sobreviventes recebem por 24 h uma cartela com cerca de 150 ovos não tratados: parasitismo, emergência e razão sexual da F1.'],
-  del:'Inteiramente casualizado, 2 tratamentos × 8 períodos, 30 fêmeas por combinação.',
+  del:'Inteiramente casualizado, 2 tratamentos e 8 períodos, 30 fêmeas por combinação.',
   vars:'Mortalidade em 24 h, parasitismo por fêmea sobrevivente, parasitismo efetivo (S × Ps), emergência e razão sexual da F1.',
   an:'Mortalidade: GLM binomial com dado individual (viva ou morta), período como fator; com dado individual a correção quasi não se aplica. Parasitismo por sobrevivente: binomial (ovos parasitados sobre ovos ofertados) ou binomial negativa. Parasitismo efetivo: IC por método delta ou bootstrap paramétrico. Emergência e razão sexual: GLM binomial.',
-  calc:'Mortalidade corrigida (Abbott, 1925); duração da atividade prejudicial = primeiro período com redução do parasitismo abaixo de 30%, mantida depois; classes de persistência da IOBC/WPRS.',refs:['hassan1985','abbott1925','paiva2021']},
+  calc:'Mortalidade corrigida (Abbott, 1925); duração da atividade prejudicial: primeiro período com redução do parasitismo abaixo de 30%, mantida depois; classes de persistência da IOBC/WPRS.',refs:['hassan1985','abbott1925','paiva2021']},
  {id:'MIP-06',item:'5.5.1',etapa:'Seletividade ecológica',nivel:'Semicampo',exp:'semicampo',t:'Sequência e intervalos entre pulverização e liberação',
   obj:'Identificar o momento de pulverização, em relação à liberação, que preserva o parasitismo e a descendência.',
   passos:['Milho em vasos de 10 L, pulverizado em V4 com clorantraniliprole na dose de bula ou com água.','Liberação no dia zero; pulverização 7, 3 e 1 dia antes, no próprio dia (liberação após a secagem) e 1, 2 e 3 dias depois.','Cinco fêmeas de 72 h por planta, em gaiola de malha fina.','Cartelas com cerca de 150 ovos não tratados em posições padronizadas, trocadas a cada 24 h por 6 dias.','Na pulverização após a liberação, a cartela das 24 h anteriores fica na planta durante a aplicação, para medir o efeito sobre os imaturos.'],
-  del:'Inteiramente casualizado em fatorial 2 × 7 (produto × momento), 10 plantas por combinação, 140 unidades; avaliações diárias como medidas repetidas.',
+  del:'Inteiramente casualizado em fatorial 2 × 7 (produto e momento), 10 plantas por combinação, 140 unidades; avaliações diárias como medidas repetidas.',
   vars:'Ovos parasitados por planta (diários e acumulados), parasitismo antes e depois da pulverização, emergência e razão sexual da F1.',
-  an:'Parasitismo diário: GLMM com efeito aleatório de planta e dia como fator ou estrutura de correlação temporal (binomial negativa, ou binomial com ovos ofertados contados). Total acumulado por planta: binomial negativa. Contrastes inseticida × água dentro de cada momento pelo emmeans, com ajuste de multiplicidade. Emergência e razão sexual: GLM(M) binomial.',
+  an:'Parasitismo diário: GLMM com efeito aleatório de planta e dia como fator ou estrutura de correlação temporal (binomial negativa, ou binomial com ovos ofertados contados). Total acumulado por planta: binomial negativa. Contrastes inseticida contra água dentro de cada momento pelo emmeans, com ajuste de multiplicidade. Emergência e razão sexual: GLM(M) binomial.',
   calc:'Redução por momento, com IC 95%; classes de semicampo da IOBC/WPRS.',refs:['hassan1985','torres2018','banks2023']},
- {id:'MIP-07',item:'5.6',etapa:'Classificação de referência',nivel:'Todos',t:'Classificação segundo a IOBC/WPRS',
+ {id:'MIP-07',item:'5.6',etapa:'Classificação de referência',nivel:'Todos os ensaios',t:'Classificação segundo a IOBC/WPRS',
   obj:'Classificar cada resultado pelos critérios da IOBC/WPRS, como referência para comparar com o modelo integrado.',
   passos:['R = [1 − (Xt ÷ Xc)] × 100; reduções negativas são consideradas zero; mortalidade corrigida por Abbott quando pertinente.','Laboratório: classe 1, inócuo (&lt; 50%); 2, levemente nocivo (50% a &lt; 80%); 3, moderadamente nocivo (80% a 99%); 4, nocivo (&gt; 99%).','Semicampo: classe 1 (&lt; 25%); 2 (25% a 50%); 3 (&gt; 50% a 75%); 4 (&gt; 75%).','Persistência: classe 1 (&lt; 5 dias); 2 (5 a 15); 3 (16 a 30); 4 (&gt; 30 dias). Ensaios com vários períodos são classificados por período.'],
   refs:['hassan1985','abbott1925']},
  {id:'MIP-08',item:'5.7',etapa:'Integração',nivel:'Análise',exp:'avaliacao',t:'Modelo integrado de classificação da compatibilidade',
   obj:'Transformar os resultados dos experimentos em uma classificação da compatibilidade por condição de manejo.',
-  passos:['Organizar os resultados por condição de exposição, estágio, geração, sequência e intervalo.','Padronizar: redução em relação à testemunha com IC 95%; mortalidade por Abbott; parasitismo efetivo (S × Ps).','Hierarquizar sem pesos numéricos: prioritários (parasitismo, sobrevivência, emergência) e complementares (longevidade, voo, razão sexual, tempo de desenvolvimento).','Classificar cada indicador pelo IC frente ao limite de 20%: preservado, prejudicado ou inconclusivo.','Integrar de forma não compensatória por condição (Nível 1) e por combinação (Nível 2), em quatro categorias.','Avaliar o modelo: sensibilidade a 10%, 20% e 30%, consistência entre laboratório e semicampo e comparação descritiva com a IOBC/WPRS.'],
+  passos:['Organizar os resultados por condição de exposição, estágio, geração, sequência e intervalo.','Padronizar: redução em relação à testemunha com IC 95%; mortalidade por Abbott; parasitismo efetivo (S × Ps).','Hierarquizar sem pesos numéricos: prioritários (parasitismo, sobrevivência, emergência) e complementares (longevidade, voo, razão sexual, tempo de desenvolvimento).','Classificar cada indicador pelo IC frente ao limite de 20%: preservado, prejudicado ou inconclusivo.','Integrar de forma não compensatória por condição e por combinação, em quatro categorias.','Avaliar o modelo: sensibilidade a 10%, 20% e 30%, consistência entre laboratório e semicampo e comparação descritiva com a IOBC/WPRS.'],
   an:'Regras implementadas no R a partir de três bases: dados brutos, resultados estatísticos e classificação.',refs:['efsa2011','efsa2017','lakens2017','tunes2009','vandervoet2019','rogers1998']}
 ];
 function renderMetodos(){
-  $('#met-out').innerHTML='<div class="scroll"><table class="list"><thead><tr><th>Código</th><th>Método</th><th>Etapa</th><th>Item</th><th>Nível</th></tr></thead><tbody>'+
-   MET.map(m=>`<tr data-met="${m.id}"><td class="mono">${m.id}</td><td><button class="linkbtn" data-met="${m.id}">${esc(m.t)}</button><small>${esc(m.obj)}</small></td><td>${esc(m.etapa)}</td><td class="mono">${m.item}</td><td>${esc(m.nivel)}</td></tr>`).join('')+'</tbody></table></div>';
+  $('#met-out').innerHTML=MET.map(m=>`<details class="met" id="${m.id}">
+   <summary><span class="cod">${m.id}</span><span class="tit">${esc(m.t)}<small>${esc(m.etapa)}, item ${m.item}. ${esc(m.nivel)}.</small></span><span class="seta"><span class="abrir">Abrir</span><span class="fechar">Fechar</span></span></summary>
+   <div class="met-body"><div>
+    <p>${esc(m.obj)}</p>
+    <h3>Procedimento</h3><ol>${m.passos.map(p=>`<li>${p}</li>`).join('')}</ol>
+    <dl class="kv">
+     ${m.del?`<dt>Delineamento</dt><dd>${esc(m.del)}</dd>`:''}
+     ${m.vars?`<dt>Variáveis</dt><dd>${esc(m.vars)}</dd>`:''}
+     ${m.an?`<dt>Análise</dt><dd>${esc(m.an)}</dd>`:''}
+     ${m.calc?`<dt>Cálculo</dt><dd>${esc(m.calc)}</dd>`:''}
+     ${m.exp?`<dt>Resultados</dt><dd><a href="#compatibilidade/${m.exp==='avaliacao'?'regras':'matrizes'}">Ver na avaliação de compatibilidade</a></dd>`:''}
+    </dl>
+    ${m.refs.length?`<h3>Referências</h3><ul>${m.refs.map(k=>{const b=BIB.find(x=>x[0]===k); return b?`<li>${esc(b[1])} (${b[2]}). ${esc(b[3])}. ${esc(b[4])}.</li>`:''}).join('')}</ul>`:''}
+   </div></div></details>`).join('');
 }
+$('#abrir-todos').addEventListener('click',()=>$$('details.met').forEach(d=>d.open=true));
+$('#fechar-todos').addEventListener('click',()=>$$('details.met').forEach(d=>d.open=false));
 
 /* ---------- literatura ---------- */
 const TEMA={mip:'MIP e controle biológico',sel:'Seletividade',eco:'Ecotoxicologia',met:'Métodos e criação',est:'Estatística e decisão',sis:'Sistema-modelo',leg:'Bioinsumos e legislação'};
@@ -1022,6 +1178,14 @@ const ESTUDOS=[
  ['Predadores e parasitoides','Coccinellidae; Syrphidae; Araneae; Bracon vulgaris','Malationa','Campo; seletividade ecológica','Camelo, Silva e Zanuncio (2025)','camelo2025']
 ];
 const link=x=>x?(x.startsWith('http')?x:'https://doi.org/'+x):'';
+function renderBarras(){
+  const cont={}; ESTUDOS.forEach(e=>{ const k=e[3].split(';')[0]; cont[k]=(cont[k]||0)+1; });
+  const xs=Object.entries(cont).sort((a,b)=>b[1]-a[1]), max=xs[0][1];
+  $('#bars').setAttribute('aria-label','Estudos por condição de ensaio: '+xs.map(([k,v])=>k+', '+v).join('; '));
+  $('#bars').innerHTML=xs.map(([k,v])=>`<div class="bar-row" title="${esc(k)}: ${v} estudos"><span>${esc(k)}</span><div class="bar-t"><div class="bar-f" style="width:${v/max*100}%"></div><b>${v}</b></div></div>`).join('');
+  const clor=ESTUDOS.filter(e=>norm(e[2]).includes('clorantraniliprole')).length, so=cont['Laboratório']||0;
+  $('#bars-nota').textContent=`${so} dos ${ESTUDOS.length} estudos da tabela do projeto foram feitos só em laboratório, e ${clor} avaliam o clorantraniliprole. É a lacuna que o modelo trata: integrar laboratório e condições de uso.`;
+}
 function renderEstudos(){
   const q=norm($('#e-q').value), g=$('#e-grp').value, nv=$('#e-nv').value, sl=$('#e-sel').value;
   const xs=ESTUDOS.filter(e=>(!g||e[0]===g)&&(!nv||norm(e[3]).includes(nv))&&(!sl||norm(e[3]).includes(sl))&&(!q||norm(e.slice(1,5).join(' ')).includes(q)));
@@ -1029,7 +1193,7 @@ function renderEstudos(){
   $('#e-out').innerHTML=xs.length?'<div class="scroll"><table><thead><tr><th>Inimigo natural</th><th>Espécie</th><th>Produtos avaliados</th><th>Abordagem</th><th>Referência</th></tr></thead><tbody>'+
    xs.map(e=>{ const b=BIB.find(x=>x[0]===e[5]), u=b?link(b[5]):''; const sp=e[1].split('; ').map(s=>/(idae|eae)$/.test(s)?esc(s):'<i>'+esc(s)+'</i>').join('; ');
     return `<tr><td>${esc(e[0])}</td><td>${sp}</td><td>${esc(e[2])}</td><td>${esc(e[3])}</td><td>${u?`<a href="${u}" target="_blank" rel="noopener">${esc(e[4])}</a>`:esc(e[4])}</td></tr>`; }).join('')+'</tbody></table></div>'
-   :'<div class="scroll"><p class="empty">Nenhum estudo com esses filtros.</p></div>';
+   :'<div class="scroll"><p class="empty">Nenhum estudo com esses filtros. Limpe a busca ou escolha outra condição.</p></div>';
 }
 function renderBib(){
   const q=norm($('#b-q').value), t=$('#b-tema').value;
@@ -1037,15 +1201,15 @@ function renderBib(){
   $('#b-count').textContent=xs.length+' de '+BIB.length+' referências';
   $('#bib-list').innerHTML=xs.length?xs.map(b=>{ const u=link(b[5]), usos=MET.filter(m=>m.refs.includes(b[0]));
     return `<li><p class="cit">${esc(b[1])} (${b[2]}). <b>${esc(b[3])}</b>. ${esc(b[4])}.</p>
-     <div class="row">${b[6].split(' ').map(x=>`<span class="tag">${TEMA[x]}</span>`).join('')}
-     ${usos.length?'<span class="muted" style="font-size:14px">Usada em '+usos.map(m=>`<button class="linkbtn mono" data-met="${m.id}">${m.id}</button>`).join(', ')+'</span>':''}
+     <div class="row" style="gap:8px">${b[6].split(' ').map(x=>`<span class="tag">${TEMA[x]}</span>`).join('')}
+     ${usos.length?'<span class="muted" style="font-size:14px">Usada em '+usos.map(m=>`<a href="#metodos/${m.id}">${m.id}</a>`).join(', ')+'</span>':''}
      ${u?`<a style="font-size:14px" target="_blank" rel="noopener" href="${u}">${u.startsWith('https://doi.org/')?'DOI '+esc(b[5]):'Página da fonte'}</a>`:''}</div></li>`; }).join(''):'<li class="empty">Nenhuma referência com esses filtros.</li>';
 }
 $('#b-tema').innerHTML='<option value="">Todos os temas</option>'+Object.entries(TEMA).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
 ['#e-q','#e-grp','#e-nv','#e-sel'].forEach(s=>$(s).addEventListener('input',renderEstudos));
 $('#b-q').addEventListener('input',renderBib); $('#b-tema').addEventListener('change',renderBib);
-function renderLit(){ $$('#seg-lit button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===st.lit)); $('#lit-estudos').hidden=st.lit!=='estudos'; $('#lit-refs').hidden=st.lit!=='refs'; }
-$('#seg-lit').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ st.lit=b.dataset.v; renderLit(); }});
+function renderLit(){ $$('#tabs-lit button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===st.lit)); $('#lit-estudos').hidden=st.lit!=='estudos'; $('#lit-refs').hidden=st.lit!=='referencias'; }
+$('#tabs-lit').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ st.lit=b.dataset.v; history.replaceState(null,'','#literatura/'+st.lit); renderLit(); }});
 
 /* ---------- calculadoras ---------- */
 const num=id=>parseFloat($('#'+id).value);
@@ -1053,38 +1217,38 @@ function calcRed(){
   const xc=num('r-xc'),xt=num('r-xt'),nv=$('#r-nv').value,L=num('r-l'),o=$('#r-out');
   if([xc,xt,L].some(isNaN)||xc<=0||xt<0){ o.innerHTML='Informe a testemunha maior que zero e o tratamento maior ou igual a zero.'; return; }
   const r=(1-xt/xc)*100, k=iobc(r,nv);
-  o.innerHTML=`Redução <b>${pct(r)}</b> <span class="chip k${k}">IOBC classe ${k} · ${IOBC[k]}</span><br><small>${r>L?`Acima do limite de ${fmt(L)}%.`:`Dentro do limite de ${fmt(L)}%.`}${r<0?' Valor negativo: o tratamento superou a testemunha (a IOBC considera zero).':''}</small>`;
+  o.innerHTML=`Redução de <b>${pct(r)}</b> <span class="chip s-${k}">IOBC classe ${k}, ${IOBC[k]}</span><br><small>${r>L?`Acima do limite de ${fmt(L)}%.`:`Dentro do limite de ${fmt(L)}%.`}${r<0?' Valor negativo: o tratamento superou a testemunha (a IOBC considera zero).':''}</small>`;
 }
 function calcAbbott(){
   const mt=num('a-mt'),nt=num('a-nt'),mc=num('a-mc'),nc=num('a-nc'),nv=$('#a-nv').value,o=$('#a-out');
   if(!(nt>0&&nc>0)||mt>nt||mc>nc||mt<0||mc<0||[mt,mc].some(isNaN)){ o.innerHTML='Confira os valores: os mortos não podem passar do total.'; return; }
-  const pt=mt/nt*100,pc=mc/nc*100; if(pc>=100){ o.innerHTML='Mortalidade de 100% na testemunha: ensaio inválido.'; return; }
+  const pt=mt/nt*100,pc=mc/nc*100; if(pc>=100){ o.innerHTML='Mortalidade de 100% na testemunha: o ensaio não é válido.'; return; }
   const c=Math.max(0,(pt-pc)/(100-pc)*100), k=iobc(c,nv);
-  o.innerHTML=`Mortalidade corrigida <b>${pct(c)}</b> <span class="chip k${k}">IOBC classe ${k} · ${IOBC[k]}</span><br><small>Tratamento ${pct(pt)} · testemunha ${pct(pc)}</small>`;
+  o.innerHTML=`Mortalidade corrigida de <b>${pct(c)}</b> <span class="chip s-${k}">IOBC classe ${k}, ${IOBC[k]}</span><br><small>Tratamento ${pct(pt)}, testemunha ${pct(pc)}</small>`;
 }
 function calcPef(){
   const sc=num('p-sc'),pc=num('p-pc'),s=num('p-st'),p=num('p-pt'),o=$('#p-out');
   if([sc,pc,s,p].some(x=>isNaN(x)||x<0)||sc>100||s>100||sc*pc===0){ o.innerHTML='Informe sobrevivência entre 0 e 100 e parasitismo positivo na testemunha.'; return; }
   const ec=sc/100*pc, et=s/100*p, rs=(1-p/pc)*100, re=(1-et/ec)*100;
-  o.innerHTML=`Efetivo: testemunha <b>${fmt(ec)}</b> · inseticida <b>${fmt(et)}</b> ovos por fêmea exposta<br>Redução do parasitismo efetivo <b>${pct(re)}</b><br><small>Redução por sobrevivente: ${pct(rs)}. ${Math.abs(re-rs)>5?'Olhar só os sobreviventes esconderia parte do efeito.':''}</small>`;
+  o.innerHTML=`Testemunha <b>${fmt(ec)}</b> e inseticida <b>${fmt(et)}</b> ovos por fêmea exposta<br>Redução do parasitismo efetivo: <b>${pct(re)}</b><br><small>Redução por sobrevivente: ${pct(rs)}. ${Math.abs(re-rs)>5?'Olhar só os sobreviventes esconderia parte do efeito.':''}</small>`;
 }
 function calcIC(){
   const e=num('i-e'),lo=num('i-lo'),hi=num('i-hi'),L=num('i-l'),o=$('#i-out');
-  if([e,lo,hi,L].some(isNaN)||lo>e||e>hi){ o.innerHTML='Informe IC inferior ≤ estimativa ≤ IC superior.'; return; }
+  if([e,lo,hi,L].some(isNaN)||lo>e||e>hi){ o.innerHTML='Informe limite inferior ≤ estimativa ≤ limite superior.'; return; }
   const k=cls([e,lo,hi],L);
-  o.innerHTML=`${chip(CI1[k])} <small style="display:inline">com limite de ${fmt(L)}%</small>`+fp([{l:'Estimativa',v:[e,lo,hi]}],L);
+  o.innerHTML=`<div style="margin-bottom:10px">${chip(CI1[k],k)} <small style="display:inline">com limite de ${fmt(L)}%</small></div>`+fp([{l:'Estimativa',v:[e,lo,hi]}],L);
 }
 function calcPers(){
   const o=$('#s-out'), serie=$('#s-txt').value.split(/\n+/).map(l=>l.split(/[:;=]/).map(x=>parseFloat(x.replace(',','.')))).filter(x=>x.length>=2&&!isNaN(x[0])&&!isNaN(x[1])).sort((a,b)=>a[0]-b[0]);
-  if(!serie.length){ o.innerHTML='Uma linha por período, no formato dias: redução.'; return; }
+  if(!serie.length){ o.innerHTML='Escreva uma linha por período, no formato dias: redução.'; return; }
   const d=persistencia(serie);
-  if(d===null){ o.innerHTML=`A redução não ficou abaixo de 30% até ${serie[serie.length-1][0]} dias. ${serie[serie.length-1][0]>30?'<span class="chip k4">Classe 4 · persistente</span>':'Estenda as avaliações.'}`; return; }
+  if(d===null){ o.innerHTML=`A redução não ficou abaixo de 30% até ${serie[serie.length-1][0]} dias. ${serie[serie.length-1][0]>30?'<span class="chip s-4">Classe 4, persistente</span>':'Estenda as avaliações.'}`; return; }
   const k=persCl(d);
-  o.innerHTML=`Atividade prejudicial até <b>${d} dias</b> <span class="chip k${k}">Classe ${k} · ${PERS[k]}</span>`;
+  o.innerHTML=`Atividade prejudicial até <b>${d} dias</b> <span class="chip s-${k}">Classe ${k}, ${PERS[k]}</span>`;
 }
 [['c-red',calcRed],['c-abbott',calcAbbott],['c-pef',calcPef],['c-ic',calcIC],['c-pers',calcPers]].forEach(([id,fn])=>{ $('#'+id).addEventListener('input',fn); fn(); });
 
-/* ---------- sobre o projeto ---------- */
+/* ---------- projeto ---------- */
 $('#metas').innerHTML=[
  ['Estabelecer e manter as criações de S. frugiperda e T. pretiosum.','Criações mantidas em condições adequadas para os experimentos.','1–24'],
  ['Avaliar os efeitos da pulverização direta do clorantraniliprole sobre pupas de T. pretiosum.','Experimento de laboratório concluído, com parâmetros biológicos e gerações seguintes.','2–6'],
@@ -1095,7 +1259,7 @@ $('#metas').innerHTML=[
  ['Apresentar e discutir os resultados e a proposta com pesquisadores da área.','Reuniões com pesquisadores de seletividade e com o departamento.','18–24'],
  ['Divulgar os resultados em eventos científicos.','Dois resumos em eventos nacionais ou internacionais.','18–24'],
  ['Produzir artigos científicos.','Dois manuscritos elaborados para publicação.','18–24']
-].map((m,i)=>`<tr><td><b>${i+1}.</b> ${esc(m[0]).replace('S. frugiperda','<i>S. frugiperda</i>').replace(/T\. pretiosum/g,'<i>T. pretiosum</i>')}</td><td>${esc(m[1])}</td><td class="mono">${m[2]}</td></tr>`).join('');
+].map((m,i)=>`<tr><td><b>${i+1}.</b> ${esc(m[0]).replace('S. frugiperda','<i>S. frugiperda</i>').replace(/T\. pretiosum/g,'<i>T. pretiosum</i>')}</td><td>${esc(m[1])}</td><td class="n">${m[2]}</td></tr>`).join('');
 $('#crono').innerHTML=[
  ['Estabelecimento e manutenção das criações de insetos',[1,2,3]],
  ['Seletividade fisiológica'],
@@ -1115,47 +1279,31 @@ $('#crono').innerHTML=[
  ['Artigo 2 (Crop Protection, periódico-alvo preliminar)',[4]],
  ['Dois resumos científicos (CBE e Sincobiol)',[4]],
  ['Relatório final',[4]]
-].map(([a,s])=>s?`<tr><td>${esc(a).replace('T. pretiosum','<i>T. pretiosum</i>')}</td>${[1,2,3,4].map(i=>`<td class="mark">${s.includes(i)?'<span class="dot" aria-label="previsto"></span>':''}</td>`).join('')}</tr>`:`<tr class="sub"><th colspan="5">${esc(a)}</th></tr>`).join('');
-
-/* ---------- início ---------- */
-function renderHome(){
-  const L=20, s=sintese(L), grupos={pres:[],ress:[],insuf:[],prej:[]};
-  EXP.semicampo.rows.forEach(r=>grupos[condCls(EXP.semicampo,r,L)].push(r.c));
-  $('#home-ficha').innerHTML=`<div class="row" style="justify-content:space-between"><span class="eyebrow">Avaliação em destaque</span><span class="tag demo-tag">Hipotético</span></div>
-   <h3>Clorantraniliprole × <i>Trichogramma pretiosum</i></h3>
-   <div>${chip(C2[s])}</div>
-   <ul>${['pres','ress','insuf','prej'].filter(k=>grupos[k].length).map(k=>`<li>${chip(CC[k])}<span>Pulverização ${esc(grupos[k].join('; '))}</span></li>`).join('')}</ul>
-   <p class="muted" style="font-size:14px">Limite de redução de 20%, classificação pelo intervalo de confiança. Milho e <i>S. frugiperda</i>, semicampo.</p>
-   <div><a class="btn" href="#compatibilidade">Abrir a avaliação</a></div>`;
-  $('#pillars').innerHTML=[
-   ['compatibilidade',EXP.semicampo.rows.length,'condições de manejo','Compatibilidade','Síntese, matrizes, incerteza, sensibilidade ao limite e comparação com a IOBC.'],
-   ['dados',ALL.length,'estimativas','Dados','Cada redução com intervalo, unidades, modelo estatístico e classificação. Exporta CSV.'],
-   ['metodos',MET.length,'protocolos','Métodos','Da criação dos insetos ao modelo integrado, com a análise estatística de cada variável.'],
-   ['literatura',ESTUDOS.length,'estudos','Literatura','Estudos de seletividade filtráveis e as '+BIB.length+' referências do projeto com DOI.']
-  ].map(([h,nn,u,t,d])=>`<a class="pillar" href="#${h}"><span><span class="n">${nn}</span> <span class="muted">${u}</span></span><h3>${t}</h3><p>${d}</p></a>`).join('');
-}
+].map(([a,s])=>s?`<tr><td>${esc(a).replace('T. pretiosum','<i>T. pretiosum</i>')}</td>${[1,2,3,4].map(i=>`<td class="mark">${s.includes(i)?'<span class="dot" role="img" aria-label="previsto"></span>':''}</td>`).join('')}</tr>`:`<tr class="sub"><th colspan="5">${esc(a)}</th></tr>`).join('');
 
 /* ---------- eventos globais e rotas ---------- */
 document.addEventListener('click',e=>{
-  const l=e.target.closest('[data-l]'); if(l){ st.L=+l.dataset.l; const v=location.hash.slice(1); if(v==='dados') renderDados(); else renderCompat(); return; }
+  const l=e.target.closest('[data-l]'); if(l){ st.L=+l.dataset.l; renderLim(); const v=vista(); if(v==='dados') renderDados(); else if(v==='compatibilidade'){ renderVerdict(); renderTab(); } else renderHero(); return; }
+  const n=e.target.closest('[data-mom]'); if(n){ st.mom=n.dataset.mom; renderHero(); return; }
   const c=e.target.closest('[data-cel]'); if(c){ const [a,b,k]=c.dataset.cel.split('|'); fichaCelula(a,b,k); return; }
   const d=e.target.closest('[data-cond]'); if(d){ const [a,b]=d.dataset.cond.split('|'); fichaCond(a,b); return; }
-  const m=e.target.closest('[data-met]'); if(m){ fichaMetodo(m.dataset.met); return; }
-  const g=e.target.closest('[data-go]'); if(g){ dlg.close(); if(g.dataset.go!=='avaliacao'){ st.tab='matriz'; } else { st.tab='regras'; } ir('compatibilidade'); }
 });
 const VIEWS=['inicio','compatibilidade','dados','metodos','literatura','ferramentas','projeto'];
 const ALIAS={resultados:'dados',bibliografia:'literatura',proposta:'projeto',avaliacao:'compatibilidade'};
+function vista(){ let h=location.hash.slice(1).split('/')[0]; h=ALIAS[h]||h; return VIEWS.includes(h)?h:'inicio'; }
 function rota(){
-  let h=location.hash.slice(1); h=ALIAS[h]||h; const v=VIEWS.includes(h)?h:'inicio';
+  const v=vista(), sub=decodeURIComponent(location.hash.slice(1).split('/')[1]||'');
   $$('section.view').forEach(s=>s.hidden=s.dataset.view!==v);
   $$('nav.main a').forEach(a=>{ if(a.getAttribute('href')==='#'+v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-  if(v==='compatibilidade') renderCompat();
+  if(v==='inicio') renderInicio();
+  if(v==='compatibilidade'){ if(TABS.includes(sub)) st.tab=sub; renderCompat(); }
   if(v==='dados') renderDados();
+  if(v==='literatura'){ if(sub==='referencias'||sub==='estudos') st.lit=sub; renderLit(); }
+  if(v==='metodos'&&sub){ const d=document.getElementById(sub); if(d&&d.tagName==='DETAILS'){ d.open=true; requestAnimationFrame(()=>d.scrollIntoView({block:'start'})); return; } }
   window.scrollTo(0,0);
 }
-function ir(v){ if(location.hash==='#'+v) rota(); else location.hash=v; }
 window.addEventListener('hashchange',rota);
-renderHome(); renderMetodos(); renderEstudos(); renderBib(); renderLit(); rota();
+renderMetodos(); renderBarras(); renderEstudos(); renderBib(); rota();
 })();
 </script>
 </body>
