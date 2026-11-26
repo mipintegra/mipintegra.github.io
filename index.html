@@ -146,10 +146,20 @@ button.chip:hover{border-color:currentColor}
 .leitura{display:flex;flex-direction:column;gap:10px;min-width:0;padding-left:28px;border-left:1px solid var(--line)}
 .leitura .valor{font:700 clamp(34px,4vw,48px)/1 var(--f-head);color:var(--mata);font-variant-numeric:tabular-nums}
 .leitura .valor small{display:block;font:400 16px/1.4 var(--f-body);color:var(--muted);margin-top:6px}
-.veredito{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;background:var(--mata);color:var(--on-dark);padding:16px 22px;border-radius:10px;font-size:17px}
-.veredito b{font-family:var(--f-head);font-size:23px}
-.veredito a{color:#fff;margin-left:auto;font-weight:600}
-.veredito a:hover{color:var(--ouro-line)}
+.veredito{--vc:var(--nd);--vb:var(--nd-bg);--vi:#fff;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 24px;align-items:center;background:var(--vb);border:2px solid var(--vc);border-left-width:12px;border-radius:12px;padding:22px 26px;transition:background-color .3s,border-color .3s}
+.veredito.v-compat{--vc:var(--ok);--vb:var(--ok-bg)}
+.veredito.v-cond{--vc:var(--ouro);--vb:var(--ouro-soft);--vi:var(--mata)}
+.veredito.v-incomp{--vc:var(--ruim);--vb:var(--ruim-bg)}
+.veredito.v-insuf{--vc:var(--nd);--vb:var(--nd-bg)}
+.v-ic{width:64px;height:64px;border-radius:50%;background:var(--vc);color:var(--vi);display:flex;align-items:center;justify-content:center;font:700 32px/1 var(--f-head)}
+.v-txt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.v-lim{align-self:flex-start;background:var(--mata);color:#fff;font-weight:700;font-size:14px;padding:3px 12px;border-radius:999px;font-variant-numeric:tabular-nums}
+.v-cat{font:700 clamp(26px,3vw,34px)/1.1 var(--f-head);color:var(--mata)}
+.v-sub{font-size:16px;color:var(--ink)}
+.v-side{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.v-dots{display:flex;gap:6px}
+.v-dots span{width:18px;height:18px;border-radius:50%;border:2px solid currentColor}
+.veredito a.btn{white-space:nowrap}
 .nota-demo{font-size:14px;color:var(--muted)}
 
 /* ===== início: etapas, experimentos, atalhos ===== */
@@ -352,7 +362,9 @@ footer .base{border-top:1px solid rgba(255,255,255,.15);padding-block:16px;displ
   .detalhe{grid-template-columns:1fr 1fr;gap:18px 14px}
   .cartela{grid-template-columns:repeat(15,6px);gap:2px 3px;padding:8px}
   .cartela i{width:6px;height:8px}
-  .veredito a{margin-left:0}
+  .veredito{grid-template-columns:auto minmax(0,1fr);padding:18px}
+  .v-ic{width:48px;height:48px;font-size:24px}
+  .v-side{grid-column:1 / -1;align-items:flex-start}
   ul.conds li{grid-template-columns:1fr}
   .fp-row{grid-template-columns:1fr;gap:2px;padding-block:4px}
   .fp-row.fp-axisrow > span:first-child{display:none}
@@ -395,7 +407,7 @@ footer .base{border-top:1px solid rgba(255,255,255,.15);padding-block:16px;displ
   <div class="band lift"><div class="wrap">
     <div class="panel demo" aria-label="Demonstração do modelo">
       <div class="demo-head">
-        <h2>Quando pulverizar clorantraniliprole em relação à liberação de <i>Trichogramma pretiosum</i>?</h2>
+        <h2>Em que momento o clorantraniliprole e o <i>Trichogramma</i> podem ser usados juntos?</h2>
         <div class="lim-wrap"><span id="lim-h">Limite de redução</span><div class="lim" data-lim role="group" aria-labelledby="lim-h"></div></div>
       </div>
       <div class="tl-box">
@@ -934,7 +946,16 @@ function renderHero(){
     ${mot.split('; ').some(x=>!x.startsWith('Parasitismo acumulado'))?`<p>${esc(mot)}</p>`:''}
     <p class="muted" style="font-size:15px">${contexto(r,L)}</p>`;
   const s=sintese(L);
-  $('#veredito').innerHTML=`<span>Com o limite de ${L}%, a combinação fica</span><b>${esc(C2[s][0])}</b><a href="#compatibilidade">Ver a avaliação completa</a>`;
+  const cs=exp.rows.map(x=>condCls(exp,x,L)), pres=exp.rows.filter((x,i)=>cs[i]==='pres').map(x=>x.c), nInc=cs.filter(c=>c==='insuf').length, N=exp.rows.length;
+  const sub={compat:`Desempenho preservado nos ${N} momentos de pulverização avaliados.`,
+    cond:`Desempenho preservado em ${pres.length} de ${N} momentos: ${pres.join('; ')}.`,
+    incomp:`Efeito prejudicial nos ${N} momentos de pulverização avaliados.`,
+    insuf:`Nenhum momento demonstrou preservação com este limite; ${nInc} de ${N} ficaram com evidência insuficiente.`}[s];
+  const ico={compat:'✓',cond:'≈',incomp:'✕',insuf:'?'}[s];
+  const ve=$('#veredito'); ve.className='veredito v-'+s;
+  ve.innerHTML=`<span class="v-ic" aria-hidden="true">${ico}</span>
+    <div class="v-txt"><span class="v-lim">Limite de ${L}%</span><span class="v-cat">${esc(C2[s][0])}</span><span class="v-sub">${esc(sub)}</span></div>
+    <div class="v-side"><div class="v-dots" role="img" aria-label="${esc(exp.rows.map((x,i)=>x.c+': '+CC[cs[i]][0]).join('; '))}">${exp.rows.map((x,i)=>`<span class="s-${cs[i]}" title="${esc(x.c)}: ${esc(CC[cs[i]][0])}"></span>`).join('')}</div><a class="btn" href="#compatibilidade">Ver a avaliação completa</a></div>`;
 }
 
 function renderInicio(){
